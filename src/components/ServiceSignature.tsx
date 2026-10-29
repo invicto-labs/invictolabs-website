@@ -1,0 +1,10 @@
+/** Decorative, lightweight illustrations for the homepage capability deck. */
+export function ServiceSignature({ index }: { index: number }) {
+  return <div className="service-signature" aria-hidden="true"><svg viewBox="0 0 260 120" fill="none">
+    <path className="signature-grid" d="M0 100H260M0 60H260M0 20H260M30 0V120M80 0V120M130 0V120M180 0V120M230 0V120" />
+    {index === 0 && <><path className="signature-muted" d="M76 21h78l24 24v61H76zM154 21v24h24" /><path className="signature-line" d="M64 12h78l24 24v61H64zM142 12v24h24M81 48h52M81 60h38M81 72h27" /><circle className="signature-disc" cx="163" cy="76" r="26" /><path className="signature-bright" d="m151 76 8 8 16-18M181 96l14 14" /><path className="signature-travel" d="M20 108h37M203 25h37" /></>}
+    {index === 1 && <><path className="signature-muted" d="M23 93h214M44 92V59M215 92V59M44 59h171" /><path className="signature-line" d="m87 54 43-36 43 36v43H87zM116 97V67h28v30M79 57l51-43 51 43" /><path className="signature-travel" d="M25 59h46M189 59h46" />{[44,130,215].map(x => <g key={x}><circle className="signature-disc" cx={x} cy="99" r="10" /><path className="signature-bright" d={`m${x-4} 99 3 3 5-6`} /></g>)}</>}
+    {index === 2 && <><path className="signature-muted" d="m24 67 106-51 106 51-106 49zM60 49l104 50M95 33l105 50M58 83l106-50M94 100l106-51" /><path className="signature-fill" d="m94 65 36-18 36 18-36 18z" /><path className="signature-line" d="M145 37c0 12-15 27-15 27s-15-15-15-27a15 15 0 0 1 30 0Z" /><circle className="signature-bright" cx="130" cy="37" r="5" /><path className="signature-travel" d="m24 67 35 17M200 84l36-17" /></>}
+    {index === 3 && <><path className="signature-muted" d="M52 35h56M152 35h56M52 85h56M152 85h56M130 46v28M52 47v26M208 47v26" />{[[52,35],[208,35],[52,85],[208,85]].map(([x,y]) => <rect key={`${x}-${y}`} className="signature-line" x={x-13} y={y-12} width="26" height="24" rx="5" />)}<rect className="signature-disc" x="108" y="36" width="44" height="48" rx="9" /><path className="signature-bright" d="m124 52-8 8 8 8m12-16 8 8-8 8" /><path className="signature-travel" d="M66 35h39M155 85h39" /></>}
+  </svg></div>
+}

@@ -1,0 +1,10 @@
+node_modules/
+.npm-cache/
+.npm-task-cache/
+dist/
+production-dist*/
+vercel-production-dist/
+docs/source-assets/
+*.tgz
+*.log
+

@@ -1,0 +1,46 @@
+/* Native sticky layering only: no wheel interception or scroll snapping.
+   Detail pages never receive this class. Small/reduced-motion views retain flow. */
+@media (min-width: 1100px) and (min-height: 720px) and (prefers-reduced-motion: no-preference) {
+  .products-overview-stack {
+    isolation: isolate;
+    overflow: visible;
+  }
+
+  .products-overview-stack > .product-hero-v3 {
+    position: sticky;
+    top: 82px;
+    z-index: 0;
+    min-height: calc(100svh - 82px);
+    padding-block: clamp(2rem, 5vh, 4rem);
+    display: grid;
+    align-items: center;
+  }
+
+  .products-overview-stack .product-hero-v3__inner {
+    min-height: 0;
+    padding-bottom: 2rem;
+  }
+
+  .products-overview-stack .product-hero-v3 h1 {
+    font-size: clamp(3.7rem, 6vw, 5.8rem);
+  }
+
+  .products-overview-stack > .product-reveal-v3 {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid #dce4f5;
+    box-shadow: 0 -22px 60px #13245320;
+    scroll-margin-top: 82px;
+  }
+
+  .products-overview-stack .product-reveal-v3__stage {
+    top: 82px;
+    min-height: calc(100svh - 82px);
+  }
+
+  .products-overview-stack > .products-contact-wave {
+    position: relative;
+    z-index: 2;
+    background-color: #fff;
+  }
+}

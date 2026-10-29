@@ -1,0 +1,63 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/fonts/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }]
+    },
+    {
+      "source": "/images/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=86400" }]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/:path*", "has": [{ "type": "host", "value": "www.invictolabs.com" }], "destination": "https://invictolabs.com/:path*", "permanent": true },
+    { "source": "/locations", "destination": "/location", "permanent": true },
+    { "source": "/approach", "destination": "/our-approach", "permanent": true },
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/:path+/index.html", "destination": "/:path+", "permanent": true },
+    { "source": "/home", "destination": "/", "permanent": true },
+    { "source": "/homepage", "destination": "/", "permanent": true },
+    { "source": "/company", "destination": "/our-company", "permanent": true },
+    { "source": "/ourcompany", "destination": "/our-company", "permanent": true },
+    { "source": "/about.html", "destination": "/our-company", "permanent": true },
+    { "source": "/faq.html", "destination": "/faq", "permanent": true },
+    { "source": "/product", "destination": "/products", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/blogs", "destination": "/blogs/index.html" },
+    { "source": "/case-studies", "destination": "/case-studies/index.html" },
+    { "source": "/blogs/:slug", "destination": "/blogs/:slug/index.html" },
+    { "source": "/case-studies/:slug", "destination": "/case-studies/:slug/index.html" },
+    { "source": "/our-company", "destination": "/our-company/index.html" },
+    { "source": "/faq", "destination": "/faq/index.html" },
+    { "source": "/products", "destination": "/products/index.html" },
+    { "source": "/products/traceq", "destination": "/products/traceq/index.html" },
+    { "source": "/products/titleflow-ai", "destination": "/products/titleflow-ai/index.html" },
+    { "source": "/products/tax-flow", "destination": "/products/tax-flow/index.html" },
+    { "source": "/services", "destination": "/services/index.html" },
+    { "source": "/services/title", "destination": "/services/title/index.html" },
+    { "source": "/services/mortgage", "destination": "/services/mortgage/index.html" },
+    { "source": "/services/tax-property", "destination": "/services/tax-property/index.html" },
+    { "source": "/services/technology", "destination": "/services/technology/index.html" },
+    { "source": "/location", "destination": "/location/index.html" },
+    { "source": "/our-approach", "destination": "/our-approach/index.html" }
+  ]
+}

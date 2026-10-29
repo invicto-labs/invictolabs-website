@@ -1,0 +1,108 @@
+.product-detail--tax-flow .product-detail-hero { background: radial-gradient(ellipse at 85% 25%, #bcdce9, transparent 60%), linear-gradient(130deg, #fafbff, #e5ecfa); }
+.product-detail--tax-flow .parcel-scene { padding: clamp(1rem, 2vw, 2rem); background: linear-gradient(150deg, #0b2459, #0d5567); border-radius: 24px 24px 90px 24px; box-shadow: 0 30px 70px #13295726; }
+.product-detail--tax-flow .parcel-scene__heading, .product-detail--tax-flow .parcel-scene figcaption, .product-detail--tax-flow .parcel-scene figcaption small { color: #d8edf8; border-color: #ffffff30; }
+.product-detail--tax-flow .parcel-scene svg { border-radius: 12px; background: #eef5fa; }
+.product-detail--tax-flow .parcel-scene__selected { animation: parcel-highlight 4s ease-in-out infinite; }
+@keyframes parcel-highlight { 50% { fill: #9ed8df; stroke: #126c85; } }
+.tax-experience { padding: clamp(4rem, 7vw, 7rem) 0; background: #f5f8fc; }
+.tax-coverage-highlight { display: grid; grid-template-columns: .9fr 1.3fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; position: relative; overflow: hidden; padding: clamp(1.6rem, 4vw, 4rem); margin-bottom: 3rem; border: 1px solid #b6d0e2; border-radius: 20px; background: radial-gradient(ellipse at 0 100%, #c7e9e9, transparent 65%), linear-gradient(125deg, #e7efff, #f8fbff); }
+.tax-coverage-highlight__metric { padding-right: 2rem; border-right: 1px solid #b5cddd; }
+.tax-coverage-highlight__metric > span { color: #3b647f; font-size: .6rem; letter-spacing: .14em; font-weight: 600; }
+.tax-coverage-highlight__metric > strong { display: block; font-size: clamp(4.2rem, 8vw, 8rem); line-height: 1.1; letter-spacing: -.075em; color: #123572; margin: 1rem 0 .4rem; font-weight: 600; }
+.tax-coverage-highlight__metric strong span { color: #237a88; font-size: .7em; }
+.tax-coverage-highlight__metric p { color: #355974; font-size: .95rem; margin: 0; }
+.tax-coverage-highlight__status { display: inline-flex; gap: .5rem; align-items: center; color: #26666e; font-size: .7rem; margin-bottom: 1rem; }
+.tax-coverage-highlight__status i { width: 7px; height: 7px; background: #278c87; border-radius: 50%; box-shadow: 0 0 0 4px #278c8714; }
+.tax-coverage-highlight__copy h3 { color: #132d56; font-size: clamp(1.6rem, 2.8vw, 2.5rem); line-height: 1.12; letter-spacing: -.035em; margin: 0 0 1rem; }
+.tax-coverage-highlight__copy p { color: #526880; font-size: .9rem; line-height: 1.8; }
+.tax-coverage-highlight__path { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; color: #244e71; font-size: .7rem; padding-block: 1rem; border-block: 1px solid #c5d9e6; margin-block: 1.3rem 1rem; }
+.tax-coverage-highlight__copy small { display: block; color: #5e7388; font-size: .68rem; line-height: 1.7; }
+@media(max-width:760px) { .tax-coverage-highlight { grid-template-columns: 1fr; } .tax-coverage-highlight__metric { border-right: 0; border-bottom: 1px solid #b5cddd; padding: 0 0 1.5rem; } }
+.tax-cert-showcase { margin-block: 5rem; }
+.tax-cert-showcase header { max-width: 720px; margin-bottom: 2rem; }
+.tax-cert-showcase h2 { font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.12; letter-spacing: -.04em; color: #10244d; margin: 0 0 1rem; }
+.tax-cert-showcase header > p:last-child { color: #536780; line-height: 1.8; }
+.tax-cert-sample { padding: clamp(1.2rem, 3vw, 3rem); background: #fff; border: 1px solid #b9d2df; border-top: 5px solid #245e78; border-radius: 12px; box-shadow: 0 20px 55px #13295712; }
+.tax-cert-sample__heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; padding-bottom: 1.5rem; color: #173554; }
+.tax-cert-sample__heading strong { font-size: 1.5rem; }
+.tax-cert-sample__heading span { font-size: .65rem; letter-spacing: .07em; background: #e8f2f7; padding: .7rem; }
+.tax-cert-sample dl { margin: 0; }
+.tax-cert-sample dl > div { display: grid; grid-template-columns: 1fr 2fr; padding: .8rem 1rem; gap: 1rem; background: #e6f0f4; border-bottom: 1px solid #fff; color: #21465c; font-size: .85rem; }
+.tax-cert-sample dl > div:nth-child(even) { background: #d3e5ed; }
+.tax-cert-sample dd { margin: 0; }
+.tax-cert-sample__values { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin: 2rem 0; }
+.tax-cert-sample__values span { display: block; color: #62748a; font-size: .72rem; margin-bottom: .5rem; }
+.tax-cert-sample__values strong { color: #173554; }
+.tax-cert-sample__table { overflow-x: auto; }
+.tax-cert-sample table { width: 100%; border-collapse: collapse; font-size: .8rem; text-align: left; }
+.tax-cert-sample caption { text-align: left; font-weight: 600; padding-bottom: 1rem; color: #173554; }
+.tax-cert-sample th { background: #245e78; color: white; }
+.tax-cert-sample th, .tax-cert-sample td { padding: .8rem; border: 1px solid #cbdde5; }
+.tax-cert-sample td { color: #35576c; }
+.tax-cert-sample > p { color: #62748a; font-size: .75rem; line-height: 1.8; margin: 1.5rem 0 0; }
+@media(max-width:640px) { .tax-cert-sample__values { grid-template-columns: repeat(2, 1fr); } .tax-cert-sample dl > div { grid-template-columns: 1fr; gap: .4rem; } }
+.tax-experience__intro { display: grid; grid-template-columns: 1.2fr 1fr; align-items: end; gap: 3rem; margin-bottom: 3rem; }
+.tax-experience__intro h2 { font-size: clamp(2.8rem, 5vw, 4.8rem); line-height: 1.02; letter-spacing: -.055em; color: #10244d; margin: 0; }
+.tax-experience__intro h2 span { color: #17687e; }
+.tax-experience__intro > p, .tax-experience__coverage p { color: #536780; line-height: 1.8; max-width: 470px; }
+.tax-experience__console { display: grid; grid-template-columns: 240px minmax(0, 1fr); border-radius: 20px; overflow: hidden; box-shadow: 0 24px 65px #10234d14; border: 1px solid #cbd9e7; }
+.tax-experience__rail { background: #0d244e; padding: 2rem 1.2rem; }
+.tax-experience__rail > span { font-size: .6rem; letter-spacing: .12em; color: #adcbdf; display: block; margin: 0 .7rem 2rem; }
+.tax-experience__rail button { display: flex; align-items: center; width: 100%; gap: .9rem; padding: 1.2rem .9rem; border: 1px solid transparent; border-radius: 9px; background: transparent; color: #c9d8ec; font: inherit; cursor: pointer; margin-bottom: .65rem; text-align: left; }
+.tax-experience__rail button small { color: #91bacd; font-size: .65rem; }
+.tax-experience__rail button svg { margin-left: auto; }
+.tax-experience__rail button[aria-pressed=true] { background: linear-gradient(110deg, #26528a, #206275); border-color: #6394ba; color: #fff; }
+.tax-experience__rail button:focus-visible { outline: 2px solid #9fe9e4; outline-offset: 3px; }
+.tax-experience__rail > p { font-size: .7rem; line-height: 1.8; color: #a9bed8; margin: 3rem .7rem 0; }
+.tax-experience__stage { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; padding: clamp(1.5rem, 3vw, 3rem); background: radial-gradient(ellipse at 100% 100%, #cee6ec, transparent 75%), #fff; min-height: 420px; }
+.tax-experience__index { display: block; font-size: .65rem; letter-spacing: .12em; color: #5f7891; margin-bottom: 2rem; }
+.tax-experience__copy > svg { color: #17687e; margin-bottom: 1rem; }
+.tax-experience__copy h3 { font-size: clamp(1.65rem, 2.4vw, 2.3rem); color: #10244d; line-height: 1.15; letter-spacing: -.04em; margin: 0 0 1rem; }
+.tax-experience__copy p { font-size: .9rem; color: #526780; line-height: 1.85; margin: 0; }
+.tax-experience__record { min-width: 0; background: #ffffffde; border: 1px solid #c9dbe5; border-radius: 12px; padding: 1.4rem; }
+.tax-experience__record-head { display: flex; align-items: center; justify-content: space-between; color: #486b84; font-size: .6rem; letter-spacing: .1em; padding-bottom: 1.3rem; border-bottom: 1px solid #dbe5ed; }
+.tax-experience__record-head i { width: 7px; height: 7px; background: #27858a; border-radius: 50%; }
+.tax-experience__record ol { list-style: none; padding: 0; margin: .5rem 0 1.5rem; }
+.tax-experience__record li { display: flex; gap: .7rem; padding: 1rem 0; font-size: .8rem; color: #243f60; border-bottom: 1px solid #e2ebf1; }
+.tax-experience__record li span { color: #64869b; font-size: .65rem; }
+.tax-experience__result { background: #dceef0; padding: 1rem; border-radius: 8px; color: #16485e; }
+.tax-experience__result span { display: block; font-size: .55rem; letter-spacing: .12em; margin-bottom: .5rem; }
+.tax-experience__result strong { font-size: .85rem; line-height: 1.6; display: block; }
+.tax-experience__coverage { position: relative; isolation: isolate; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; padding: clamp(2rem, 4vw, 4rem); margin-top: 3rem; border-radius: 16px; background: linear-gradient(115deg, #e0e8fb, #d3e9ed); }
+.tax-experience__coverage h3 { color: #122c56; font-size: clamp(2rem, 3.4vw, 3.2rem); line-height: 1.1; letter-spacing: -.04em; margin: 0; }
+.tax-experience__coverage .button { margin-top: 1rem; }
+.tax-experience__coverage-mark { position: absolute; z-index: -1; bottom: -3rem; right: 0; font-size: 17rem; line-height: 1; font-weight: 700; color: #174b7310; letter-spacing: -.08em; }
+@media(max-width: 1000px) { .tax-experience__console { grid-template-columns: 1fr; } .tax-experience__rail { display: flex; align-items: center; gap: .7rem; padding: 1rem; } .tax-experience__rail > span, .tax-experience__rail > p { display: none; } .tax-experience__rail button { margin: 0; } }
+@media(max-width: 640px) { .tax-experience__intro, .tax-experience__stage, .tax-experience__coverage { grid-template-columns: 1fr; gap: 1.5rem; } .tax-experience__rail button { justify-content: center; font-size: .8rem; padding: .8rem .4rem; gap: .4rem; } .tax-experience__rail button svg { display: none; } .tax-experience__stage { min-height: 0; } .tax-experience__index { margin-bottom: 1rem; } }
+.product-detail--tax-flow .product-detail-hero { position: relative; isolation: isolate; overflow: hidden; }
+.product-detail--tax-flow .product-detail-hero::before { content: ''; position: absolute; z-index: -1; inset: 0; background-image: linear-gradient(#37638409 1px, transparent 1px), linear-gradient(90deg, #37638409 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(90deg, transparent, #000); }
+.product-detail--tax-flow .parcel-scene { border-radius: 18px; transform: rotate(-2deg); }
+.product-detail--tax-flow .product-detail-hero h1 { max-width: 680px; }
+.tax-experience__copy, .tax-experience__record { animation: tax-stage-enter .35s ease-out both; }
+@keyframes tax-stage-enter { from { opacity: .3; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.tax-cert-showcase { display: grid; grid-template-columns: .85fr 1.3fr; gap: clamp(2rem, 4vw, 4rem); align-items: start; background: radial-gradient(ellipse at 90% 0, #225f78, transparent 70%), #0d234d; padding: clamp(1.5rem, 4vw, 4rem); border-radius: 24px; }
+.tax-cert-showcase h2 { color: #fff; font-size: clamp(2.2rem, 3.5vw, 3.4rem); }
+.tax-cert-showcase header .eyebrow { color: #a3d3e7; }
+.tax-cert-showcase header > p { color: #c1d4e8; line-height: 1.8; font-size: .9rem; }
+.tax-cert-showcase__legend { display: grid; gap: 1rem; margin: 2rem 0; }
+.tax-cert-showcase__legend > span { display: flex; gap: 1rem; color: #8fafcc; font-size: .7rem; padding-bottom: 1rem; border-bottom: 1px solid #ffffff22; }
+.tax-cert-showcase__legend b { color: #e2eff8; font-size: .83rem; font-weight: 500; }
+.tax-cert-showcase header > .tax-cert-showcase__note { color: #9fbad0; font-size: .7rem; }
+.tax-cert-sample { min-width: 0; padding: clamp(1.2rem, 2vw, 2rem); border: 1px solid #ccdde8; border-radius: 14px; box-shadow: 0 20px 50px #0002; }
+.tax-cert-sample__heading strong { display: flex; align-items: center; gap: .6rem; font-size: 1rem; }
+.tax-cert-sample__heading span { font-size: .55rem; border-radius: 4px; }
+.tax-cert-sample__summary { background: linear-gradient(125deg, #edf4ff, #e1f0f0); padding: 1.5rem; border-radius: 10px; }
+.tax-cert-sample__summary > span { color: #5c7892; font-size: .65rem; letter-spacing: .08em; }
+.tax-cert-sample__summary h3 { color: #15365b; font-size: clamp(1.3rem, 2vw, 1.8rem); margin: .8rem 0 .3rem; letter-spacing: -.03em; }
+.tax-cert-sample__summary p { font-size: .8rem; color: #536f87; margin: 0; }
+.tax-cert-sample__summary > div { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; border-top: 1px solid #c5d8e3; margin-top: 1.5rem; padding-top: 1.3rem; }
+.tax-cert-sample__summary > div span { font-size: .65rem; color: #56718a; }
+.tax-cert-sample__summary strong { display: block; color: #164466; font-size: 1.5rem; margin-top: .5rem; }
+.tax-cert-sample__toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: .7rem; padding: 1.2rem 0; background: none; border: 0; color: #224977; font: inherit; font-size: .8rem; font-weight: 600; cursor: pointer; text-align: left; }
+.tax-cert-sample__toggle:focus-visible { outline: 2px solid #315ec7; outline-offset: 3px; }
+.tax-cert-sample__toggle[aria-expanded=true] svg { transform: rotate(180deg); }
+.tax-cert-sample__values { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.tax-experience__coverage { background: linear-gradient(115deg, #e1e9fd, #cfebea); border: 1px solid #c5dce6; }
+@media(max-width: 900px) { .tax-cert-showcase { grid-template-columns: 1fr; } .tax-cert-showcase header { margin-bottom: 0; } .tax-cert-showcase__legend { grid-template-columns: repeat(3, 1fr); gap: .8rem; } .tax-cert-showcase__legend > span { flex-direction: column; gap: .5rem; } }
+@media(max-width: 640px) { .product-detail--tax-flow .parcel-scene { transform: none; } .tax-cert-sample__values { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media(prefers-reduced-motion: reduce) { .product-detail--tax-flow .parcel-scene__selected, .tax-experience__copy, .tax-experience__record { animation: none; } }

@@ -1,0 +1,20 @@
+# Invicto
+
+> Invicto provides title, mortgage, tax and property operations support, alongside tools for managing and reviewing that work.
+
+## Company and services
+- [Home](/): Overview of Invicto's work.
+- [Our company](/our-company): Company background and leadership.
+- [Services](/services): Title research, mortgage operations, tax and property data, and technology services.
+- [Our approach](/our-approach): Engagement and delivery process.
+- [Locations](/location): Dallas and Bengaluru contact information.
+- [Client FAQ](/faq): Scope, coverage, onboarding and review questions.
+
+## Products
+- [Products](/products): Overview of Invicto's product family.
+- [TraceQ](/products/traceq): Order tracking, assignments, productivity, quality review and invoicing.
+- [TitleFlow AI](/products/titleflow-ai): AI-assisted extraction, typing and quality checks with human review.
+- [Tax Flow](/products/tax-flow): Property-tax information retrieval using state, county and parcel number.
+
+## Contact
+Email marketing@invictolabs.com for scope, product demonstrations and supported coverage. Website inquiry forms prepare an email draft; they do not send a message automatically. Product demonstrations may contain fictional sample data, not actual property records.

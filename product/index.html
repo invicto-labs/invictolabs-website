@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="/products" vite-ignore />
+    <meta http-equiv="refresh" content="0; url=/products" />
+    <title>Products | Invicto</title>
+  </head>
+  <body>
+    <p>Redirecting to <a href="/products">Invicto Products</a>…</p>
+    <script>
+      const destination = new URL('/products', window.location.origin)
+      destination.search = window.location.search
+      destination.hash = window.location.hash
+      window.location.replace(destination)
+    </script>
+  </body>
+</html>

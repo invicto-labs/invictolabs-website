@@ -1,0 +1,9 @@
+/home                  /                 301
+/homepage              /                 301
+/index.html            /                 301
+/company               /our-company      301
+/ourcompany            /our-company      301
+/about.html            /our-company      301
+/faq.html              /faq              301
+/product               /products         301
+/*                     /index.html        200

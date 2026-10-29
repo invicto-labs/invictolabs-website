@@ -1,0 +1,31 @@
+.tax-certificate-hero { position: relative; isolation: isolate; min-width: 0; margin: 0; padding: 1.5rem clamp(1rem, 3vw, 2.5rem); }
+.tax-certificate-hero::before { content: ''; position: absolute; z-index: -1; inset: 14% 0 8%; background: radial-gradient(ellipse at 90% 10%, #368f9c, transparent 70%), linear-gradient(145deg, #142b65, #164d65); border-radius: 30px; transform: rotate(-4deg); }
+.tax-certificate-hero__input { display: flex; align-items: center; gap: .8rem; justify-content: center; margin-bottom: 1.3rem; color: #244968; }
+.tax-certificate-hero__input > span { font-size: .55rem; letter-spacing: .13em; }
+.tax-certificate-hero__input strong { font-size: .75rem; font-weight: 500; }
+.tax-certificate-hero__input i { font-style: normal; color: #4f8e99; padding: 0 .35rem; }
+.tax-certificate-hero__input > svg { animation: tax-input-cue 3s ease-in-out infinite; }
+.tax-certificate-hero__paper { position: relative; background: #fff; border: 1px solid #c4d7e3; border-radius: 10px; box-shadow: 0 25px 55px #081d4c26; padding: clamp(1.2rem, 2.6vw, 2.3rem); color: #16314f; }
+.tax-certificate-hero__masthead { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding-bottom: 1.2rem; border-bottom: 1px solid #d9e3ec; }
+.tax-certificate-hero__masthead > span { display: inline-flex; gap: .5rem; align-items: center; font-weight: 700; font-size: .8rem; letter-spacing: .08em; }
+.tax-certificate-hero__masthead small { font-size: .5rem; letter-spacing: .08em; color: #356576; background: #e8f3f5; padding: .45rem .6rem; border-radius: 4px; }
+.tax-certificate-hero__title { padding-block: 1.4rem; }
+.tax-certificate-hero__title > span { color: #597489; font-size: .6rem; letter-spacing: .12em; }
+.tax-certificate-hero__title h2 { margin: .6rem 0 .35rem; font-size: clamp(1.4rem, 2.5vw, 2.2rem); line-height: 1.15; letter-spacing: -.04em; }
+.tax-certificate-hero__title p { margin: 0; color: #61758a; font-size: .8rem; }
+.tax-certificate-hero__identity { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0 0 1.5rem; }
+.tax-certificate-hero dt { font-size: .65rem; color: #647b8f; }
+.tax-certificate-hero dd { margin: .4rem 0 0; font-size: .75rem; font-weight: 600; }
+.tax-certificate-hero__assessment { padding: 1rem; background: #f0f5f9; border-radius: 6px; }
+.tax-certificate-hero__assessment > span { font-size: .55rem; letter-spacing: .1em; color: #416980; }
+.tax-certificate-hero__assessment dl { margin: .9rem 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+.tax-certificate-hero__totals { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-block: 1.4rem; }
+.tax-certificate-hero__totals div > span { display: block; color: #5a768b; font-size: .65rem; margin-bottom: .4rem; }
+.tax-certificate-hero__totals strong { font-size: clamp(1.5rem, 2.8vw, 2.3rem); font-weight: 600; letter-spacing: -.04em; color: #173963; }
+.tax-certificate-hero__totals strong span { font-size: .6em; color: #6b8699; }
+.tax-certificate-hero__footer { display: flex; align-items: center; justify-content: space-between; gap: .4rem; border-top: 1px solid #d9e3ec; padding-top: 1rem; color: #527587; font-size: .6rem; }
+.tax-certificate-hero__footer i { width: 4px; height: 4px; border-radius: 50%; background: #74a4b0; }
+.tax-certificate-hero figcaption { font-size: .65rem; color: #4d647e; line-height: 1.7; text-align: center; margin-top: 1.4rem; }
+@keyframes tax-input-cue { 50% { transform: translateY(4px); } }
+@media(max-width: 480px) { .tax-certificate-hero { padding-inline: .65rem; } .tax-certificate-hero__input { flex-wrap: wrap; gap: .4rem; } .tax-certificate-hero__identity { grid-template-columns: 1fr; gap: .65rem; } .tax-certificate-hero__assessment dl { grid-template-columns: 1fr; } .tax-certificate-hero__assessment dl > div { display: flex; align-items: center; justify-content: space-between; } .tax-certificate-hero__assessment dd { margin: 0; } }
+@media(prefers-reduced-motion: reduce) { .tax-certificate-hero__input > svg { animation: none; } }

@@ -1,0 +1,82 @@
+/* Shared visual language: white, navy, and the Invicto logo blue. */
+:root { --brand-ink: #07164a; --brand-action: #173dea; --brand-paper: #f7f9fd; --brand-rule: #d8e1ef; }
+.header-resources { position: relative; }
+.header-resources__toggle { display: inline-flex; align-items: center; gap: .4rem; padding: .7rem .1rem; border: 0; background: transparent; color: #3f4962; font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.header-resources__toggle[data-active='true'], .header-resources__toggle:hover { color: var(--brand-action); }
+.header-resources__toggle svg { transition: transform .2s; }
+.header-resources__toggle[aria-expanded='true'] svg { transform: rotate(180deg); }
+.header-resources__links { position: absolute; top: calc(100% + .8rem); right: 0; width: 285px; display: grid; padding: .6rem; border: 1px solid var(--brand-rule); border-radius: 12px; background: white; box-shadow: 0 16px 32px #07164a15; z-index: 10; }
+.header-resources__links[hidden] { display: none; }
+.header-resources__links a { display: grid; gap: .4rem; padding: .9rem; border-radius: 7px; }
+.header-resources__links strong { font-size: .86rem; font-weight: 600; color: var(--brand-ink); }
+.header-resources__links span { font-size: .72rem; color: #61728b; }
+.header-resources__links a:hover, .header-resources__links a[aria-current='page'] { background: #f0f4fd; }
+.header-resources__toggle:focus-visible, .header-resources__links a:focus-visible { outline: 2px solid var(--brand-action); outline-offset: 3px; }
+body .site-header .header-actions { gap: .6rem; margin-left: 1.3rem; }
+body .site-header .header-careers { border-color: var(--brand-rule); background: white; }
+body .site-header .primary-nav { gap: clamp(.65rem, 1.05vw, 1rem); }
+/* Static textures frame the primary interactions, instead of adding motion. */
+body .home-page .services-dot-grid, body .partnership-dot-grid, body .locations-dot-grid,
+body .about-page .story-leadership__surface, body .products-contact-wave__surface {
+  background-image: radial-gradient(#9bb0d538 1px, transparent 1px); background-size: 28px 28px;
+}
+body .about-page .about-hero__dots { background-image: radial-gradient(#9fb6fc35 1px, transparent 1px); background-size: 30px 30px; }
+body .about-page .story-leadership__surface { opacity: .5; }
+body .products-contact-wave__surface { opacity: .4; }
+body .service-art { background: radial-gradient(ellipse at 50% 55%, #224985, transparent 70%), #0b204c; }
+body .service-art__drawing { animation: none; filter: none; }
+body .service-art__orbit { opacity: .5; }
+/* One cohesive palette across the product family. */
+body .products-page .product-reveal-card--traceq { background: linear-gradient(145deg, #102960, #07164a); }
+body .products-page .product-reveal-card--quality { background: linear-gradient(145deg, #234bdd, #132e91); }
+body .products-page .product-reveal-card--tax { background: linear-gradient(145deg, #173975, #0c204d); }
+body .product-detail--tax-flow .product-detail-hero { background: radial-gradient(ellipse at 85% 25%, #dce6ff, transparent 60%), #f7f9fd; }
+body .products-page .tax-coverage-highlight { background: linear-gradient(125deg, #e7efff, #f8fbff); border-color: var(--brand-rule); }
+body .products-page .tax-coverage-highlight__metric strong span { color: var(--brand-action); }
+body .products-page .tax-experience__console { background: white; border-color: var(--brand-rule); }
+body .products-page .tax-experience__stage { background: linear-gradient(135deg, #fff, #eef3fc); }
+body .products-page .tax-certificate-hero__paper { border-color: #cfdaec; border-top-color: var(--brand-action); }
+body .products-page .tax-certificate-hero__assessment { background: #f0f4fc; }
+body .products-page .tax-certificate-hero::before { background: radial-gradient(ellipse at 90% 10%, #3858b9, transparent 70%), linear-gradient(145deg, #142b65, #0b1c4a); }
+body .products-page .tax-experience__rail button[aria-pressed='true'] { background: #2347ac; border-color: #7290db; }
+body .products-page .tax-cert-showcase { background: radial-gradient(ellipse at 90% 0, #294c9a, transparent 70%), #0d234d; }
+body .products-page .tax-cert-sample__summary { background: #eef3fc; }
+body .products-page .titleflow-workflow li { background: linear-gradient(145deg, #fff, #e7eeff); border-top-color: #315ec7; }
+body .products-page .titleflow-review-note > div:first-child, body .products-page .titleflow-review-band { background: linear-gradient(125deg, #fff, #e2eaff); }
+body .products-page .taxflow-transfer i, body .products-page .traceq-spine * { animation: none; }
+body .products-page .tax-cert-sample { border-top-color: var(--brand-action); }
+body .products-page .tax-cert-sample th { background: #173975; }
+body .products-page .tax-cert-sample dl > div { background: #edf2fb; }
+body .products-page .tax-cert-sample dl > div:nth-child(even) { background: #e2eaf8; }
+body .products-page .product-window { border-radius: 10px; box-shadow: 0 18px 42px #0b214514; }
+body .products-page .product-window figcaption { gap: 1rem; align-items: start; }
+body .products-page .product-window figcaption > span { font-size: .75rem; line-height: 1.6; }
+body .products-page .product-window figcaption > a { flex-shrink: 0; }
+.product-evidence { margin: 2rem 0 0; border: 1px solid var(--brand-rule); border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 12px 32px #07164a08; }
+.product-evidence__label { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 1.3rem; border-bottom: 1px solid var(--brand-rule); font-size: .62rem; letter-spacing: .08em; color: #526680; }
+.product-evidence img { display: block; width: 100%; height: auto; }
+.product-evidence figcaption { display: grid; grid-template-columns: .8fr 1.3fr; gap: 2rem; padding: 1.5rem; border-top: 1px solid var(--brand-rule); }
+.product-evidence figcaption strong { color: var(--brand-ink); font-size: 1.2rem; line-height: 1.4; letter-spacing: -.025em; }
+.product-evidence figcaption span { color: #536680; font-size: .85rem; line-height: 1.75; }
+/* Consistent portrait framing and concise, factual leadership context. */
+body .about-page .leader-card { border: 1px solid var(--brand-rule); border-radius: 12px; box-shadow: 0 8px 24px #07164a08; overflow: hidden; }
+body .about-page .leader-card--compact .leader-card__image { aspect-ratio: 4 / 5; height: auto; background: #edf1f7; }
+body .about-page .leader-card__image img { object-fit: cover; }
+body .about-page .leader-card__content { padding: 1.6rem; }
+body .about-page .leader-card__content h3 { font-size: 1.55rem; letter-spacing: -.035em; }
+body .about-page .leader-card__content > p:nth-of-type(2) { color: #526680; font-size: .88rem; line-height: 1.8; }
+.leader-card__focus { display: block; padding-top: 1rem; margin: 1rem 0; border-top: 1px solid var(--brand-rule); color: #284575; font-size: .73rem; line-height: 1.6; }
+body .about-page .story-panel blockquote { font-size: 1.3rem; color: var(--brand-ink); }
+body .about-page .about-reveal--ready > .container { opacity: 1; transform: none; transition: none; }
+@media (max-width: 1280px) {
+  body .site-header .primary-nav { gap: .2rem; }
+  body .site-header .header-actions { margin: .85rem 0 0; }
+  .header-resources__toggle { padding: .85rem .8rem; font-size: .94rem; width: 100%; justify-content: space-between; }
+  .header-resources__links { position: static; width: 100%; margin-top: .25rem; box-shadow: none; background: #f7f9fd; }
+}
+@media (max-width: 760px) {
+  .product-evidence figcaption { grid-template-columns: 1fr; gap: .7rem; padding: 1.25rem; }
+  .product-evidence__label { padding-inline: 1rem; font-size: .55rem; }
+  body .products-page .product-window figcaption { flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) { .header-resources__toggle svg { transition: none; } }

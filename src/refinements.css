@@ -1,0 +1,23 @@
+/* Cross-site content and readability refinements. */
+.route-loading { min-height: 70svh; display: grid; place-items: center; color: #15315b; background: #f5f7fc; font-size: 1rem; }
+.gallery-zoom-button { display: block; margin: 1rem 0; padding: .65rem 1rem; border: 1px solid #bacbea; border-radius: 6px; color: #173faa; background: #eef3ff; cursor: pointer; font: inherit; font-size: .85rem; }
+.gallery-zoom { width: min(96vw, 1600px); max-width: 96vw; max-height: 94svh; padding: 1rem; border: 1px solid #b8c9e6; border-radius: 12px; color: #15315b; }
+.gallery-zoom::backdrop { background: #07152ce6; }
+.gallery-zoom form { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+.gallery-zoom button { padding: .7rem 1rem; border: 0; border-radius: 6px; background: #173faa; color: white; cursor: pointer; font: inherit; }
+.gallery-zoom > div { overflow: auto; max-height: 72svh; }
+.gallery-zoom img { width: 1920px; max-width: none; height: auto; }
+.gallery-zoom > p { font-size: .85rem; }
+.faq-page .faq-hero { min-height: 0; padding-block: clamp(4rem, 7vw, 6rem); }
+.faq-page .faq-hero__inner { min-height: 0; }
+.faq-page .faq-item__answer[hidden] { display: none; }
+.about-page .about-hero__metrics strong { font-size: clamp(1.35rem, 3vw, 2.5rem); }
+.location-directions { display: inline-block; margin-top: .7rem; font-size: .8rem; color: #2449ba; text-decoration: underline; text-underline-offset: 3px; }
+.hero-carousel-toggle { position: absolute; bottom: 12px; right: 12px; z-index: 3; border: 1px solid #ffffff65; border-radius: 6px; color: #fff; background: #112550d9; padding: .5rem .7rem; font: inherit; font-size: .7rem; cursor: pointer; }
+.hero-carousel-toggle:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+@media(min-width:1100px) { .home-page .hero h1 { font-size: clamp(3.5rem, 5.2vw, 5.8rem); } }
+@media(max-width:960px) { .site-header .header-actions { grid-template-columns: 1fr; } }
+.site-header .header-actions { flex-shrink: 0; }
+.site-header .header-actions .button { white-space: nowrap; }
+@media(min-width:1281px) { .site-header .primary-nav { gap: clamp(.7rem, 1.2vw, 1.1rem); } }
+.products-page .product-siblings > span { color: #52617c; }

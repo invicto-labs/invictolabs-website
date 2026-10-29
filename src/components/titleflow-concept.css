@@ -1,0 +1,37 @@
+.titleflow-concept { margin: 0; padding: clamp(1.5rem, 3vw, 3rem); border-radius: 18px; overflow: hidden; color: #fff; border: 1px solid #33518a; background: radial-gradient(ellipse at 80% 0, #25488b, transparent 65%), #0c204b; box-shadow: 0 20px 60px #132e5915; }
+.titleflow-concept__label { display: flex; justify-content: space-between; gap: 1rem; font-size: .67rem; letter-spacing: .12em; color: #c0d2f7; }
+.titleflow-concept__label > span { color: #9fb7dc; font-size: .6rem; }
+.titleflow-concept__papers { position: relative; width: 190px; height: 200px; margin: 3.1rem auto 1.8rem; }
+.titleflow-concept__papers > div { position: absolute; inset: 0; border: 1px solid #ffffff45; border-radius: 10px; background: #304a7b; transform: rotate(-12deg) translate(-14px, 3px); }
+.titleflow-concept__papers > div:nth-child(2) { transform: rotate(8deg) translate(12px, 1px); background: #607ba8; }
+.titleflow-concept__papers > div:last-child { padding: 1.5rem; transform: none; background: #f5f8ff; color: #22488a; animation: titleflow-paper-float 6s ease-in-out infinite; box-shadow: 0 18px 35px #020d2633; }
+.titleflow-concept__papers i { display: block; height: 5px; margin-top: 13px; border-radius: 3px; background: #d3deef; }
+.titleflow-concept__papers i:nth-last-child(2) { width: 65%; }
+.titleflow-concept__papers span { display: block; font-size: .58rem; letter-spacing: .12em; margin-top: 1.25rem; }
+.titleflow-concept__line { width: 1px; height: 38px; margin: 0 auto 1rem; background: #91a9d65c; }
+.titleflow-concept__line i { display: block; width: 5px; height: 5px; border-radius: 50%; margin-left: -2px; background: #a2c3ff; animation: titleflow-signal 3s ease-in-out infinite; }
+.titleflow-concept__steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+.titleflow-concept__steps span { display: flex; justify-content: center; align-items: center; gap: .6rem; padding: .9rem .4rem; border: 1px solid #aec6ed30; border-radius: 8px; background: #ffffff06; font-size: .8rem; }
+.titleflow-concept figcaption { text-align: center; margin-top: 1.8rem; }
+.titleflow-concept figcaption strong { font-size: clamp(1.3rem, 2vw, 1.8rem); letter-spacing: -.03em; line-height: 1.35; }
+.titleflow-concept figcaption p { font-size: .72rem; color: #b3c4df; margin: .85rem 0 0; }
+.titleflow-example { margin: 0; border: 1px solid #cedced; border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0 16px 45px #1027510a; }
+.titleflow-example__header { display: flex; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.5rem; color: #526c91; font-size: .65rem; letter-spacing: .1em; border-bottom: 1px solid #dce5f1; }
+.titleflow-example__grid { display: grid; grid-template-columns: 1fr 1.15fr; }
+.titleflow-example__source, .titleflow-example__review { padding: clamp(1.5rem, 3.5vw, 3.5rem); }
+.titleflow-example__source { background: linear-gradient(135deg, #f5f8fd, #e9f0fb); color: #153667; }
+.titleflow-example h3 { color: #102751; font-size: clamp(1.5rem, 2.5vw, 2.2rem); line-height: 1.25; letter-spacing: -.035em; margin: 1rem 0; }
+.titleflow-example__reference { font-size: .6rem; letter-spacing: .07em; color: #5c7395; }
+.titleflow-example dl { margin: 1.5rem 0 0; }
+.titleflow-example dl > div { padding: .85rem 0; border-top: 1px solid #cfdced; }
+.titleflow-example dt { font-size: .7rem; color: #5c7395; }
+.titleflow-example dd { margin: .3rem 0 0; font-weight: 600; }
+.titleflow-example ul { list-style: none; padding: 0; display: grid; gap: 1.25rem; margin-top: 1.5rem; }
+.titleflow-example li { display: flex; gap: .9rem; color: #5a6c84; font-size: .85rem; line-height: 1.65; }
+.titleflow-example li svg { flex-shrink: 0; margin-top: .2rem; color: #315cb2; }
+.titleflow-example li strong { display: block; color: #17345d; }
+.titleflow-example > figcaption { padding: 1rem 1.5rem; border-top: 1px solid #dce5f1; font-size: .73rem; line-height: 1.7; color: #65758b; }
+@keyframes titleflow-paper-float { 50% { transform: translateY(-7px); } }
+@keyframes titleflow-signal { 0% { transform: translateY(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(30px); opacity: 0; } }
+@media (max-width: 700px) { .titleflow-example__grid { grid-template-columns: 1fr; } .titleflow-concept__steps span { flex-direction: column; } }
+@media (prefers-reduced-motion: reduce) { .titleflow-concept * { animation: none !important; } }

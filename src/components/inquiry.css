@@ -1,0 +1,16 @@
+.contact--inquiry .contact-grid { align-items: start; }
+.contact--inquiry .inquiry-privacy { font-size: .78rem; line-height: 1.7; margin-top: 1.5rem; opacity: .85; }
+.inquiry-form { display: grid; gap: .85rem; }
+.inquiry-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; }
+.inquiry-form label { display: grid; gap: .4rem; font-size: .8rem; font-weight: 600; }
+.inquiry-form input, .inquiry-form select, .inquiry-form textarea, .inquiry-draft textarea { width: 100%; min-width: 0; padding: .75rem .85rem; border: 1px solid #b5c6e3; border-radius: 7px; background: #fff; color: #142b52; font: inherit; font-size: .9rem; }
+.inquiry-form textarea, .inquiry-draft textarea { resize: vertical; }
+.inquiry-form input:focus-visible, .inquiry-form select:focus-visible, .inquiry-form textarea:focus-visible { outline: 3px solid #80a4ff; outline-offset: 2px; }
+.inquiry-form .contact-cta { width: 100%; cursor: pointer; font: inherit; font-weight: 600; }
+.inquiry-draft { margin-top: 1rem; padding: 1rem; border: 1px solid #b5c6e3; border-radius: 10px; background: #f1f5ff; color: #15315b; }
+.inquiry-draft p { font-size: .8rem; line-height: 1.6; }
+.inquiry-draft > div { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .8rem; }
+.inquiry-draft a, .inquiry-draft button { color: #1539ba; font: inherit; font-size: .85rem; text-decoration: underline; border: 0; background: transparent; cursor: pointer; }
+.products-contact-wave .inquiry-form label { color: #203b65; }
+.stack-page > .contact--inquiry { position: relative; top: auto; min-height: 0; }
+@media(max-width:540px) { .inquiry-form__row { grid-template-columns: 1fr; } }

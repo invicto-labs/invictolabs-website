@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://invictolabs.com/sitemap.xml

@@ -1,0 +1,10 @@
+.product-tilt-shell {
+  position: relative; min-width: 0; perspective: 1000px;
+  transform: translate3d(var(--product-card-x, 0px), var(--product-card-y, 0px), 0) rotate(var(--product-card-rotate, 0deg)) scale(var(--product-card-scale, 1));
+  transform-origin: 50% 76%;
+}
+.product-tilt-inner { position: relative; height: 100%; transform-style: preserve-3d; }
+.products-page .product-tilt-inner > .product-reveal-card { height: 100%; transform: none; rotate: none; animation: none; }
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .product-tilt-inner { transform: none !important; }
+}

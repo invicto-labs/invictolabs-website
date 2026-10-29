@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#07164a"/>
+  <path d="M900 0H1200V630H1050L900 0Z" fill="#122a76"/>
+  <path d="M980 0H1200V630H1130L980 0Z" fill="#173dea" opacity=".4"/>
+  <text x="80" y="145" fill="white" font-family="Arial,sans-serif" font-size="72" font-weight="700">Invicto</text>
+  <rect x="80" y="195" width="65" height="5" fill="#809bff"/>
+  <text x="80" y="285" fill="white" font-family="Arial,sans-serif" font-size="52" font-weight="700">Clarity for every file.</text>
+  <text x="80" y="355" fill="white" font-family="Arial,sans-serif" font-size="52" font-weight="700">Capacity for every opportunity.</text>
+  <text x="80" y="440" fill="#c4d1ff" font-family="Arial,sans-serif" font-size="27">Title services · Mortgage operations · Technology</text>
+  <text x="80" y="545" fill="white" font-family="Arial,sans-serif" font-size="25">TraceQ  /  TitleFlow AI  /  TaxFlow</text>
+  <text x="930" y="580" fill="#c4d1ff" font-family="Arial,sans-serif" font-size="20">invictolabs.com</text>
+</svg>
