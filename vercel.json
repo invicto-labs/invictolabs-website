@@ -39,9 +39,18 @@
     { "source": "/ourcompany", "destination": "/our-company", "permanent": true },
     { "source": "/about.html", "destination": "/our-company", "permanent": true },
     { "source": "/faq.html", "destination": "/faq", "permanent": true },
-    { "source": "/product", "destination": "/products", "permanent": true }
+    { "source": "/product", "destination": "/products", "permanent": true },
+    { "source": "/contact-us.html", "destination": "/#contact", "permanent": true },
+    { "source": "/Origination.html", "destination": "/services/mortgage", "permanent": true },
+    { "source": "/Valuation.html", "destination": "/services/mortgage", "permanent": true },
+    { "source": "/Postclose_and_Recording.html", "destination": "/services/mortgage", "permanent": true },
+    { "source": "/title-production-simplified", "destination": "/services/title", "permanent": true },
+    { "source": "/Attorney-Services.html", "destination": "/services/title", "permanent": true },
+    { "source": "/Web-and-Mobile-Applications.html", "destination": "/services/technology", "permanent": true },
+    { "source": "/AI-and-ML.html", "destination": "/services/technology", "permanent": true }
   ],
   "rewrites": [
+    { "source": "/privacy-policy", "destination": "/privacy-policy/index.html" },
     { "source": "/blogs", "destination": "/blogs/index.html" },
     { "source": "/case-studies", "destination": "/case-studies/index.html" },
     { "source": "/blogs/:slug", "destination": "/blogs/:slug/index.html" },

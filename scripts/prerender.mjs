@@ -5,7 +5,7 @@ import React from 'react'
 import { renderToPipeableStream } from 'react-dom/server'
 import { MemoryRouter } from 'react-router-dom'
 import { PurgeCSS } from 'purgecss'
-import { SiteRoutes, routeMetadata, structuredData, SITE_URL, SHARE_IMAGE } from '../.ssr/main.js'
+import { SiteRoutes, routeMetadata, structuredData, SITE_URL, SITE_NAME, SHARE_IMAGE } from '../.ssr/main.js'
 
 const template = await readFile('dist/index.html', 'utf8')
 const manifest = JSON.parse(await readFile('dist/.vite/manifest.json', 'utf8'))
@@ -47,7 +47,7 @@ for (const [route, meta] of Object.entries({ ...routeMetadata, '/404': { title: 
     .replace(/<meta name="robots"[^>]*>/, `<meta name="robots" content="${route === '/404' ? 'noindex, follow' : 'index, follow, max-image-preview:large'}">`)
     .replace('</head>', `${styles}${preload}
       <meta property="og:url" content="${SITE_URL}${route}">
-      <meta property="og:site_name" content="Invicto">
+      <meta property="og:site_name" content="${escape(SITE_NAME)}">
       <meta property="og:locale" content="en_US">
       <meta property="og:image" content="${SHARE_IMAGE}">
       <meta property="og:image:width" content="1200">

@@ -85,12 +85,12 @@ export const routeMetadata: Record<string, { title: string; description: string 
     "description": "Retrieve available property tax information by parcel number, state, and county with TaxFlow. Explore the workflow and discuss county coverage."
   },
   "/": {
-    "title": "Title Search & Mortgage Operations Support | Invicto",
-    "description": "Title search, production, mortgage operations, and property tax support for U.S. teams. Explore Invicto services and TraceQ, TitleFlow AI, and TaxFlow."
+    "title": "Invicto Labs | Title & Mortgage Operations Support",
+    "description": "Invicto Labs supports U.S. teams with title search, mortgage operations, and property tax research. Explore TraceQ, TitleFlow AI, and TaxFlow at invictolabs.com."
   },
   "/our-company": {
-    "title": "Our Company | Invicto",
-    "description": "Meet the leaders and operating team behind Invicto’s nationwide mortgage and title support."
+    "title": "About Invicto Labs | Our Company & Leadership",
+    "description": "Meet the leaders and operating team behind Invicto Labs, supporting U.S. title and mortgage operations from Dallas and Bengaluru."
   },
   "/products": {
     "title": "Products | Invicto Operations Technology",
