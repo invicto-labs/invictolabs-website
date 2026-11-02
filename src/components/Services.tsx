@@ -1,6 +1,5 @@
-import { lazy, Suspense } from 'react'
-import type { CSSProperties } from 'react'
-import { useServiceDeck, moveServiceSpotlight } from './useServiceDeck'
+import { lazy, Suspense, useEffect, useRef } from 'react'
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react'
 import { Blocks, Landmark, MapPinned, SearchCheck } from 'lucide-react'
 import { services } from '../data/site'
 import { SectionHeading } from './SectionHeading'
@@ -16,7 +15,91 @@ const icons = {
 }
 
 export function Services({ showcase = false }: { showcase?: boolean }) {
-  const { sectionRef, deckRef, progressRef } = useServiceDeck(showcase)
+  const sectionRef = useRef<HTMLElement>(null)
+  const deckRef = useRef<HTMLDivElement>(null)
+  const progressRef = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    const section = sectionRef.current
+    const deck = deckRef.current
+    if (!section || !deck) return
+
+    const cards = Array.from(deck.querySelectorAll<HTMLElement>('.service-card'))
+    const deckMedia = window.matchMedia('(min-width: 1100px) and (min-height: 720px) and (prefers-reduced-motion: no-preference)')
+    let frame = 0
+
+    const expandCards = () => {
+      section.classList.remove('services--deck-ready')
+      section.style.setProperty('--deck-progress', '1')
+      cards.forEach((card) => {
+        card.style.setProperty('--deck-x', '0px')
+        card.style.setProperty('--deck-y', '0px')
+        card.style.setProperty('--deck-rotate', '0deg')
+        card.style.setProperty('--deck-scale', '1')
+        card.style.removeProperty('z-index')
+      })
+      if (progressRef.current) progressRef.current.textContent = '04 / 04'
+    }
+
+    const updateDeck = () => {
+      frame = 0
+      if (!deckMedia.matches) {
+        expandCards()
+        return
+      }
+
+      section.classList.add('services--deck-ready')
+      const stage = section.querySelector<HTMLElement>('.services-stage')
+      const stickyTop = stage ? parseFloat(getComputedStyle(stage).top) || 0 : 82
+      const travel = Math.max(1, section.offsetHeight - (stage?.offsetHeight ?? window.innerHeight - stickyTop))
+      const rawProgress = (stickyTop - section.getBoundingClientRect().top) / travel
+      // Reserve the final quarter of the homepage pin for reading the open cards.
+      const progress = Math.min(1, Math.max(0, rawProgress / (showcase ? 0.75 : 1)))
+      const easedProgress = progress * progress * (3 - 2 * progress)
+      const deckCenter = deck.clientWidth / 2
+
+      cards.forEach((card, index) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2
+        const collapsedX = deckCenter - cardCenter
+        const collapsedY = index * 9
+        const collapsedRotation = (index - (cards.length - 1) / 2) * 2.6
+        const collapsedScale = 1 - index * 0.012
+        const remaining = 1 - easedProgress
+
+        card.style.setProperty('--deck-x', `${collapsedX * remaining}px`)
+        card.style.setProperty('--deck-y', `${collapsedY * remaining}px`)
+        card.style.setProperty('--deck-rotate', `${collapsedRotation * remaining}deg`)
+        card.style.setProperty('--deck-scale', `${1 - (1 - collapsedScale) * remaining}`)
+        card.style.zIndex = `${cards.length - index}`
+      })
+
+      section.style.setProperty('--deck-progress', `${progress}`)
+      const currentCard = Math.min(cards.length, Math.floor(progress * cards.length) + 1)
+      if (progressRef.current) progressRef.current.textContent = `0${currentCard} / 04`
+    }
+
+    const requestUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateDeck)
+    }
+
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+    deckMedia.addEventListener('change', requestUpdate)
+    requestUpdate()
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+      deckMedia.removeEventListener('change', requestUpdate)
+    }
+  }, [showcase])
+
+  const moveSpotlight = (event: ReactPointerEvent<HTMLElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect()
+    event.currentTarget.style.setProperty('--pointer-x', `${event.clientX - bounds.left}px`)
+    event.currentTarget.style.setProperty('--pointer-y', `${event.clientY - bounds.top}px`)
+  }
 
   return (
     <section ref={sectionRef} className="section services" id="services" aria-labelledby="services-heading">
@@ -56,7 +139,7 @@ export function Services({ showcase = false }: { showcase?: boolean }) {
                 <article
                   className="service-card"
                   key={service.title}
-                  onPointerMove={moveServiceSpotlight}
+                  onPointerMove={moveSpotlight}
                   style={{ '--card-delay': `${index * 90}ms` } as CSSProperties}
                 >
                   <div className="service-card__head">

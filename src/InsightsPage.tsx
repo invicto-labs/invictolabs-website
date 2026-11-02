@@ -7,7 +7,6 @@ import { SiteLink } from './components/SiteLink'
 import NotFoundPage from './NotFoundPage'
 import { blogs, caseStudies, readingMinutes, type Insight } from './data/insights'
 import './insights.css'
-import { JournalContents, JournalReadingSection } from './components/JournalReading'
 
 function Meta({ item, example }: { item: Insight; example: boolean }) {
   return <div className="journal-meta"><span>{item.category}</span><span><Clock3 size={13} aria-hidden="true" /> {readingMinutes(item)} min read</span>{example && <span>Illustrative workflow</span>}</div>
@@ -47,13 +46,13 @@ export default function InsightsPage({ kind }: { kind: 'blogs' | 'case-studies' 
         <div className="journal-byline"><span className="journal-monogram" aria-hidden="true">i</span><div><strong>Invicto editorial</strong><span>{isBlog ? 'Practical operations guide' : 'Workflow walkthrough · Not a client result'}</span></div></div>
       </section>
       <div className="journal-reader container">
-        <aside className="journal-toc"><p>IN THIS {isBlog ? 'GUIDE' : 'WALKTHROUGH'}</p><JournalContents titles={selected.sections.map(section => section.title)} />
+        <aside className="journal-toc"><p>IN THIS {isBlog ? 'GUIDE' : 'WALKTHROUGH'}</p><nav aria-label="Article contents">{selected.sections.map((section, index) => <SiteLink href={`#reading-${index}`} key={section.title}><span>0{index + 1}</span>{section.title}</SiteLink>)}</nav>
           <div className="journal-toc__related"><span>Related capability</span><SiteLink href={selected.related.href}>{selected.related.label} <ArrowUpRight size={15} aria-hidden="true" /></SiteLink></div>
         </aside>
         <article className="journal-body">
           <div className="journal-takeaway"><p>THE ESSENTIAL IDEA</p><h2>{selected.takeaway}</h2></div>
           {!isBlog && <p className="journal-disclosure">Illustrative workflow, not a client engagement. No measured outcomes or customer endorsements are presented.</p>}
-          {selected.sections.map((section, index) => <JournalReadingSection key={section.title} {...section} index={index} />)}
+          {selected.sections.map((section, index) => <section id={`reading-${index}`} className="journal-reading-section" key={section.title}><span className="journal-section-index">0{index + 1}</span><h2>{section.title}</h2>{section.paragraphs.map(p => <p key={p}>{p}</p>)}</section>)}
           <section className="journal-checklist"><p className="eyebrow"><span /> {isBlog ? 'Keep this checklist' : 'Review checkpoints'}</p><h2>{isBlog ? 'Before the next handoff.' : 'What to validate in practice.'}</h2><ul>{selected.checklist.map(point => <li key={point}><Check size={17} aria-hidden="true" />{point}</li>)}</ul></section>
           {selected.sources && <div className="journal-sources"><h2>Further reading</h2><p>External references for additional context. These do not represent an endorsement or an Invicto certification.</p>{selected.sources.map(source => <a href={source.href} key={source.href}>{source.label} <ArrowUpRight size={14} aria-hidden="true" /></a>)}</div>}
           <p className="journal-editorial-note">General operational information, not legal, tax, or lending advice. Scope, source availability, and review responsibilities must be confirmed for each engagement.</p>
