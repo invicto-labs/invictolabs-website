@@ -1,7 +1,6 @@
 import { ServicePageBackground } from './components/ServicePageBackground'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
-import { Contact } from './components/Contact'
 import { Services } from './components/Services'
 import { Locations } from './components/Locations'
 import { ApproachExperience } from './components/ApproachExperience'
@@ -18,7 +17,6 @@ export default function OperationsPage({ kind }: { kind: 'services' | 'location'
       {kind === 'services' ? <Services /> : kind === 'location' ? <Locations /> : <ApproachExperience />}
       {kind === 'services' && <ServiceDelivery />}
       {kind === 'our-approach' && <ApproachDelivery />}
-      <Contact />
     </main>
     <Footer />
   </>

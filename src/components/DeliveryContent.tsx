@@ -62,7 +62,7 @@ export function ServiceDelivery({ slug }: { slug?: string }) {
     <section aria-labelledby="delivery-inquiry">
       <h2 id="delivery-inquiry">Discuss a sample or pilot</h2>
       <p>Tell us the workflow, scope, and deliverable you want to review. The form prepares an email draft for you to send.</p>
-      <SiteLink className="button" href="#contact">Discuss a sample or pilot</SiteLink>
+      <SiteLink className="button" href="/#contact">Discuss a sample or pilot</SiteLink>
     </section>
   </div>
 }
@@ -86,11 +86,13 @@ export function ApproachDelivery() {
     <section aria-labelledby="governance-review">
       <h2 id="governance-review">Access, reporting, and continuity</h2>
       <p>Agree authorized access, points of contact, reporting cadence, and escalation owners during onboarding. Review volume changes with the delivery lead before revising scope or priorities.</p>
-      <ul><li>[TBD: approved data handling, access controls, confidentiality, and due diligence pack]</li>
-        <li>[TBD: approved SLA, reporting cadence, and escalation matrix]</li>
-        <li>[TBD: approved capacity and continuity arrangements]</li></ul>
+      <ul className="delivery-grid" role="list">
+        <li><h3>Access and data handling</h3><p>[TBD: approved data handling, access controls, confidentiality, and due diligence pack]</p></li>
+        <li><h3>Reporting and escalation</h3><p>[TBD: approved SLA, reporting cadence, and escalation matrix]</p></li>
+        <li><h3>Capacity and continuity</h3><p>[TBD: approved capacity and continuity arrangements]</p></li>
+      </ul>
     </section>
     <DeliveryFaq />
-    <SiteLink className="button" href="#contact">Discuss a pilot</SiteLink>
+    <SiteLink className="button" href="/#contact">Discuss a pilot</SiteLink>
   </div>
 }

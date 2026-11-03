@@ -5,9 +5,9 @@ import { mkdir, mkdtemp, writeFile } from 'node:fs/promises'
 const output = path.resolve(process.env.QA_OUTPUT || 'qa/after-phase2-nav')
 const labels = ['Home', 'Services', 'Our Approach', 'Locations', 'Products', 'Our Company', 'Resources']
 const sections = [
-  { key: '/services', anchor: 'home-services', heading: 'services-heading' },
-  { key: '/our-approach', anchor: 'home-approach', heading: 'approach-heading' },
-  { key: '/location', anchor: 'home-locations', heading: 'locations-heading' },
+  { key: '/services', anchor: 'home-services' },
+  { key: '/our-approach', anchor: 'home-approach' },
+  { key: '/location', anchor: 'home-locations' },
 ]
 const viewports = [
   { width: 360, height: 640 }, { width: 390, height: 844 }, { width: 430, height: 932 },
@@ -47,7 +47,7 @@ async function openMenu(page: Page) {
   return nav
 }
 
-async function checkActive(page: Page, key: string, mobile: boolean, current: 'location' | 'page') {
+async function checkActive(page: Page, key: string, mobile: boolean, current: 'page') {
   const nav = mobile ? await openMenu(page) : page.getByRole('navigation', { name: 'Primary navigation' })
   const item = nav.locator(`[data-nav-item="${key}"]`)
   await expect(item).toHaveAttribute('aria-current', current)
@@ -56,8 +56,10 @@ async function checkActive(page: Page, key: string, mobile: boolean, current: 'l
     const indicator = nav.locator('.primary-nav__indicator')
     await expect(indicator).toBeVisible()
     await expect.poll(async () => {
-      const [line, active] = await Promise.all([indicator.boundingBox(), item.boundingBox()])
-      return line && active ? Math.max(Math.abs(line.x - active.x), Math.abs(line.width - active.width)) : 100
+      const [line, active, row] = await Promise.all([indicator.boundingBox(), item.boundingBox(), nav.boundingBox()])
+      if (!line || !active || !row) return 100
+      const centerOffset = line.x + line.width / 2 - (active.x + active.width / 2)
+      return Math.max(Math.abs(centerOffset), Math.abs(line.width - 40), Math.abs(line.height - 3), Math.abs(line.y - (row.y + row.height + 2)))
     }).toBeLessThan(1.5)
   }
   return nav
@@ -66,11 +68,11 @@ async function checkActive(page: Page, key: string, mobile: boolean, current: 'l
 for (const viewport of viewports) {
   test.describe(`${viewport.width}x${viewport.height}`, () => {
     test.use({ viewport })
-    test('Home scroll-spy and section links', async ({ page, browserName }) => {
+    test('Home selection stays fixed and navigation opens pages', async ({ page, browserName }) => {
       const mobile = viewport.width <= 1280
       await page.goto('/')
       await ready(page)
-      let nav = await checkActive(page, '/', mobile, 'location')
+      const nav = await checkActive(page, '/', mobile, 'page')
       expect((await nav.locator('[data-nav-item]').allTextContents()).map(value => value.trim())).toEqual(labels)
       if (!mobile) await page.screenshot({ path: path.join(output, 'frames', `${browserName}-1440-home-top.png`) })
       if (mobile) await page.keyboard.press('Escape')
@@ -79,49 +81,41 @@ for (const viewport of viewports) {
         ...labels.slice(0, -1), 'Blogs', 'Workflow Walkthroughs', 'FAQ',
       ])
       expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThan(2)
-      const initialHistoryLength = await page.evaluate(() => history.length)
       for (const section of sections) {
-        // Test actual scroll position changes without using the link handler.
-        await expect(page.locator('.mobile-menu-layer')).toHaveCount(0)
-        await page.locator(`#${section.anchor}`).evaluate(anchor => {
-          const header = document.querySelector('header')!.getBoundingClientRect().height
-          window.scrollTo({ top: scrollY + anchor.getBoundingClientRect().top - header - 8, behavior: 'instant' })
-        })
+        await page.locator(`#${section.anchor}`).scrollIntoViewIfNeeded()
         await settleScroll(page)
-        nav = await checkActive(page, section.key, mobile, 'location')
-        if (!mobile || viewport.width === 390) await page.screenshot({ path: path.join(output, 'frames', `${browserName}-${viewport.width}-${section.anchor}.png`) })
-        await nav.locator(`[data-nav-item="${section.key}"]`).click()
-        await expect(page).toHaveURL(new RegExp(`#${section.anchor}$`))
-        await expect(page.locator(`#${section.heading}`)).toBeFocused()
-        await expect.poll(() => page.locator(`#${section.heading}`).evaluate(heading => heading.getBoundingClientRect().top - document.querySelector('header')!.getBoundingClientRect().bottom)).toBeGreaterThanOrEqual(-1)
-        await expect(page.locator(`#${section.heading}`)).toBeInViewport()
-        await expect.poll(() => page.locator(`#${section.anchor}`).evaluate(anchor =>
-          Math.abs(anchor.getBoundingClientRect().top - document.querySelector('header')!.getBoundingClientRect().bottom - 8)
-        )).toBeLessThan(2)
-        expect(await page.evaluate(() => history.length)).toBe(initialHistoryLength)
+        const homeNav = await checkActive(page, '/', mobile, 'page')
+        const link = homeNav.locator(`[data-nav-item="${section.key}"]`)
+        await expect(link).toHaveAttribute('href', section.key)
+        await link.click()
+        await expect(page).toHaveURL(new RegExp(`${section.key}$`))
+        await ready(page)
         await expect(page.locator('.mobile-menu-layer')).toHaveCount(0)
+        await checkActive(page, section.key, mobile, 'page')
+        if (mobile) await page.keyboard.press('Escape')
+        await page.goBack()
+        await expect(page).toHaveURL(/\/$/)
+        await ready(page)
       }
       await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }))
       await settleScroll(page)
       if (viewport.width === 390) await page.locator('.site-footer').screenshot({ path: path.join(output, 'frames', `${browserName}-390-footer.png`) })
-      nav = await checkActive(page, '/location', mobile, 'location')
-      await nav.locator('[data-nav-item="/"]').press('Space')
-      await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(2)
-      await expect(page.locator('#hero-heading')).toBeFocused()
+      await checkActive(page, '/', mobile, 'page')
+      if (mobile) await page.keyboard.press('Escape')
 
       await page.goto('/#home-approach')
       await page.reload()
       await ready(page)
       await expect(page.locator('#approach-heading')).toBeFocused()
-      nav = await checkActive(page, '/our-approach', mobile, 'location')
-      const products = (await nav.locator('[data-nav-item="/products"]').boundingBox())!
+      const deepLinkNav = await checkActive(page, '/', mobile, 'page')
+      const products = (await deepLinkNav.locator('[data-nav-item="/products"]').boundingBox())!
       await page.mouse.click(products.x + products.width / 2, products.y + products.height / 2)
       await expect(page).toHaveURL(/\/products$/)
       await ready(page)
       await page.goBack()
       await expect(page).toHaveURL(/#home-approach$/)
       await ready(page)
-      await checkActive(page, '/our-approach', mobile, 'location')
+      await checkActive(page, '/', mobile, 'page')
       if (mobile) await page.keyboard.press('Escape')
       await page.goForward()
       await expect(page).toHaveURL(/\/products$/)
@@ -154,9 +148,9 @@ test.describe('Desktop navigation', () => {
     await page.goto('/')
     await ready(page)
     await page.locator('[data-nav-item="/services"]').press('Enter')
-    await expect(page.locator('#services-heading')).toBeFocused()
-    await expect(page.locator('#services-heading')).toBeInViewport()
-    await checkActive(page, '/services', false, 'location')
+    await expect(page).toHaveURL(/\/services$/)
+    await ready(page)
+    await checkActive(page, '/services', false, 'page')
   })
 })
 
@@ -214,8 +208,8 @@ test('native Chromium browser zoom at 200%', async ({ browserName, baseURL }) =>
     const nav = await openMenu(page)
     await expect(nav.locator('[aria-current]')).toHaveText('Home')
     await nav.locator('[data-nav-item="/services"]').click()
-    await expect(page.locator('#services-heading')).toBeFocused()
-    await expect(page.locator('#services-heading')).toBeInViewport()
+    await expect(page).toHaveURL(/\/services$/)
+    await ready(page)
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThan(2)
     await page.screenshot({ path: path.join(output, 'frames', 'chromium-native-zoom-200.png') })
   } finally {

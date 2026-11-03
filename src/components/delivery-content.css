@@ -9,6 +9,11 @@
 }
 
 .stack-page > .delivery-content { padding-inline: clamp(1rem, 4vw, 3rem); }
+.approach-page > .delivery-content {
+  gap: clamp(2rem, 4vw, 3.5rem);
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  background: linear-gradient(150deg, #f5f7fc, #eaf0ff 70%, #eef8f4);
+}
 .delivery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
@@ -25,6 +30,125 @@
 
 .delivery-content dd { margin-inline-start: 0; margin-block-end: 0.85rem; }
 .delivery-content dt { font-weight: 700; }
-.delivery-content summary { display: list-item; min-block-size: 44px; padding-block: 0.65rem; cursor: pointer; }
-.delivery-content details + details { margin-block-start: 0.5rem; }
+.delivery-content [aria-labelledby='delivery-faq'] details {
+  --faq-padding: 1rem;
+  --faq-marker: .6rem;
+  --faq-gap: .75rem;
+
+  padding: 0;
+}
+
+.delivery-content [aria-labelledby='delivery-faq'] details + details { margin-block-start: .5rem; }
+.delivery-content [aria-labelledby='delivery-faq'] summary {
+  display: grid;
+  grid-template-columns: var(--faq-marker) minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--faq-gap);
+  min-block-size: 44px;
+  padding: .9rem var(--faq-padding);
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.delivery-content [aria-labelledby='delivery-faq'] summary::-webkit-details-marker { display: none; }
+.delivery-content [aria-labelledby='delivery-faq'] summary::before {
+  width: var(--faq-marker);
+  height: var(--faq-marker);
+  border-right: 2px solid #2447be;
+  border-bottom: 2px solid #2447be;
+  content: '';
+  transform: translateY(-.1em) rotate(-45deg);
+}
+
+.delivery-content [aria-labelledby='delivery-faq'] details[open] summary::before {
+  transform: translateY(-.2em) rotate(45deg);
+}
+
+.delivery-content [aria-labelledby='delivery-faq'] details > p {
+  max-inline-size: 78ch;
+  margin: 0;
+  padding: 0 var(--faq-padding) 1rem calc(var(--faq-padding) + var(--faq-marker) + var(--faq-gap) + .5rem);
+  color: #425675;
+}
 .delivery-content > .button { justify-self: start; }
+
+.approach-page .delivery-content [aria-labelledby='pilot-review'] {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid #d7dfec;
+  border-inline-start: 4px solid #5176ed;
+  border-radius: 12px;
+  background: linear-gradient(110deg, #e0e8ff, #f5f7fc 90%);
+}
+
+.approach-page .delivery-content :is(#pilot-review, #quality-review) {
+  margin-top: 0;
+  line-height: 1.2;
+}
+
+.approach-page [aria-labelledby='pilot-review'] > p {
+  max-width: 75ch;
+}
+
+.approach-page [aria-labelledby='quality-review'] article {
+  --role-accent: #5176ed;
+  --role-tint: #e0e8ff;
+  border-block-start: 3px solid var(--role-accent);
+  background: linear-gradient(155deg, var(--role-tint), #fff 95%);
+}
+
+.approach-page [aria-labelledby='quality-review'] article:nth-child(2) {
+  --role-accent: #4a9182;
+  --role-tint: #daf1e9;
+}
+
+.approach-page [aria-labelledby='quality-review'] article:nth-child(3) {
+  --role-accent: #8185b6;
+  --role-tint: #eae6fa;
+}
+
+.approach-page [aria-labelledby='quality-review'] article h3 {
+  margin-top: 0;
+  line-height: 1.25;
+}
+
+.approach-page [aria-labelledby='quality-review'] article p {
+  margin-bottom: 0;
+  color: #425675;
+  line-height: 1.65;
+}
+
+.approach-page .delivery-content :is([aria-labelledby='pilot-review'], [aria-labelledby='quality-review']) > p:last-child {
+  margin: 1rem 0 0;
+  color: #425675;
+  font-size: .9rem;
+}
+
+.approach-page [aria-labelledby='governance-review'] {
+  padding: clamp(1rem, 3vw, 2rem);
+  border: 1px solid #d7dfec;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #e9eeff, #f5f7fc 70%);
+}
+
+.approach-page #governance-review { margin-top: 0; }
+.approach-page [aria-labelledby='governance-review'] > p { max-width: 75ch; }
+.approach-page [aria-labelledby='governance-review'] ul {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.approach-page [aria-labelledby='governance-review'] li {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid #d7dfec;
+  border-block-start: 3px solid #5176ed;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.approach-page [aria-labelledby='governance-review'] li:nth-child(2) { border-block-start-color: #4a9182; }
+.approach-page [aria-labelledby='governance-review'] li:nth-child(3) { border-block-start-color: #8185b6; }
+.approach-page [aria-labelledby='governance-review'] h3 { margin: 0 0 .5rem; font-size: 1rem; line-height: 1.35; }
+.approach-page [aria-labelledby='governance-review'] li p { margin: 0; color: #425675; font-size: .9rem; line-height: 1.6; }

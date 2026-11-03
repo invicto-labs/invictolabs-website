@@ -28,7 +28,7 @@ export function ServiceAtelier() {
       <h1 id="atelier-heading">Title and mortgage <em>operations support.</em></h1>
       <div>
         <p>Prepare title files, mortgage documents, and property research for your team’s review.</p>
-        <SiteLink className="button" href="#contact">Discuss a sample or pilot</SiteLink>
+        <SiteLink className="button" href="/#contact">Discuss a sample or pilot</SiteLink>
       </div>
     </div>
     <div className="service-atelier__stage"><div className="service-atelier__visual" key={active}><ServiceArtwork index={active} /></div><div className="service-atelier__editorial" aria-live="polite"><span className="service-atelier__kicker">0{active + 1} / {service.name}</span><h2>{titles[active]}</h2><p>{service.intro}</p><SiteLink href={`/services/${service.slug}`}>Explore {service.name.toLowerCase()} <ArrowUpRight size={21} /></SiteLink></div></div>

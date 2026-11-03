@@ -41,17 +41,17 @@ body > .header-menu.mobile-menu-layer {
 .mobile-menu-layer .header-resources__links { position: static; width: 100%; margin-top: .25rem; box-shadow: none; }
 .mobile-menu-close:focus-visible { outline: 3px solid #173dea; outline-offset: 2px; }
 .home-nav-anchor { display: block; block-size: 0; scroll-margin-block-start: 8px; }
-.primary-nav { position: relative; }
+.primary-nav { position: relative; --nav-underline-width: 40px; --nav-underline-height: 3px; }
 .primary-nav .primary-nav__indicator {
   position: absolute;
-  top: 0;
+  top: calc(100% + 2px);
   left: 0;
-  width: 1px;
-  height: 2px;
+  width: var(--nav-underline-width);
+  height: var(--nav-underline-height);
+  border-radius: 99px;
   background: var(--blue);
   pointer-events: none;
   visibility: hidden;
-  transform-origin: left;
 }
 .primary-nav[data-indicator-ready] .primary-nav__indicator {
   visibility: visible;
@@ -60,7 +60,6 @@ body > .header-menu.mobile-menu-layer {
 .primary-nav[data-indicator-ready] > a[data-nav-item]::after,
 .primary-nav[data-indicator-ready] .header-resources__toggle::after { content: none; }
 .primary-nav > a[data-nav-item][aria-current], .header-resources__toggle[aria-current] { color: var(--blue); }
-.primary-nav > a[aria-current='location']::after { transform: scaleX(1); transform-origin: left; }
 .header-resources__toggle[aria-current] { position: relative; }
 .header-resources__toggle[aria-current]::after {
   position: absolute;
@@ -69,6 +68,15 @@ body > .header-menu.mobile-menu-layer {
   height: 2px;
   background: var(--blue);
   content: '';
+}
+.primary-nav > a[data-nav-item]:not(.button)::after,
+.primary-nav .header-resources__toggle[aria-current]::after {
+  inset-inline: 0;
+  bottom: calc(-2px - var(--nav-underline-height));
+  width: var(--nav-underline-width);
+  height: var(--nav-underline-height);
+  margin-inline: auto;
+  border-radius: 99px;
 }
 .mobile-menu-layer .primary-nav__indicator { display: none; }
 .mobile-menu-layer .primary-nav [data-nav-item][aria-current] { box-shadow: inset 3px 0 var(--blue); }

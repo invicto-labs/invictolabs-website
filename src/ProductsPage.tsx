@@ -12,7 +12,6 @@ import {
   UsersRound,
   Workflow,
 } from 'lucide-react'
-import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { GridBoxBackground } from './components/ui/GridBoxBackground'
@@ -51,7 +50,7 @@ const traceQCapabilities = [
 type ProductName = 'traceq' | 'titleflow-ai' | 'tax-flow'
 const productIntroductions = {
   traceq: { name: 'TraceQ', label: 'OPERATIONS, CONNECTED', headline: 'Every order. Every handoff. One clear view.', description: 'Give your people a shared operating picture. TraceQ connects title-search orders, team assignments, production activity, quality checkpoints, and invoicing.', action: 'Explore the workflow', target: '#traceq' },
-  'titleflow-ai': { name: 'TitleFlow AI', label: 'EXPERTISE, AMPLIFIED', headline: 'More time for the work that needs your judgment.', description: 'Support title-file preparation and quality review while keeping your searchers in control. Explore the working process here; discuss product details in a private walkthrough.', action: 'Request a private walkthrough', target: '#contact' },
+  'titleflow-ai': { name: 'TitleFlow AI', label: 'EXPERTISE, AMPLIFIED', headline: 'More time for the work that needs your judgment.', description: 'Support title-file preparation and quality review while keeping your searchers in control. Explore the working process here; discuss product details in a private walkthrough.', action: 'Request a private walkthrough', target: '/#contact' },
   'tax-flow': { name: 'Tax Flow', label: 'PROPERTY TAX RESEARCH', headline: 'From parcel to a clearer tax record.', description: 'Enter a parcel number, state, and county. Tax Flow retrieves available property-tax information from supported sources and brings it into a structured certificate for your team to review.', action: 'Explore the workflow', target: '#tax-flow' },
 }
 
@@ -353,10 +352,6 @@ export default function ProductsPage({ product }: { product?: ProductName }) {
         {product === 'titleflow-ai' && <Suspense fallback={null}><ProductInsights kind="title-workflow" /></Suspense>}
         {product === 'tax-flow' && <Suspense fallback={null}><TaxFlowExperience /></Suspense>}
         {product && <nav className="product-siblings container" aria-label="Explore other products"><span>Explore the product family</span>{(Object.keys(productIntroductions) as ProductName[]).map(key => <SiteLink key={key} href={`/products/${key}`} aria-current={product === key ? 'page' : undefined}>{productIntroductions[key].name}<ArrowUpRight size={16} /></SiteLink>)}</nav>}
-        <div className="products-contact-wave">
-          <div className="products-contact-wave__surface" aria-hidden="true" />
-          <Contact />
-        </div>
       </main>
       <Footer />
     </>

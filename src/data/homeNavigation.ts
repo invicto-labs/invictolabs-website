@@ -5,7 +5,3 @@ export const homeTargets = {
 } as const
 
 export type HomeSectionPath = keyof typeof homeTargets
-
-export function homeTargetFor(path: string) {
-  return homeTargets[path as HomeSectionPath]
-}
