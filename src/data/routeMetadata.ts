@@ -70,7 +70,7 @@ export const routeMetadata: Record<string, { title: string; description: string 
   },
   "/our-approach": {
     "title": "Our Approach | Invicto",
-    "description": "See how Invicto aligns people, processes, and delivery with your operations."
+    "description": "Explore Invicto’s six-step approach to discovery, workflow integration, quality review, and ongoing delivery for your operations."
   },
   "/products/traceq": {
     "title": "TraceQ — Title Order Management Software | Invicto",
