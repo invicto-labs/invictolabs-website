@@ -2,9 +2,23 @@
 
 ## Domain status
 
-The owner confirmed on October 22, 2026 that the main domain is not connected yet. The Vercel address remains usable for review. The canonical origin is https://invictolabs.com throughout the metadata, structured data, sitemap and discovery file.
+On November 2, 2026, the owner confirmed that the domain is connected to the existing `invicto-labs/invictolabs-website` Vercel project. Public HTTP checks confirmed that the homepage, robots.txt, and sitemap.xml return 200, and a deliberately missing URL returns 404. The canonical origin is https://invictolabs.com throughout the metadata, structured data, sitemap and discovery file.
 
-Before treating this as an SEO launch:
+Search results still expose URLs from the previous website. Direct HTTP checks found `/Origination.html` and `/contact-us.html` returning 404. Permanent redirects now map eight observed legacy URLs to relevant current pages. Homepage/company metadata, visible brand references, Organization/WebSite structured data, and social site names identify Invicto Labs and its alternate names, Invicto and invictolabs.com.
+
+## Search Console after deployment
+
+1. Run `npm run verify:production -- https://invictolabs.com --redirects`. This checks pages listed in the live sitemap, rendered HTML, branded schema, indexing blocks, assets, missing-page status, and migration redirects. Omit `--redirects` for the local Vite preview.
+2. Sign in to the Google account that owns the verified property. The account inspected during this review did not have access to the domain property; verification must be confirmed in the correct account.
+3. Submit `https://invictolabs.com/sitemap.xml` in Sitemaps and confirm Success.
+4. Inspect the homepage, run Test Live URL, and Request Indexing if eligible. Repeat for the company page and priority service/product pages. Confirm that the selected canonical matches each HTTPS URL on invictolabs.com.
+5. Review Page Indexing for excluded canonical pages and old URLs. Review Performance for `invictolabs.com`, `invicto labs`, `invictolabs`, and `invicto`, comparing equivalent periods and countries.
+
+Google controls crawling, indexing, site-name display, and ranking. Search Console cannot assign a number-one position. Recrawl requests do not guarantee indexing or a completion date. See [Google site-name guidance](https://developers.google.com/search/docs/appearance/site-names) and [recrawl guidance](https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl).
+
+## Domain configuration reference
+
+If the hosting/domain setup changes in future:
 
 1. Add invictolabs.com and www.invictolabs.com to this Vercel project. Use the exact DNS values displayed by Vercel for this project; do not guess an IP address. Preserve existing email MX/TXT records.
 2. Wait for Vercel to validate DNS and HTTPS. The repository redirects www to the apex domain.

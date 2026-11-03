@@ -65,7 +65,7 @@ export function Hero() {
             Clarity for every file. <em>Capacity</em> for every opportunity.
           </h1>
           <p className="hero-lede">
-            Invicto brings dependable title research and flexible mortgage operations support into one connected workflow—helping your team move every property file forward with confidence.
+            Invicto Labs brings dependable title research and flexible mortgage operations support into one connected workflow—helping your team move every property file forward with confidence.
           </p>
           <div className="hero-actions">
             <SiteLink className="button" href="#contact">

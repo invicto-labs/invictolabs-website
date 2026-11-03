@@ -1,5 +1,6 @@
 export const company = {
-  name: 'Invicto',
+  name: 'Invicto Labs',
+  alternateNames: ['Invicto', 'invictolabs.com'],
   email: 'marketing@invictolabs.com',
   phone: '+1 412-439-1184',
   phoneHref: '+14124391184',

@@ -41,7 +41,7 @@ export default function AboutPage() {
               <p className="eyebrow eyebrow--light"><span /> The company behind the capacity</p>
               <h1 id="about-heading">Built close to the work. Designed for what comes next.</h1>
               <p>
-                Invicto supports U.S. title and mortgage teams with research, file preparation, property-data services, and operational technology. Our team connects Dallas headquarters with delivery operations in Bengaluru.
+                Invicto Labs supports U.S. title and mortgage teams with research, file preparation, property-data services, and operational technology. Our team connects Dallas headquarters with delivery operations in Bengaluru.
               </p>
               <div className="about-hero__actions">
                 <SiteLink className="button button--light" href="#leadership">

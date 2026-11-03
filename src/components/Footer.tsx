@@ -9,7 +9,7 @@ export function Footer() {
       <div className="container footer-grid">
         <div className="footer-brand">
           <Logo inverse />
-          <p>Your all-in-one outsourcing partner for mortgage, title, tax, and MLS services across the nation.</p>
+          <p>Invicto Labs, your outsourcing partner for mortgage, title, tax, and MLS services across the United States.</p>
         </div>
         <nav className="footer-nav footer-nav--explore" aria-label="Footer navigation">
           <p>Explore</p>

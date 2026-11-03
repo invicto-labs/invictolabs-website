@@ -20,7 +20,7 @@ import './styles.css'
 import './refinements.css'
 import './site-polish.css'
 import { syncMetadata } from './seo'
-export { structuredData, SITE_URL, SHARE_IMAGE } from './seo'
+export { structuredData, SITE_URL, SITE_NAME, SHARE_IMAGE } from './seo'
 
 const cleanRouteAliases: Record<string, string> = {
   '/locations': '/location',
