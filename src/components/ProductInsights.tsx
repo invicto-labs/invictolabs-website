@@ -4,13 +4,13 @@ import { ArrowRight, ClipboardCheck, Download, FileInput, Files, Layers3, Receip
 import './product-insights.css'
 import { TitleFlowExample } from './TitleFlowConcept'
 import TiltedCard from './ui/TiltedCard'
+import { DeferredDottedSurface } from './DeferredDottedSurface'
 
 const titleStages = [
   { icon: FileInput, title: 'Open an order', text: 'Capture the order number, property details, and key dates.', output: 'Order record' },
   { icon: Files, title: 'Add source records', text: 'Attach deeds, mortgages, tax records, and client instructions.', output: 'Source file' },
   { icon: Layers3, title: 'AI extraction and examination', text: 'AI extracts parties and recording details from source documents. Examiners verify the results, build the deed chain, and document vesting.', output: 'Examination record' },
-  { icon: SearchCheck, title: 'Prepare searches', text: 'Review names from deeds and mortgages, then gather the search evidence required for the order.', output: 'Search evidence' },
-  { icon: ClipboardCheck, title: 'Run quality checks', text: 'Check draft reports against the evidence and client requirements. Resolve findings before approval.', output: 'Reviewed report' },
+  { icon: ClipboardCheck, title: 'Search and check quality', text: 'Review names and gather search evidence. Check the draft against that evidence and client requirements, then resolve findings before approval.', output: 'Reviewed report' },
   { icon: Download, title: 'Export and complete', text: 'Export approved search notes, title reports, and source packages, then record completion.', output: 'Delivery package' },
 ]
 
@@ -52,18 +52,22 @@ export function ProductInsights({ kind }: { kind: 'title' | 'tax' }) {
   if (kind === 'title') return (
     <>
       <section className="titleflow-editorial" id="titleflow-workflow" aria-labelledby="titleflow-workflow-heading">
+        <div className="titleflow-workflow__surface" aria-hidden="true">
+          <DeferredDottedSurface size={8} opacity={0.55} sizeAttenuation vertexColors />
+        </div>
         <div className="container">
           <header>
             <p className="titleflow-kicker">THE WORKING PROCESS</p>
             <h2 id="titleflow-workflow-heading">From order intake to delivery</h2>
-            <p>Follow six steps through evidence collection, examination, quality review, and export.</p>
+            <p>Follow five steps through evidence collection, examination, quality review, and export.</p>
           </header>
           <ol className="titleflow-workflow" role="list" ref={workflowRef}>
             {titleStages.map(({ icon: Icon, title, text, output }, index) => <li key={title} style={{ '--titleflow-stage-index': index } as CSSProperties}>
               <TiltedCard rotateAmplitude={4}>
                 <div className="titleflow-workflow__card">
                   <div className="titleflow-workflow__marker"><Icon size={22} aria-hidden="true" /><span>0{index + 1}</span></div>
-                  <div><h3>{title}</h3><p>{text}</p><small>{output}</small></div>
+                  <div><h3>{title}</h3><p>{text}</p></div>
+                  <small>{output}</small>
                 </div>
               </TiltedCard>
               {index < titleStages.length - 1 && <span className="titleflow-workflow__connector" aria-hidden="true"><ArrowRight size={16} /></span>}

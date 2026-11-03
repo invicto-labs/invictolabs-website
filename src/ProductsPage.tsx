@@ -44,7 +44,7 @@ const traceQCapabilities = [
 type ProductName = 'traceq' | 'titleflow-ai' | 'tax-flow'
 const productIntroductions = {
   traceq: { name: 'TraceQ', label: 'OPERATIONS, CONNECTED', headline: 'Every order. Every handoff. One clear view.', description: 'Give your people a shared operating picture. TraceQ connects title-search orders, team assignments, production activity, quality checkpoints, and invoicing.', action: 'Explore the workflow', target: '#traceq' },
-  'titleflow-ai': { name: 'TitleFlow AI', label: 'AI-ASSISTED TITLE EXAMINATION', headline: 'From source records to review-ready title reports.', description: 'Give title examiners one workspace to organize deeds, mortgages, and tax records, verify AI-extracted details against the original pages, and prepare reports for delivery.', action: 'Request a private demo', target: '/#contact' },
+  'titleflow-ai': { name: 'TitleFlow AI', label: 'AI-ASSISTED TITLE EXAMINATION', headline: <>From source records to <span className="titleflow-headline-accent">review-ready</span> title reports.</>, description: 'Give title examiners one workspace to organize deeds, mortgages, and tax records, verify AI-extracted details against the original pages, and prepare reports for delivery.', action: 'Request a private demo', target: '/#contact' },
   'tax-flow': { name: 'Tax Flow', label: 'PROPERTY TAX RESEARCH', headline: 'From parcel to a clearer tax record.', description: 'Enter a parcel number, state, and county. Tax Flow retrieves available property-tax information from supported sources and brings it into a structured certificate for your team to review.', action: 'Explore the workflow', target: '#tax-flow' },
 }
 
