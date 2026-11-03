@@ -39,7 +39,7 @@ const sections = [
 ]
 
 export default function PrivacyPage() {
-  return <><Header /><main id="main-content" className="privacy-page">
+  return <><Header /><main tabIndex={-1} id="main-content" className="privacy-page">
     <section className="privacy-hero"><div className="container">
       <p className="eyebrow"><span /> Information & trust</p>
       <h1>Privacy Policy</h1>

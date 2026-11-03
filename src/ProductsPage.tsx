@@ -1,5 +1,5 @@
 import { SiteLink } from './components/SiteLink'
-import { lazy, Suspense, useEffect, useRef } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import {
   ArrowRight,
   ArrowUpRight,
@@ -18,12 +18,20 @@ import { Header } from './components/Header'
 import { GridBoxBackground } from './components/ui/GridBoxBackground'
 const LazyRings = lazy(() => import('./components/ui/MagicRings').then(module => ({ default: module.MagicRings })))
 function MagicRings(props: React.ComponentProps<typeof LazyRings>) {
-  return <Suspense fallback={null}><LazyRings {...props} /></Suspense>
+  const [enabled, setEnabled] = useState(false)
+  useEffect(() => {
+    const media = matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)')
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+    const update = () => setEnabled(media.matches && !connection?.saveData)
+    update(); media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
+  return enabled ? <Suspense fallback={null}><LazyRings {...props} /></Suspense> : null
 }
-import { ProductInsights } from './components/ProductInsights'
+const ProductInsights = lazy(() => import('./components/ProductInsights').then(module => ({ default: module.ProductInsights })))
 import { ProductHeroVisual } from './components/ProductHeroVisual'
-import { TaxFlowExperience } from './components/TaxFlowExperience'
-import { TraceQGallery } from './components/TraceQGallery'
+const TaxFlowExperience = lazy(() => import('./components/TaxFlowExperience').then(module => ({ default: module.TaxFlowExperience })))
+const TraceQGallery = lazy(() => import('./components/TraceQGallery').then(module => ({ default: module.TraceQGallery })))
 import './products-stack.css'
 // Keep the shells mounted before the scroll effect captures them. A lazy
 // fallback can be replaced after that effect runs, leaving detached targets.
@@ -134,7 +142,7 @@ export default function ProductsPage({ product }: { product?: ProductName }) {
   return (
     <>
       <Header />
-      <main className={`products-page products-v2${product ? ` product-detail product-detail--${product}` : ' products-overview-stack'}`} id="main-content">
+      <main tabIndex={-1} className={`products-page products-v2${product ? ` product-detail product-detail--${product}` : ' products-overview-stack'}`} id="main-content">
         {introduction && <section className="product-detail-hero" id="top">
           <div className="container">
             <SiteLink className="product-back" href="/products#product-system">← All products</SiteLink>
@@ -181,13 +189,13 @@ export default function ProductsPage({ product }: { product?: ProductName }) {
             <SiteLink className="button product-hero-v3__button" href="#product-system">
               Open the product system <ArrowRight size={18} aria-hidden="true" />
             </SiteLink>
-            <div className="product-hero-v3__signals" aria-label="Invicto product highlights">
+            <div role="group" className="product-hero-v3__signals" aria-label="Invicto product highlights">
               <span><strong>03</strong> focused products</span>
               <span><strong>One</strong> operational purpose</span>
               <span><strong>Human</strong> review stays central</span>
             </div>
           </div>
-          <SiteLink className="product-hero-v3__scroll" href="#product-system" aria-label="Scroll to explore the product system">
+          <SiteLink className="product-hero-v3__scroll" href="#product-system" aria-label="Scroll to open the product system">
             <span>Scroll to open</span><i><b /></i>
           </SiteLink>
         </section>
@@ -281,10 +289,10 @@ export default function ProductsPage({ product }: { product?: ProductName }) {
 
             <section className="traceq-client-view" id="traceq-client-view" aria-labelledby="traceq-client-heading">
               <div className="traceq-showcase-heading"><h3 id="traceq-client-heading">Inside the workspace</h3><p>Explore the views behind your day-to-day operations.</p></div>
-              <TraceQGallery />
+              <Suspense fallback={null}><TraceQGallery /></Suspense>
             </section>
             <div className="traceq-system-v2">
-              <div className="traceq-spine" aria-label="Conceptual TraceQ operating workflow">
+              <div role="group" className="traceq-spine" aria-label="Conceptual TraceQ operating workflow">
                 <div className="traceq-spine__bar">
                   <span><b /> TRACEQ / OPERATIONS</span>
                   <small><i /> Connected workflow</small>
@@ -318,7 +326,7 @@ export default function ProductsPage({ product }: { product?: ProductName }) {
                   <article key={title}>
                     <span className="traceq-ledger__number">0{index + 1}</span>
                     <span className="traceq-ledger__icon"><Icon size={18} aria-hidden="true" /></span>
-                    <span><strong>{title}</strong><p>{description}</p></span>
+                    <div><strong>{title}</strong><p>{description}</p></div>
                   </article>
                 ))}
               </div>
@@ -338,12 +346,12 @@ export default function ProductsPage({ product }: { product?: ProductName }) {
               </div>
             </div>
 
-            <ProductInsights kind="title" />
+            <Suspense fallback={null}><ProductInsights kind="title" /></Suspense>
           </div>
         </section>}
 
-        {product === 'titleflow-ai' && <ProductInsights kind="title-workflow" />}
-        {product === 'tax-flow' && <TaxFlowExperience />}
+        {product === 'titleflow-ai' && <Suspense fallback={null}><ProductInsights kind="title-workflow" /></Suspense>}
+        {product === 'tax-flow' && <Suspense fallback={null}><TaxFlowExperience /></Suspense>}
         {product && <nav className="product-siblings container" aria-label="Explore other products"><span>Explore the product family</span>{(Object.keys(productIntroductions) as ProductName[]).map(key => <SiteLink key={key} href={`/products/${key}`} aria-current={product === key ? 'page' : undefined}>{productIntroductions[key].name}<ArrowUpRight size={16} /></SiteLink>)}</nav>}
         <div className="products-contact-wave">
           <div className="products-contact-wave__surface" aria-hidden="true" />

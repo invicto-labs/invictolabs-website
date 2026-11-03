@@ -3,7 +3,8 @@
 .service-atelier__headline { display:flex; align-items:flex-end; gap:3rem; justify-content:space-between; padding:2.7rem 0; }
 .service-atelier__headline h1 { font-size:clamp(3rem,5.5vw,5.8rem); letter-spacing:-.065em; line-height:1.04; margin:0; font-weight:500; }
 .service-atelier__headline h1 em { font-family:Georgia,serif; font-weight:400; color:#2344ba; }
-.service-atelier__headline > p { max-width:290px; font-size:.9rem; line-height:1.8; color:#5e6a80; }
+.service-atelier__headline > div { flex: 0 1 21rem; }
+.service-atelier__headline > div p { font-size:.9rem; line-height:1.8; color:#5e6a80; }
 .service-atelier__stage { display:grid; grid-template-columns:1.25fr 1fr; min-height:370px; background:#0c204e; color:#fff; overflow:hidden; }
 .service-atelier__visual { animation:atelier-enter .5s ease-out; }
 .service-atelier__editorial { padding:clamp(1.8rem,3vw,3rem); display:flex; flex-direction:column; justify-content:center; border-left:1px solid #ffffff18; }
@@ -15,7 +16,7 @@
 .service-atelier__selector button { display:flex; align-items:center; gap:.8rem; padding:1.5rem 1rem; background:transparent; color:#526180; border:0; border-bottom:2px solid #c9d4e7; cursor:pointer; font:inherit; text-align:left; }
 .service-atelier__selector button > span { font-size:.65rem; }
 .service-atelier__selector button strong { font-size:.8rem; font-weight:500; flex:1; }
-.service-atelier__selector button[aria-pressed=true] { color:#173fe1; border-color:#173fe1; background:#e9edfa; }
+.service-atelier__selector button[aria-pressed="true"] { color:#173fe1; border-color:#173fe1; background:#e9edfa; }
 .service-art { position:relative; isolation:isolate; min-height:360px; height:100%; overflow:hidden; background:radial-gradient(ellipse at 50% 55%,#244b81,transparent 70%),#0d204b; }
 .service-art svg { display:block; width:100%; height:100%; min-height:330px; max-height:470px; position:relative; z-index:1; }
 .service-art__drawing { stroke:#afc9ff; stroke-width:1.5; stroke-linejoin:round; stroke-linecap:round; filter:drop-shadow(0 0 7px #709ef04a); animation:atelier-drift 7s ease-in-out infinite; }

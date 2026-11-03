@@ -8,7 +8,7 @@ export function TaxCertificatePreview() {
     <div className="tax-cert-sample">
       <div className="tax-cert-sample__heading"><strong><FileText size={20} aria-hidden="true" /> Tax Certificate</strong><span>FICTIONAL SAMPLE</span></div>
       <div className="tax-cert-sample__summary"><span>DEMO-TF-0001</span><h3>100 Example Lane</h3><p>Sample City · Sample County</p><div><span>Illustrative annual tax<strong>$2,400.00</strong></span><span>Illustrative balance<strong>$0.00</strong></span></div></div>
-      <button className="tax-cert-sample__toggle" aria-expanded={expanded} aria-controls="tax-cert-details" onClick={() => setExpanded(!expanded)}> {expanded ? 'Hide' : 'Explore'} sample certificate details <ChevronDown size={18} aria-hidden="true" /></button>
+      <button type="button" className="tax-cert-sample__toggle" aria-expanded={expanded} aria-controls="tax-cert-details" onClick={() => setExpanded(!expanded)}> {expanded ? 'Hide' : 'Explore'} sample certificate details <ChevronDown size={18} aria-hidden="true" /></button>
       <div id="tax-cert-details" hidden={!expanded}>
       <dl>{[['Processed date', 'October 2, 2026'], ['Order number', 'DEMO-TF-0001'], ['Borrower / owner', 'Sample Property Owner'], ['Property address', '100 Example Lane · Sample City'], ['Parcel number', 'DEMO-PARCEL-0001']].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
       <div className="tax-cert-sample__values">{[['Land value','$60,000'],['Improvements','$140,000'],['Assessed value','$200,000'],['Exemption','$0'],['Taxable value','$200,000']].map(([label,value])=><div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div>

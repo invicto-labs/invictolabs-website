@@ -180,3 +180,9 @@ Use `npm run preview -- --host 127.0.0.1 --port 4173` for production testing,
 then `npm run verify:production`, `npm run audit:desktop` or `npm run audit:mobile`
 in another terminal. See `PERFORMANCE-NOTES.txt` for measured results and limits.
 
+
+## Services content and release QA
+
+The Services hub uses `src/components/ServiceAtelier.tsx` and `src/components/DeliveryContent.tsx`. The service pages combine the catalogue in `src/data/serviceDetails.ts`, research summaries in `src/data/serviceResearch.ts`, and editorial text in `src/data/serviceArticleText.ts`. Keep the existing route slugs and confirm the editorial, scope, and metadata entries together. The standalone Approach experience lives in `src/components/ApproachExperience.tsx`.
+
+Record missing business facts in `CONTENT_TODO.md`. Use the production preview for audits. See [QA playbook](docs/QA_PLAYBOOK.md), [manual checks](docs/MANUAL_TEST_CHECKLIST.md), and [launch checklist](docs/LAUNCH_CHECKLIST.md).

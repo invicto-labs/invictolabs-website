@@ -20,7 +20,7 @@ export function TaxFlowExperience() {
         <div className="tax-coverage-highlight__copy"><span className="tax-coverage-highlight__status"><i aria-hidden="true" /> Automated extraction</span><h3>Different county websites.<br />One certificate workflow.</h3><p>Tax Flow automates the retrieval of available property-tax information and organizes it for your team’s review.</p><div className="tax-coverage-highlight__path"><span>Locate the property</span><ArrowRight size={16} aria-hidden="true" /><span>Extract tax details</span><ArrowRight size={16} aria-hidden="true" /><span>Review the certificate</span></div><small>Availability and returned fields vary by county source. Confirm support for your target counties.</small></div>
       </section>
       <div className="tax-experience__console">
-        <div className="tax-experience__rail" aria-label="Explore the Tax Flow workflow">
+        <div className="tax-experience__rail" role="group" aria-label="Explore the Tax Flow workflow">
           <span>THE RETRIEVAL PROCESS</span>
           {stages.map((item, index) => <button key={item.name} type="button" aria-pressed={active === index} aria-controls="tax-stage" onClick={() => setActive(index)}><small>0{index + 1}</small>{item.name}<ArrowRight size={18} aria-hidden="true" /></button>)}
           <p>Interactive illustration<br />No live property search</p>

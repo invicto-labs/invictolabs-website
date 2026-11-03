@@ -6,8 +6,8 @@ export function SiteLink({ href = '', ...props }: AnchorHTMLAttributes<HTMLAncho
   const location = useLocation()
   const internal = href.startsWith('#') || (href.startsWith('/') && !href.startsWith('//'))
   const asset = /\.[a-z0-9]+(?:[?#]|$)/i.test(href)
-  if (!internal || asset || props.download || props.target === '_blank') return <a href={href} {...props} />
+  if (!internal || asset || props.download || props.target === '_blank') return <a href={href} {...props} rel={props.target === '_blank' ? [...new Set((props.rel ?? '').split(/\s+/).concat('noopener','noreferrer').filter(Boolean))].join(' ') : props.rel} />
   const [destination, section = ''] = href.split('#')
   const to = destination || `${location.pathname}${location.search}`
-  return <Link to={to} state={{ scrollTarget: section }} {...props} />
+  return <Link to={section ? `${to}#${section}` : to} state={{ scrollTarget: section }} {...props} />
 }

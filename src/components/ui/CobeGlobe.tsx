@@ -107,6 +107,7 @@ export function Globe({
   const velocityRef = useRef({ x: 0, y: 0 })
   const markerLabels = useRef(new Map<string, HTMLDivElement>())
   const arcLabels = useRef(new Map<string, HTMLDivElement>())
+  const invalidate = useRef<() => void>(() => {})
 
   const handlePointerDown = useCallback((event: ReactPointerEvent<HTMLCanvasElement>) => {
     pointerRef.current = { x: event.clientX, y: event.clientY }
@@ -114,6 +115,7 @@ export function Globe({
     shellRef.current?.classList.add('is-dragging')
     event.currentTarget.setPointerCapture(event.pointerId)
     event.currentTarget.style.cursor = 'grabbing'
+    invalidate.current()
   }, [])
 
   useEffect(() => {
@@ -130,12 +132,14 @@ export function Globe({
         y: velocityRef.current.y * 0.34 + tiltDelta * 0.66,
       }
       pointerRef.current = { x: event.clientX, y: event.clientY }
+      invalidate.current()
     }
 
     const handlePointerUp = () => {
       pointerRef.current = null
       if (canvasRef.current) canvasRef.current.style.cursor = 'grab'
       shellRef.current?.classList.remove('is-dragging')
+      invalidate.current()
     }
 
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
@@ -157,10 +161,16 @@ export function Globe({
     if (!context) return
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const desktopMotion = window.matchMedia('(min-width: 1281px) and (hover: hover) and (pointer: fine)')
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData
+    const animate = () => desktopMotion.matches && !reducedMotion.matches && !saveData
     let frame = 0
     let size = 0
     let landPoints: GeoPoint[] = []
     let visible = false
+    let lastFrameTime = 0
+    const schedule = () => { if (visible && !frame) frame = window.requestAnimationFrame(draw) }
+    invalidate.current = schedule
 
     const landMask = new Image()
     landMask.onload = () => {
@@ -172,7 +182,7 @@ export function Globe({
 
       mapContext.drawImage(landMask, 0, 0)
       const pixels = mapContext.getImageData(0, 0, mapCanvas.width, mapCanvas.height).data
-      const sampleCount = Math.max(4000, Math.min(24000, Math.round(mapSamples)))
+      const sampleCount = Math.max(4000, Math.min(desktopMotion.matches ? 24000 : 6000, Math.round(mapSamples)))
       const goldenAngle = Math.PI * (3 - Math.sqrt(5))
       const points: GeoPoint[] = []
 
@@ -191,9 +201,15 @@ export function Globe({
     }
     landMask.src = COBE_LAND_MASK
 
+    let resizeFrame = 0
+    let previousRatio = 0
     const resize = () => {
-      size = shell.clientWidth
-      const ratio = Math.min(window.devicePixelRatio || 1, 2)
+      resizeFrame = 0
+      const nextSize = shell.clientWidth
+      const ratio = Math.min(window.devicePixelRatio || 1, desktopMotion.matches ? 2 : 1.5)
+      if (size === nextSize && previousRatio === ratio) return
+      size = nextSize
+      previousRatio = ratio
       canvas.width = Math.round(size * ratio)
       canvas.height = Math.round(size * ratio)
       canvas.style.width = `${size}px`
@@ -202,7 +218,9 @@ export function Globe({
       if (visible && !frame) frame = window.requestAnimationFrame(draw)
     }
 
-    const resizeObserver = new ResizeObserver(resize)
+    const resizeObserver = new ResizeObserver(() => {
+      if (!resizeFrame) resizeFrame = requestAnimationFrame(resize)
+    })
     resizeObserver.observe(shell)
     resize()
 
@@ -226,20 +244,32 @@ export function Globe({
       if (!element) return
       const visible = point.z > 0.06
       element.style.opacity = visible ? `${Math.min(1, point.z * 1.8)}` : '0'
-      element.style.transform = `translate3d(${point.x}px, ${point.y - 10}px, 0) translate(-50%, -100%)`
+      const panel = shell.closest<HTMLElement>('.locations-globe-panel') ?? shell
+      const panelRect = panel.getBoundingClientRect(), shellRect = shell.getBoundingClientRect()
+      const halfWidth = element.offsetWidth / 2
+      const minX = panelRect.left - shellRect.left + halfWidth + 10
+      const maxX = panelRect.right - shellRect.left - halfWidth - 10
+      const x = Math.max(minX, Math.min(maxX, point.x))
+      const y = Math.max(panelRect.top - shellRect.top + element.offsetHeight + 10, Math.min(panelRect.bottom - shellRect.top - 10, point.y - 10))
+      element.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -100%)`
     }
 
-    const draw = () => {
+    const draw = (time = performance.now()) => {
       frame = 0
+      if (animate() && time - lastFrameTime < 1000 / 30) { frame = window.requestAnimationFrame(draw); return }
+      const elapsed = lastFrameTime ? Math.min(48, time - lastFrameTime) : 16.67
+      lastFrameTime = time
       if (!size) {
-        if (visible) frame = window.requestAnimationFrame(draw)
+        if (visible && animate()) frame = window.requestAnimationFrame(draw)
         return
       }
 
       if (!pointerRef.current) {
-        if (!reducedMotion.matches) rotationRef.current += speed
-        rotationRef.current += velocityRef.current.x
-        tiltRef.current -= velocityRef.current.y
+        if (animate()) rotationRef.current += speed * elapsed / 16.67
+        if (!reducedMotion.matches) {
+          rotationRef.current += velocityRef.current.x
+          tiltRef.current -= velocityRef.current.y
+        }
         velocityRef.current.x *= 0.955
         velocityRef.current.y *= 0.94
         tiltRef.current += (theta - tiltRef.current) * 0.018
@@ -369,7 +399,7 @@ export function Globe({
       context.stroke()
 
       canvas.style.opacity = '1'
-      if (visible) frame = window.requestAnimationFrame(draw)
+      if (visible && (animate() || pointerRef.current || !reducedMotion.matches && Math.abs(velocityRef.current.x) + Math.abs(velocityRef.current.y) > 0.0001)) frame = window.requestAnimationFrame(draw)
     }
 
     const visibilityObserver = new IntersectionObserver(
@@ -384,17 +414,23 @@ export function Globe({
       { rootMargin: '20% 0px' },
     )
     visibilityObserver.observe(shell)
+    reducedMotion.addEventListener('change', schedule)
+    desktopMotion.addEventListener('change', schedule)
 
     return () => {
       landMask.onload = null
       resizeObserver.disconnect()
+      if (resizeFrame) cancelAnimationFrame(resizeFrame)
       visibilityObserver.disconnect()
+      reducedMotion.removeEventListener('change', schedule)
+      desktopMotion.removeEventListener('change', schedule)
+      invalidate.current = () => {}
       if (frame) window.cancelAnimationFrame(frame)
     }
   }, [arcColor, arcHeight, arcWidth, arcs, baseColor, dark, diffuse, glowColor, mapBrightness, mapSamples, markerColor, markerElevation, markerSize, markers, speed, theta])
 
   return (
-    <div ref={shellRef} className={`cobe-globe ${className}`.trim()}>
+    <><div ref={shellRef} className={`cobe-globe ${className}`.trim()}>
       <canvas
         ref={canvasRef}
         className="cobe-globe__canvas"
@@ -428,6 +464,11 @@ export function Globe({
           {arc.label}
         </div>
       ))}
-    </div>
+    </div><div className="cobe-globe__controls" role="group" aria-label="Rotate the office globe">
+        <button type="button" aria-label="Rotate globe left" onClick={() => { rotationRef.current -= .35; invalidate.current() }}>←</button>
+        <button type="button" aria-label="Reset globe view" onClick={() => { rotationRef.current = initialRotation; tiltRef.current = theta; velocityRef.current = { x: 0, y: 0 }; invalidate.current() }}>Reset</button>
+        <button type="button" aria-label="Rotate globe right" onClick={() => { rotationRef.current += .35; invalidate.current() }}>→</button>
+      </div>
+    </>
   )
 }

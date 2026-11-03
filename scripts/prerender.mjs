@@ -1,8 +1,8 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
-import { PassThrough } from 'node:stream'
 import React from 'react'
-import { renderToPipeableStream } from 'react-dom/server'
+import { prerenderToNodeStream } from 'react-dom/static'
+import { renderToString } from 'react-dom/server'
 import { MemoryRouter } from 'react-router-dom'
 import { PurgeCSS } from 'purgecss'
 import { SiteRoutes, routeMetadata, structuredData, SITE_URL, SHARE_IMAGE } from '../.ssr/main.js'
@@ -11,32 +11,44 @@ const template = await readFile('dist/index.html', 'utf8')
 const manifest = JSON.parse(await readFile('dist/.vite/manifest.json', 'utf8'))
 const escape = text => text.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]))
 const entryFor = route => route === '/privacy-policy' ? 'src/PrivacyPage.tsx' : /^\/(blogs|case-studies)(\/|$)/.test(route) ? 'src/InsightsPage.tsx' : route.startsWith('/products') ? 'src/ProductsPage.tsx' : route.startsWith('/services/') ? 'src/ServiceDetailPage.tsx' : route === '/our-company' ? 'src/AboutPage.tsx' : route === '/faq' ? 'src/FaqPage.tsx' : route === '/' ? 'src/App.tsx' : 'src/OperationsPage.tsx'
+function manifestKey(key) {
+  if (manifest[key]) return key
+  // Rollup may promote a dynamic entry into a shared named chunk.
+  const name = key.split('/').pop().replace(/\.[^.]+$/, '')
+  return Object.keys(manifest).find(candidate => manifest[candidate].isDynamicEntry && manifest[candidate].name === name) ?? key
+}
 function resources(key, seen = new Set()) {
+  key = manifestKey(key)
   if (seen.has(key) || !manifest[key]) return []
   seen.add(key)
   const asset = manifest[key]
   return [ ...asset.css ?? [], ...(asset.imports ?? []).flatMap(child => resources(child, seen)) ]
 }
 function modules(key, seen = new Set()) {
+  key = manifestKey(key)
   if (seen.has(key) || !manifest[key]) return []
   seen.add(key)
   return [manifest[key].file, ...(manifest[key].imports ?? []).flatMap(child => modules(child, seen))]
 }
-function render(route) {
-  return new Promise((resolve, reject) => {
-    let html = ''
-    const output = new PassThrough()
-    output.on('data', chunk => { html += chunk })
-    output.on('end', () => resolve(html))
-    const stream = renderToPipeableStream(React.createElement(React.StrictMode, null,
-      React.createElement(MemoryRouter, { initialEntries: [route] }, React.createElement(SiteRoutes))), {
-      onAllReady() { stream.pipe(output) }, onError: reject,
-    })
-  })
+async function render(route) {
+  // Finish Suspense before emitting static HTML. Streaming reveal scripts are
+  // unnecessary in a prerendered site and would need separate CSP allowances.
+  const tree = React.createElement(React.StrictMode, null,
+    React.createElement(MemoryRouter, { initialEntries: [route] }, React.createElement(SiteRoutes)))
+  const { prelude } = await prerenderToNodeStream(tree)
+  // Drain the async render to resolve nested lazy modules, then serialize the
+  // resolved tree without streaming reveal scripts or hidden fallback copies.
+  for await (const chunk of prelude) void chunk
+  const html = renderToString(tree)
+  if (html.includes('<!--$!-->') || html.includes('<script>')) throw new Error(`Incomplete static render: ${route}`)
+  return html
 }
 for (const [route, meta] of Object.entries({ ...routeMetadata, '/404': { title: 'Page not found | Invicto', description: 'This page could not be found. Explore Invicto title services, mortgage operations, and products.' } })) {
   const content = await render(route)
-  const styles = [...new Set(resources(entryFor(route)))].filter(file => !template.includes(file)).map(file => `<link rel="stylesheet" href="/${file}">`).join('')
+  // Include selected lazy content's CSS in SSR so no-JS and first paint retain
+  // the same presentation, without preloading other products' JavaScript.
+  const selected = route === '/products/traceq' ? ['src/components/TraceQGallery.tsx'] : route === '/products/titleflow-ai' ? ['src/components/ProductInsights.tsx','src/components/TitleFlowConcept.tsx'] : route === '/products/tax-flow' ? ['src/components/TaxFlowExperience.tsx','src/components/TaxCertificateHero.tsx'] : []
+  const styles = [...new Set([entryFor(route), ...selected].flatMap(key => resources(key)))].filter(file => !template.includes(file)).map(file => `<link rel="stylesheet" href="/${file}">`).join('')
   const preload = modules(entryFor(route)).filter(file => !template.includes(file)).map(file => `<link rel="modulepreload" href="/${file}">`).join('')
   let html = template.replace('<div id="root"></div>', `<div id="root">${content}</div>`)
     .replace(/<title>.*?<\/title>/s, `<title>${escape(meta.title)}</title>`)
@@ -69,7 +81,7 @@ for (const [route, meta] of Object.entries({ ...routeMetadata, '/404': { title: 
     const path = link.match(/href="\/?([^"]+)"/)[1]
     return { raw: await readFile(join('dist', path), 'utf8') }
   }))
-  const critical = await new PurgeCSS().purge({ content: [{ raw: content, extension: 'html' }], css, safelist: ['html', 'body', ':root', 'header-menu--open', 'mobile-menu-open'], keyframes: false, fontFace: false })
+  const critical = await new PurgeCSS().purge({ content: [{ raw: content, extension: 'html' }], css, safelist: ['html', 'body', ':root', 'header-menu--open', 'mobile-menu-layer', 'mobile-menu-sheet', 'mobile-menu-top', 'mobile-menu-close', 'mobile-menu-scroll', 'inquiry-draft'], keyframes: false, fontFace: false })
   html = html.replace(stylesheetPattern, link => `${link.replace('rel="stylesheet"', 'rel="stylesheet" media="print" onload="this.media=\'all\'"')}<noscript>${link}</noscript>`)
     .replace('</head>', `<style data-critical>${critical.map(result => result.css).join('\n')}</style></head>`)
   const file = route === '/' ? 'dist/index.html' : route === '/404' ? 'dist/404.html' : join('dist', route.slice(1), 'index.html')

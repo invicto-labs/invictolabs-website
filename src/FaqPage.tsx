@@ -16,7 +16,7 @@ export default function FaqPage() {
   return (
     <>
       <Header />
-      <main className="faq-page" id="main-content">
+      <main tabIndex={-1} className="faq-page" id="main-content">
         <section className="faq-hero" id="top" aria-labelledby="faq-heading">
           <div className="faq-hero__surface" aria-hidden="true">
             <DottedSurface size={8} opacity={0.92} sizeAttenuation vertexColors />
@@ -25,7 +25,7 @@ export default function FaqPage() {
             <p className="eyebrow"><span /> Client FAQ</p>
             <h1 id="faq-heading">The questions behind a confident partnership.</h1>
             <p>Clear answers about coverage, quality, workflow integration, and what it takes to get started with Invicto.</p>
-            <div className="faq-hero__signals" aria-label="Invicto operating highlights">
+            <div role="group" className="faq-hero__signals" aria-label="Invicto operating highlights">
               <span><strong>06</strong> practical answers</span>
               <span><strong>Clear</strong> engagement scope</span>
               <span><strong>Human</strong> reviewed delivery</span>

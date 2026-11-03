@@ -1,5 +1,5 @@
 .product-detail--tax-flow .product-detail-hero { background: radial-gradient(ellipse at 85% 25%, #bcdce9, transparent 60%), linear-gradient(130deg, #fafbff, #e5ecfa); }
-.product-detail--tax-flow .parcel-scene { padding: clamp(1rem, 2vw, 2rem); background: linear-gradient(150deg, #0b2459, #0d5567); border-radius: 24px 24px 90px 24px; box-shadow: 0 30px 70px #13295726; }
+.product-detail--tax-flow .parcel-scene { padding: clamp(1rem, 2vw, 2rem); background: linear-gradient(150deg, #0b2459, #0d5567); border-radius: 24px 24px 90px; box-shadow: 0 30px 70px #13295726; }
 .product-detail--tax-flow .parcel-scene__heading, .product-detail--tax-flow .parcel-scene figcaption, .product-detail--tax-flow .parcel-scene figcaption small { color: #d8edf8; border-color: #ffffff30; }
 .product-detail--tax-flow .parcel-scene svg { border-radius: 12px; background: #eef5fa; }
 .product-detail--tax-flow .parcel-scene__selected { animation: parcel-highlight 4s ease-in-out infinite; }
@@ -51,7 +51,7 @@
 .tax-experience__rail button { display: flex; align-items: center; width: 100%; gap: .9rem; padding: 1.2rem .9rem; border: 1px solid transparent; border-radius: 9px; background: transparent; color: #c9d8ec; font: inherit; cursor: pointer; margin-bottom: .65rem; text-align: left; }
 .tax-experience__rail button small { color: #91bacd; font-size: .65rem; }
 .tax-experience__rail button svg { margin-left: auto; }
-.tax-experience__rail button[aria-pressed=true] { background: linear-gradient(110deg, #26528a, #206275); border-color: #6394ba; color: #fff; }
+.tax-experience__rail button[aria-pressed="true"] { background: linear-gradient(110deg, #26528a, #206275); border-color: #6394ba; color: #fff; }
 .tax-experience__rail button:focus-visible { outline: 2px solid #9fe9e4; outline-offset: 3px; }
 .tax-experience__rail > p { font-size: .7rem; line-height: 1.8; color: #a9bed8; margin: 3rem .7rem 0; }
 .tax-experience__stage { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; padding: clamp(1.5rem, 3vw, 3rem); background: radial-gradient(ellipse at 100% 100%, #cee6ec, transparent 75%), #fff; min-height: 420px; }
@@ -85,7 +85,7 @@
 .tax-cert-showcase header .eyebrow { color: #a3d3e7; }
 .tax-cert-showcase header > p { color: #c1d4e8; line-height: 1.8; font-size: .9rem; }
 .tax-cert-showcase__legend { display: grid; gap: 1rem; margin: 2rem 0; }
-.tax-cert-showcase__legend > span { display: flex; gap: 1rem; color: #8fafcc; font-size: .7rem; padding-bottom: 1rem; border-bottom: 1px solid #ffffff22; }
+.tax-cert-showcase__legend > span { display: flex; gap: 1rem; color: #8fafcc; font-size: .7rem; padding-bottom: 1rem; border-bottom: 1px solid #fff2; }
 .tax-cert-showcase__legend b { color: #e2eff8; font-size: .83rem; font-weight: 500; }
 .tax-cert-showcase header > .tax-cert-showcase__note { color: #9fbad0; font-size: .7rem; }
 .tax-cert-sample { min-width: 0; padding: clamp(1.2rem, 2vw, 2rem); border: 1px solid #ccdde8; border-radius: 14px; box-shadow: 0 20px 50px #0002; }
@@ -100,7 +100,7 @@
 .tax-cert-sample__summary strong { display: block; color: #164466; font-size: 1.5rem; margin-top: .5rem; }
 .tax-cert-sample__toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: .7rem; padding: 1.2rem 0; background: none; border: 0; color: #224977; font: inherit; font-size: .8rem; font-weight: 600; cursor: pointer; text-align: left; }
 .tax-cert-sample__toggle:focus-visible { outline: 2px solid #315ec7; outline-offset: 3px; }
-.tax-cert-sample__toggle[aria-expanded=true] svg { transform: rotate(180deg); }
+.tax-cert-sample__toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
 .tax-cert-sample__values { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .tax-experience__coverage { background: linear-gradient(115deg, #e1e9fd, #cfebea); border: 1px solid #c5dce6; }
 @media(max-width: 900px) { .tax-cert-showcase { grid-template-columns: 1fr; } .tax-cert-showcase header { margin-bottom: 0; } .tax-cert-showcase__legend { grid-template-columns: repeat(3, 1fr); gap: .8rem; } .tax-cert-showcase__legend > span { flex-direction: column; gap: .5rem; } }

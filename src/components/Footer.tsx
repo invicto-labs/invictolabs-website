@@ -2,6 +2,7 @@ import { SiteLink } from './SiteLink'
 import { ArrowUpRight } from 'lucide-react'
 import { company, navigation } from '../data/site'
 import { Logo } from './Logo'
+import './footer.css'
 
 export function Footer() {
   return (
@@ -15,13 +16,13 @@ export function Footer() {
           <p>Explore</p>
           {navigation.map((item) => <SiteLink href={item.href} key={item.href}>{item.label}</SiteLink>)}
         </nav>
-        <nav className="footer-nav" aria-label="Footer products">
+        <nav className="footer-nav footer-nav--products" aria-label="Footer products">
           <p>Products</p>
           <SiteLink href="/products/traceq">TraceQ Labs</SiteLink>
           <SiteLink href="/products/titleflow-ai">TitleFlow AI</SiteLink>
           <SiteLink href="/products/tax-flow">Tax Flow</SiteLink>
         </nav>
-        <div className="footer-nav">
+        <div className="footer-nav footer-nav--connect">
           <p>Connect</p>
           <SiteLink href={`mailto:${company.email}`}>{company.email}</SiteLink>
           <SiteLink href={`tel:${company.phoneHref}`}>{company.phone}</SiteLink>

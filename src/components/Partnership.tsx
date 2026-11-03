@@ -69,7 +69,7 @@ export function Partnership() {
               <h3>Research, review, and a clear next step.</h3>
               <p>Discuss the search type, source access, output format, and review responsibilities your team needs before work begins.</p>
             </div>
-            <div className="partnership-flow" aria-label="Search, human review, and client-ready workflow">
+            <div className="partnership-flow" role="group" aria-label="Search, human review, and client-ready workflow">
               <span>Search</span><i><b /></i>
               <span>Human review</span><i><b /></i>
               <span>Client review</span>
@@ -98,7 +98,7 @@ export function Partnership() {
           </div>
         </div>
 
-        <div className="signal-band" aria-label="Invicto company and operating facts">
+        <div className="signal-band" role="group" aria-label="Invicto company and operating facts">
           {partnershipProofs.map((proof) => (
             <div key={proof.label}>
               <strong>{proof.value}</strong>

@@ -47,7 +47,7 @@ export function ProductInsights({ kind }: { kind: 'title' | 'title-workflow' | '
           <div><p>A property-tax retrieval application built for U.S. mortgage operations. Supply the parcel number, state, and county, and Tax Flow automates the lookup of available property-tax information from supported sources.</p><SiteLink href="#contact">Discuss your county coverage <ArrowRight size={17} aria-hidden="true" /></SiteLink></div>
         </div>
         <div className="taxflow-workspace">
-          <div className="taxflow-lookup" aria-label="Illustration of the Tax Flow lookup process">
+          <div role="group" className="taxflow-lookup" aria-label="Illustration of the Tax Flow lookup process">
             <div className="taxflow-lookup__head"><ReceiptText size={23} aria-hidden="true" /><strong>Tax Flow</strong><span>WORKFLOW PREVIEW</span></div>
             <p className="taxflow-overline">START WITH THE PROPERTY</p>
             <div className="taxflow-fields"><div><small>Parcel number</small><strong>Your property’s parcel ID</strong></div><div><small>State</small><strong>Select state</strong></div><div><small>County</small><strong>Select county</strong></div></div>

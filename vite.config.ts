@@ -9,8 +9,10 @@ export default defineConfig({ plugins: [react(), {
     server.middlewares.use('/.well-known/ai-catalog.json', (_req, res) => { res.statusCode = 404; res.end('Not found') })
   },
   configurePreviewServer(server) {
+    const securityHeaders = JSON.parse(readFileSync(resolve('vercel.json'), 'utf8')).headers.find((rule: { source: string }) => rule.source === '/(.*)').headers as { key: string; value: string }[]
+    server.middlewares.use((_req, res, next) => { for (const header of securityHeaders) res.setHeader(header.key, header.value); next() })
     server.middlewares.use('/.well-known/ai-catalog.json', (_req, res) => { res.statusCode = 404; res.end('Not found') })
-    const routes = new Set(['/our-company', '/faq', '/products', '/products/traceq', '/products/titleflow-ai', '/products/tax-flow', '/services', '/services/title', '/services/mortgage', '/services/tax-property', '/services/technology', '/location', '/our-approach'])
+    const routes = new Set(['/privacy-policy', '/our-company', '/faq', '/products', '/products/traceq', '/products/titleflow-ai', '/products/tax-flow', '/services', '/services/title', '/services/mortgage', '/services/tax-property', '/services/technology', '/location', '/our-approach'])
     server.middlewares.use((req, res, next) => {
       const path = req.url?.split('?')[0].replace(/\/$/, '')
       if (path && (routes.has(path) || /^\/(blogs|case-studies)(\/[^/]+)?$/.test(path))) req.url = `${path}/index.html`

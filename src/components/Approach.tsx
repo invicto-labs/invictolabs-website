@@ -3,6 +3,7 @@ import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react'
 import { CheckCircle2, Compass, Network, Rocket, SearchCheck, TrendingUp } from 'lucide-react'
 import { approach } from '../data/site'
 import { SectionHeading } from './SectionHeading'
+import { SiteLink } from './SiteLink'
 
 const icons = {
   discover: SearchCheck,
@@ -161,7 +162,9 @@ export function Approach() {
               {approach.map((step, index) => {
                 const Icon = icons[step.icon as keyof typeof icons]
                 return (
-                  <article
+                  <SiteLink
+                    href="/our-approach"
+                    aria-label={`${step.title}: Explore our full approach`}
                     className="approach-orbit-card"
                     key={step.number}
                     onPointerMove={moveSpotlight}
@@ -177,7 +180,7 @@ export function Approach() {
                     <h3>{step.title}</h3>
                     <p>{step.description}</p>
                     <div className="approach-orbit-card__line" aria-hidden="true"><i /></div>
-                  </article>
+                  </SiteLink>
                 )
               })}
             </div>

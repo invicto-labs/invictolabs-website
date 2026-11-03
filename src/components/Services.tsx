@@ -4,7 +4,6 @@ import { Blocks, Landmark, MapPinned, SearchCheck } from 'lucide-react'
 import { services } from '../data/site'
 import { SectionHeading } from './SectionHeading'
 const DotGrid = lazy(() => import('./ui/DotGrid'))
-import { SiteLink } from './SiteLink'
 import { serviceDetails } from '../data/serviceDetails'
 
 const icons = {
@@ -54,7 +53,8 @@ export function Services({ showcase = false }: { showcase?: boolean }) {
       const travel = Math.max(1, section.offsetHeight - (stage?.offsetHeight ?? window.innerHeight - stickyTop))
       const rawProgress = (stickyTop - section.getBoundingClientRect().top) / travel
       // Reserve the final quarter of the homepage pin for reading the open cards.
-      const progress = Math.min(1, Math.max(0, rawProgress / (showcase ? 0.75 : 1)))
+      const keyboardFocus = deck.contains(document.activeElement) && document.activeElement?.matches(':focus-visible')
+      const progress = keyboardFocus ? 1 : Math.min(1, Math.max(0, rawProgress / (showcase ? 0.75 : 1)))
       const easedProgress = progress * progress * (3 - 2 * progress)
       const deckCenter = deck.clientWidth / 2
 
@@ -85,6 +85,8 @@ export function Services({ showcase = false }: { showcase?: boolean }) {
     window.addEventListener('scroll', requestUpdate, { passive: true })
     window.addEventListener('resize', requestUpdate)
     deckMedia.addEventListener('change', requestUpdate)
+    deck.addEventListener('focusin', requestUpdate)
+    deck.addEventListener('focusout', requestUpdate)
     requestUpdate()
 
     return () => {
@@ -92,6 +94,8 @@ export function Services({ showcase = false }: { showcase?: boolean }) {
       window.removeEventListener('scroll', requestUpdate)
       window.removeEventListener('resize', requestUpdate)
       deckMedia.removeEventListener('change', requestUpdate)
+      deck.removeEventListener('focusin', requestUpdate)
+      deck.removeEventListener('focusout', requestUpdate)
     }
   }, [showcase])
 
@@ -136,8 +140,10 @@ export function Services({ showcase = false }: { showcase?: boolean }) {
             {services.map((service, index) => {
               const Icon = icons[service.icon as keyof typeof icons]
               return (
-                <article
+                <a
                   className="service-card"
+                  href={`/services/${serviceDetails[index].slug}`}
+                  aria-label={`Explore this service: ${service.title}`}
                   key={service.title}
                   onPointerMove={moveSpotlight}
                   style={{ '--card-delay': `${index * 90}ms` } as CSSProperties}
@@ -155,8 +161,8 @@ export function Services({ showcase = false }: { showcase?: boolean }) {
                     <span>{['Research to review', 'Support across the file', 'Property-level context', 'Built around your process'][index]}</span>
                     <i aria-hidden="true"><b /></i>
                   </div>
-                  <SiteLink className="service-card__details" href={`/services/${serviceDetails[index].slug}`} aria-label={`Explore this service: ${service.title}`}>Explore this service <span aria-hidden="true">↗</span></SiteLink>
-                </article>
+                  <span className="service-card__details" aria-hidden="true">Explore this service <span>↗</span></span>
+                </a>
               )
             })}
           </div>

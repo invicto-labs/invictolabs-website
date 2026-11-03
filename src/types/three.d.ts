@@ -42,9 +42,9 @@ declare module 'three' {
     position: { z: number }
   }
 
-  export class ShaderMaterial {
-    constructor(parameters: Record<string, unknown>)
-    uniforms: Record<string, { value: any }>
+  export class ShaderMaterial<TUniforms extends Record<string, { value: unknown }> = Record<string, { value: unknown }>> {
+    constructor(parameters: { uniforms: TUniforms } & Record<string, unknown>)
+    uniforms: TUniforms
     dispose(): void
   }
 

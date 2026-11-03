@@ -37,7 +37,7 @@ export default function InsightsPage({ kind }: { kind: 'blogs' | 'case-studies' 
   const filtered = items.filter(item => (category === 'All' || item.category === category) && [item.title, item.intro, item.category].join(' ').toLowerCase().includes(query.trim().toLowerCase()))
   const featured = items[isBlog ? 0 : 1]
 
-  return <><Header /><main className="insights-page" id="main-content">
+  return <><Header /><main tabIndex={-1} className="insights-page" id="main-content">
     {selected ? <>
       <section className="journal-reader-hero container">
         <SiteLink className="journal-back" href={base}>← Back to {label.toLowerCase()}</SiteLink>

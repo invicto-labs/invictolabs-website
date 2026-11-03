@@ -17,8 +17,8 @@ export function TraceQGallery() {
     </div>
     <figure className="traceq-gallery__frame" id="traceq-screen">
       <div className="traceq-gallery__bar"><span>TRACEQ LABS / {screen.label}</span><span>DEMO WORKSPACE</span></div>
-      <img key={screen.file} src={`/images/traceq/${screen.file}.png`} width="3200" height="2100" alt={screen.alt} loading="lazy" decoding="async" />
-      <figcaption aria-live="polite"><strong>{screen.heading}</strong><span>{screen.description}</span></figcaption>
+      <img key={screen.file} src={`/images/traceq/responsive/${screen.file}-960.webp`} srcSet={[640,960,1440,1920].map(width => `/images/traceq/responsive/${screen.file}-${width}.webp ${width}w`).join(', ')} sizes="(max-width: 767px) calc(100vw - 32px), (max-width: 1280px) 85vw, 1160px" width="3200" height="2100" alt={screen.alt} loading="lazy" decoding="async" />
+      <figcaption aria-live="polite"><strong>{screen.heading}</strong><span>{screen.description}</span><a href={`/images/traceq/${screen.file}.png`} target="_blank" rel="noopener noreferrer">Open full-resolution view ↗</a></figcaption>
     </figure>
     <p className="traceq-gallery__note">Application showcase with fictional sample data. Names, order details, revenue, and performance figures are illustrative—not client results. Available views depend on role and access.</p>
   </div>

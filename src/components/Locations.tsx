@@ -69,7 +69,7 @@ export function Locations() {
                 <div>
                   <p>{location.type}</p>
                   <h3>{location.city}</h3>
-                  <address>{location.address}</address><SiteLink className="location-directions" href={location.directionsUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}`} target="_blank" rel="noreferrer">View directions ↗</SiteLink>
+                  <address>{location.address}</address><SiteLink className="location-directions" href={location.directionsUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.address)}`} target="_blank" rel="noreferrer" aria-label={`View directions to ${location.city} (opens in a new tab)`}>View directions <span aria-hidden="true">↗</span></SiteLink>
                 </div>
               </article>
             ))}

@@ -24,8 +24,14 @@ export function ServiceAtelier() {
   const service = serviceDetails[active]
   return <section className="service-atelier" aria-labelledby="atelier-heading"><div className="container">
     <div className="service-atelier__masthead"><span>INVICTO / SERVICES</span><span>Expertise, working together.</span></div>
-    <div className="service-atelier__headline"><h1 id="atelier-heading">The work behind<br /><em>what comes next.</em></h1><p>Your operation has many moving parts.<br />Bring the right people, processes, and technology together.</p></div>
+    <div className="service-atelier__headline">
+      <h1 id="atelier-heading">Title and mortgage <em>operations support.</em></h1>
+      <div>
+        <p>Prepare title files, mortgage documents, and property research for your team’s review.</p>
+        <SiteLink className="button" href="#contact">Discuss a sample or pilot</SiteLink>
+      </div>
+    </div>
     <div className="service-atelier__stage"><div className="service-atelier__visual" key={active}><ServiceArtwork index={active} /></div><div className="service-atelier__editorial" aria-live="polite"><span className="service-atelier__kicker">0{active + 1} / {service.name}</span><h2>{titles[active]}</h2><p>{service.intro}</p><SiteLink href={`/services/${service.slug}`}>Explore {service.name.toLowerCase()} <ArrowUpRight size={21} /></SiteLink></div></div>
-    <div className="service-atelier__selector" aria-label="Choose a service">{serviceDetails.map((item,index) => <button key={item.slug} aria-pressed={active === index} onClick={() => setActive(index)}><span>0{index+1}</span><strong>{item.name}</strong><ArrowRight size={18} /></button>)}</div>
+    <div className="service-atelier__selector" role="group" aria-label="Choose a service">{serviceDetails.map((item,index) => <button type="button" key={item.slug} aria-pressed={active === index} onClick={() => setActive(index)}><span>0{index+1}</span><strong>{item.name}</strong><ArrowRight size={18} /></button>)}</div>
   </div></section>
 }

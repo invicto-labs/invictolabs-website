@@ -1,6 +1,6 @@
 .product-tilt-shell {
   position: relative; min-width: 0; perspective: 1000px;
-  transform: translate3d(var(--product-card-x, 0px), var(--product-card-y, 0px), 0) rotate(var(--product-card-rotate, 0deg)) scale(var(--product-card-scale, 1));
+  transform: translate3d(var(--product-card-x, 0), var(--product-card-y, 0), 0) rotate(var(--product-card-rotate, 0deg)) scale(var(--product-card-scale, 1));
   transform-origin: 50% 76%;
 }
 .product-tilt-inner { position: relative; height: 100%; transform-style: preserve-3d; }

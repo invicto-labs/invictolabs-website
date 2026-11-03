@@ -7,6 +7,12 @@ import { SectionHeading } from './components/SectionHeading'
 import { companyStats, leaders, principles } from './data/site'
 import './leadership-layout.css'
 
+const portraitNames: Record<string, string> = { '/jay-prasad.webp': 'jay', '/sneha-gowda.webp': 'sneha', '/tushar-portrait.png': 'tushar' }
+function portraitSources(source: string) {
+  const name = portraitNames[source]
+  return name ? { src: `/${name}-portrait-640.webp`, srcSet: [360,640,900].map(width => `/${name}-portrait-${width}.webp ${width}w`).join(', '), sizes: '(max-width: 640px) calc(100vw - 32px), (max-width: 1024px) 45vw, 400px' } : { src: source }
+}
+
 export default function AboutPage() {
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll<HTMLElement>('.about-reveal'))
@@ -31,7 +37,7 @@ export default function AboutPage() {
   return (
     <>
       <Header />
-      <main className="about-page" id="main-content">
+      <main tabIndex={-1} className="about-page" id="main-content">
         <section className="about-hero" id="top" aria-labelledby="about-heading">
           <div className="about-hero__dots" aria-hidden="true">
           </div>
@@ -58,7 +64,7 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="about-hero__metrics" aria-label="Invicto areas of focus">
+            <div role="group" className="about-hero__metrics" aria-label="Invicto areas of focus">
               {companyStats.map((stat, index) => (
                 <article key={stat.label}>
                   <span>0{index + 1}</span>
@@ -109,7 +115,7 @@ export default function AboutPage() {
                     aria-label={`View ${leader.name} on LinkedIn`}
                   >
                     <img
-                      src={leader.image}
+                      {...portraitSources(leader.image)}
                       alt={`${leader.name}, ${leader.role}`}
                       width="900"
                       height="900"

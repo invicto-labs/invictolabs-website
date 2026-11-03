@@ -66,7 +66,7 @@
 .titleflow-gallery header > p { color: #536780; max-width: 430px; line-height: 1.8; }
 .titleflow-gallery__controls { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1.2rem; }
 .titleflow-gallery__controls button { font: inherit; font-size: .82rem; padding: .8rem 1.2rem; background: #fff; color: #2d4775; border: 1px solid #cbd8eb; border-radius: 8px; cursor: pointer; }
-.titleflow-gallery__controls button[aria-pressed=true] { color: #fff; background: #132d80; border-color: #132d80; }
+.titleflow-gallery__controls button[aria-pressed="true"] { color: #fff; background: #132d80; border-color: #132d80; }
 .titleflow-gallery__controls button:focus-visible { outline: 3px solid #7299ef; outline-offset: 3px; }
 .titleflow-gallery figure { margin: 0; border: 1px solid #bdcce3; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 20px 50px #183a7114; }
 .titleflow-gallery img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; }

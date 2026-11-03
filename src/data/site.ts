@@ -7,17 +7,22 @@ export const company = {
   careers: 'https://www.linkedin.com/company/invictolabs/jobs/',
 }
 
-export const navigation = [
+export const primaryLinks = [
   { label: 'Home', href: '/' },
-  { label: 'Our Company', href: '/our-company' },
-  { label: 'Products', href: '/products' },
   { label: 'Services', href: '/services' },
   { label: 'Our Approach', href: '/our-approach' },
   { label: 'Locations', href: '/location' },
+  { label: 'Products', href: '/products' },
+  { label: 'Our Company', href: '/our-company' },
+]
+
+export const resourceLinks = [
   { label: 'Blogs', href: '/blogs' },
   { label: 'Workflow Walkthroughs', href: '/case-studies' },
   { label: 'FAQ', href: '/faq' },
 ]
+
+export const navigation = [...primaryLinks, ...resourceLinks]
 
 export const companyStats = [
   { value: 'Title', label: 'Research & production', description: 'Support for property research and working files.' },
@@ -102,10 +107,10 @@ export const services = [
   {
     icon: 'blocks',
     number: '04',
-    title: 'Technology services',
+    title: 'Workflow and automation',
     description:
-      'Practical digital solutions that reduce friction and help your operation work as one connected system.',
-    items: ['Web development', 'Application development', 'Workflow enablement'],
+      'Tools and workflow support for research, review, and operational handoffs.',
+    items: ['Workflow enablement', 'Automation support', 'Web and app development by scope'],
   },
 ]
 

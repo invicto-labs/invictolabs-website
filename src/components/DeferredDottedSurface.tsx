@@ -8,14 +8,23 @@ export function DeferredDottedSurface(props: DottedSurfaceProps) {
   const host = useRef<HTMLDivElement>(null)
   const [ready, setReady] = useState(false)
   useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
+    const media = matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)')
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+    let observer: IntersectionObserver | undefined
+    const update = () => {
+      observer?.disconnect()
+      if (!media.matches || connection?.saveData) { setReady(false); return }
+      observer = new IntersectionObserver(entries => {
       if (entries.some(entry => entry.isIntersecting)) {
         setReady(true)
-        observer.disconnect()
+        observer?.disconnect()
       }
-    }, { rootMargin: '160px' })
-    if (host.current) observer.observe(host.current)
-    return () => observer.disconnect()
+      }, { rootMargin: '160px' })
+      if (host.current) observer.observe(host.current)
+    }
+    update()
+    media.addEventListener('change', update)
+    return () => { observer?.disconnect(); media.removeEventListener('change', update) }
   }, [])
   return <div ref={host} style={{ position: 'absolute', inset: 0 }} aria-hidden="true">
     {ready && <Suspense fallback={null}><Surface {...props} /></Suspense>}

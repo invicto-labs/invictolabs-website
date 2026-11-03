@@ -1,0 +1,20 @@
+/* Keep the desktop composition; give phone groups enough room to read. */
+.site-footer .footer-nav a { min-width: 44px; min-height: 44px; align-items: center; padding-block: .35rem; overflow-wrap: break-word; }
+.site-footer .footer-nav { gap: .15rem; }
+.site-footer .footer-bottom a { display: inline-flex; align-items: center; min-height: 44px; }
+@media (max-width: 767px) {
+  .site-footer { padding: 2rem 0 max(1rem, env(safe-area-inset-bottom)); }
+  .site-footer .footer-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-md); padding-bottom: 1.5rem; }
+  .site-footer .footer-brand, .site-footer .footer-nav { min-width: 0; }
+  .site-footer .footer-brand .logo { width: 124px; margin-bottom: .75rem; }
+  .site-footer .footer-brand > p { max-width: 36ch; font-size: .8125rem; line-height: 1.65; }
+  .site-footer .footer-nav--explore { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.25rem; }
+  .site-footer .footer-nav--products { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: .75rem; }
+  .site-footer .footer-nav--products > p { grid-column: 1 / -1; }
+  .site-footer .footer-nav a { font-size: .8438rem; line-height: 1.5; word-break: normal; }
+  .site-footer .footer-nav > p { margin-bottom: .25rem; font-size: .6875rem; line-height: 1.5; }
+  .site-footer .footer-nav--connect { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.25rem; }
+  .site-footer .footer-nav--connect > p, .site-footer .footer-nav--connect > a[href^='mailto:'] { grid-column: 1 / -1; }
+  .site-footer .footer-bottom { flex-flow: row wrap; gap: .25rem 1.5rem; padding-top: 1rem; font-size: .75rem; }
+  .site-footer .footer-bottom > span { flex-basis: 100%; line-height: 1.6; }
+}

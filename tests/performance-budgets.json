@@ -1,0 +1,20 @@
+{
+  "basis": "Initial budgets for this baseline; reviewed against measured transferred resource sizes in the Phase 1 report. They are review gates, not claims that the current site meets them.",
+  "mobile": {
+    "performance": 90,
+    "accessibility": 90,
+    "best-practices": 90,
+    "seo": 90,
+    "lcpMs": 2500,
+    "tbtMs": 200,
+    "cls": 0.1,
+    "ttfbMs": 800,
+    "fcpMs": 1800
+  },
+  "resources": {
+    "scriptTransferBytes": 220000,
+    "stylesheetTransferBytes": 50000,
+    "imageTransferBytes": 500000,
+    "totalTransferBytes": 1000000
+  }
+}

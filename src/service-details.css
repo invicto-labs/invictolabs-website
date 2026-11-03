@@ -75,7 +75,7 @@
 .service-scope-tabs button { display:flex; align-items:center; gap:1rem; width:100%; padding:1.1rem; border:1px solid #d0dbed; border-radius:9px; background:#f3f6fd; color:#17355d; text-align:left; font:inherit; cursor:pointer; transition:background .2s,color .2s; }
 .service-scope-tabs button svg { margin-left:auto; flex-shrink:0; }
 .service-scope-tabs button > span { font-size:.7rem; }
-.service-scope-tabs button[aria-pressed=true] { background:#1539cd; color:white; border-color:#1539cd; box-shadow:0 8px 20px #173fd820; }
+.service-scope-tabs button[aria-pressed="true"] { background:#1539cd; color:white; border-color:#1539cd; box-shadow:0 8px 20px #173fd820; }
 .service-scope-panel { position:relative; overflow:hidden; min-height:440px; padding:clamp(1.7rem,3.5vw,3rem); border-radius:22px; border:1px solid #c0d3ed; background:radial-gradient(ellipse at top right,#b2dcd9,transparent 70%),linear-gradient(135deg,#eef2ff,#dbe7ff); color:#1d4985; display:flex; flex-direction:column; }
 .service-scope-panel__number { position:absolute; right:1.5rem; top:-1.5rem; font-size:11rem; line-height:1; letter-spacing:-.08em; color:#1647780c; pointer-events:none; }
 .service-scope-panel__copy { position:relative; margin-top:3rem; animation:service-copy .3s ease-out; }

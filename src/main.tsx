@@ -16,9 +16,11 @@ const TraceQPage = lazy(() => import('./ProductsPage').then(module => ({ default
 const TitleFlowPage = lazy(() => import('./ProductsPage').then(module => ({ default: module.TitleFlowPage })))
 const TaxFlowPage = lazy(() => import('./ProductsPage').then(module => ({ default: module.TaxFlowPage })))
 import { RouteScrollManager } from './components/RouteScrollManager'
+import { homeTargets } from './data/homeNavigation'
 import './styles.css'
 import './refinements.css'
 import './site-polish.css'
+import './accessibility.css'
 import { syncMetadata } from './seo'
 export { structuredData, SITE_URL, SHARE_IMAGE } from './seo'
 
@@ -65,9 +67,9 @@ export function SiteRoutes() {
     const metadata = routeMetadata[path] ?? { title: 'Page not found | Invicto', description: 'Explore Invicto services and products.' }
     syncMetadata(path, metadata, Boolean(routeMetadata[path]))
   }, [path])
-  if (path !== location.pathname || location.hash) return <Navigate replace to={path + location.search} state={{ ...location.state, scrollTarget: hash.slice(1) }} />
+  if (path !== location.pathname) return <Navigate replace to={path + location.search} state={{ ...location.state, scrollTarget: hash.slice(1) }} />
   return (
-    <Suspense fallback={<div className="route-loading" role="status">Loading Invicto…</div>}><RouteScrollManager behavior="auto" locationKey={location.key} target={location.state?.scrollTarget ?? ''}>
+    <Suspense fallback={<div className="route-loading" role="status">Loading Invicto…</div>}><RouteScrollManager behavior="auto" locationKey={location.key} target={hash ? hash.slice(1) : location.state?.scrollTarget ?? ''}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/services" element={<OperationsPage key="services" kind="services" />} />
@@ -93,7 +95,29 @@ export function SiteRoutes() {
 
 if (typeof document !== 'undefined') {
   const root = document.getElementById('root')!
+  // A redirect as the first hydrated tree leaves the streamed SSR tree orphaned.
+  // Normalize entry fragments before React starts, retaining router state/query.
+  const originalPath = window.location.pathname
+  const normalized = originalPath.replace(/\/+$/, '').toLowerCase() || '/'
+  let entryPath = cleanRouteAliases[normalized] ?? normalized
+  let target = window.location.hash === '#top' ? '' : window.location.hash.slice(1)
+  const sections: Record<string, string> = { services: '/services', locations: '/location', approach: '/our-approach' }
+  const products: Record<string, string> = { traceq: 'traceq', 'ai-quality': 'titleflow-ai', 'tax-flow': 'tax-flow' }
+  if (entryPath === '/' && sections[target]) { entryPath = sections[target]; target = '' }
+  if (entryPath === '/products' && products[target]) { entryPath += '/' + products[target]; target = '' }
+  const keepHomeAnchor = entryPath === '/' && Object.values(homeTargets).some(item => item.anchor === target)
+  if (entryPath !== originalPath || (window.location.hash && !keepHomeAnchor)) {
+    const previous = window.history.state ?? {}
+    window.history.replaceState({ ...previous, usr: { ...previous.usr, scrollTarget: target } }, '', entryPath + window.location.search + (keepHomeAnchor ? `#${target}` : ''))
+  }
+  const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]')
+  const serverPath = canonical ? new URL(canonical.href).pathname.replace(/\/+$/, '') || '/' : originalPath
+  const canHydrate = serverPath === entryPath
   const app = <StrictMode><BrowserRouter><SiteRoutes /></BrowserRouter></StrictMode>
-  if (root.hasChildNodes()) hydrateRoot(root, app)
-  else createRoot(root).render(app)
+  const start = () => {
+    if (root.hasChildNodes() && canHydrate) hydrateRoot(root, app)
+    else createRoot(root).render(app)
+  }
+  // Attach handlers immediately; background tabs may suspend animation frames.
+  start()
 }
