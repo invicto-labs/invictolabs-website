@@ -1,4 +1,5 @@
 import { FileText, Layers3, SearchCheck, UserCheck } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import './titleflow-concept.css'
 
 export function TitleFlowConcept() {
@@ -12,12 +13,68 @@ export function TitleFlowConcept() {
 }
 
 export function TitleFlowExample() {
+  const gridRef = useRef<HTMLDivElement>(null)
+  const referenceRef = useRef<HTMLDivElement>(null)
+  const sourceValueRef = useRef<HTMLDivElement>(null)
+  const [referencePath, setReferencePath] = useState('')
+
+  useEffect(() => {
+    const grid = gridRef.current
+    const reference = referenceRef.current
+    const sourceValue = sourceValueRef.current
+    if (!grid || !reference || !sourceValue) return
+
+    const observer = new ResizeObserver(() => {
+      const bounds = grid.getBoundingClientRect()
+      const start = reference.getBoundingClientRect()
+      const end = sourceValue.getBoundingClientRect()
+      const startX = start.right - bounds.left + 4
+      const endX = end.left - bounds.left - 4
+      const startY = start.top - bounds.top + start.height / 2
+      const endY = end.top - bounds.top + end.height / 2
+      const middleX = (startX + endX) / 2
+      setReferencePath(endX > startX ? `M ${startX} ${startY} C ${middleX} ${startY}, ${middleX} ${endY}, ${endX} ${endY}` : '')
+    })
+    observer.observe(grid)
+    observer.observe(reference)
+    observer.observe(sourceValue)
+    return () => observer.disconnect()
+  }, [])
+
   return <figure className="titleflow-example">
-    <div className="titleflow-example__header"><span>FROM SOURCE TO REVIEW</span><span>FICTIONAL EXAMPLE</span></div>
-    <div className="titleflow-example__grid">
-      <div className="titleflow-example__source"><FileText size={26} aria-hidden="true" /><h3>A source record</h3><p className="titleflow-example__reference">DEMO DOCUMENT · NOT A LEGAL RECORD</p><dl><div><dt>Property</dt><dd>100 Example Lane</dd></div><div><dt>Recorded reference</dt><dd>DEMO-001</dd></div><div><dt>Named party</dt><dd>Example Owner</dd></div></dl></div>
-      <div className="titleflow-example__review"><p className="eyebrow"><span /> A focused review</p><h3>Clear questions.<br />Accountable decisions.</h3><ul><li><SearchCheck size={20} aria-hidden="true" /><span><strong>Check the property details</strong>Compare the working record with the source.</span></li><li><SearchCheck size={20} aria-hidden="true" /><span><strong>Resolve discrepancies</strong>Review unclear or inconsistent information.</span></li><li><UserCheck size={20} aria-hidden="true" /><span><strong>Complete the human review</strong>Keep final approval with the responsible reviewer.</span></li></ul></div>
+    <div className="titleflow-example__header"><strong>From source to review</strong><span>Fictional example</span></div>
+    <div className="titleflow-example__grid" ref={gridRef}>
+      <div className="titleflow-example__source">
+        <div className="titleflow-example__panel-label"><FileText size={18} aria-hidden="true" /> 01 / Source record</div>
+        <div className="titleflow-example__document">
+          <h3>Sample deed</h3>
+          <dl>
+            <div><dt>Property</dt><dd>100 Example Lane</dd></div>
+            <div><dt>Named party</dt><dd>Example Owner</dd></div>
+            <div className="titleflow-example__field" ref={referenceRef}><dt>Recording reference</dt><dd>DEMO-001</dd></div>
+          </dl>
+        </div>
+      </div>
+      <div className="titleflow-example__review">
+        <div className="titleflow-example__panel-label"><SearchCheck size={18} aria-hidden="true" /> 02 / Examiner review</div>
+        <h3>Check the recording reference</h3>
+        <p>The draft and the source show different values. The examiner checks the original deed before making a correction.</p>
+        <dl className="titleflow-example__comparison">
+          <div className="titleflow-example__field" ref={sourceValueRef}><dt>Source value</dt><dd>DEMO-001</dd></div>
+          <div><dt>Draft value</dt><dd>DEMO-010</dd></div>
+        </dl>
+        <div className="titleflow-example__resolution">
+          <UserCheck size={20} aria-hidden="true" />
+          <p><strong>Examiner correction</strong>Confirm the source value and update the draft before final approval.</p>
+        </div>
+      </div>
+      {referencePath && <svg className="titleflow-example__reference-link" aria-hidden="true">
+        <path d={referencePath} fill="none" stroke="currentColor" strokeOpacity=".4" strokeDasharray="3 4" />
+        <path d="M -7 -4 L 0 0 L -7 4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <animateMotion path={referencePath} rotate="auto" dur="2.8s" keyPoints="0;1;1" keyTimes="0;.45;1" calcMode="linear" repeatCount="indefinite" />
+        </path>
+      </svg>}
     </div>
-    <figcaption>Illustrative example—not the product interface or an actual TitleFlow output. All values are invented. No live document processing occurs on this page.</figcaption>
+    <figcaption>This example uses a fictional deed and invented values to illustrate examiner review.</figcaption>
   </figure>
 }

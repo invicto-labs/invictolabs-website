@@ -77,8 +77,8 @@ export const routeMetadata: Record<string, { title: string; description: string 
     "description": "Manage title orders, track production, review quality, and coordinate invoicing with TraceQ. Explore client order visibility and request a demo."
   },
   "/products/titleflow-ai": {
-    "title": "TitleFlow AI — AI-Assisted Title Review | Invicto",
-    "description": "Explore AI-assisted title extraction, report preparation, and human-reviewed quality checks with TitleFlow AI. See the workflow and request a demo."
+    "title": "TitleFlow AI | Title Examination Software by Invicto Labs",
+    "description": "Use TitleFlow AI to organize title evidence, verify extracted details against source records, and prepare reports for examiner approval."
   },
   "/products/tax-flow": {
     "title": "TaxFlow — Property Tax Retrieval Software | Invicto",

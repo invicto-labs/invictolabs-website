@@ -107,7 +107,7 @@ export function Header() {
 
           <div className="header-actions">
             <SiteLink className="header-careers" href={company.careers} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>Careers <ArrowUpRight size={14} aria-hidden="true" /></SiteLink>
-            <SiteLink className="button button--small" href={currentPath === '/our-company' || /^\/(blogs|case-studies)(\/|$)/.test(currentPath) ? '/#contact' : '#contact'} onClick={() => setMenuOpen(false)}>
+            <SiteLink className="button button--small" href={currentPath === '/our-company' || currentPath === '/products/titleflow-ai' || /^\/(blogs|case-studies)(\/|$)/.test(currentPath) ? '/#contact' : '#contact'} onClick={() => setMenuOpen(false)}>
               Talk to our team
               <ArrowUpRight size={16} aria-hidden="true" />
             </SiteLink>

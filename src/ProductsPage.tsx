@@ -2,6 +2,7 @@ import { SiteLink } from './components/SiteLink'
 import { lazy, Suspense, useEffect, useRef } from 'react'
 import {
   ArrowRight,
+  ArrowDown,
   ArrowUpRight,
   Bot,
   ClipboardCheck,
@@ -43,7 +44,7 @@ const traceQCapabilities = [
 type ProductName = 'traceq' | 'titleflow-ai' | 'tax-flow'
 const productIntroductions = {
   traceq: { name: 'TraceQ', label: 'OPERATIONS, CONNECTED', headline: 'Every order. Every handoff. One clear view.', description: 'Give your people a shared operating picture. TraceQ connects title-search orders, team assignments, production activity, quality checkpoints, and invoicing.', action: 'Explore the workflow', target: '#traceq' },
-  'titleflow-ai': { name: 'TitleFlow AI', label: 'EXPERTISE, AMPLIFIED', headline: 'More time for the work that needs your judgment.', description: 'Support title-file preparation and quality review while keeping your searchers in control. Explore the working process here; discuss product details in a private walkthrough.', action: 'Request a private walkthrough', target: '#contact' },
+  'titleflow-ai': { name: 'TitleFlow AI', label: 'AI-ASSISTED TITLE EXAMINATION', headline: 'From source records to review-ready title reports.', description: 'Give title examiners one workspace to organize deeds, mortgages, and tax records, verify AI-extracted details against the original pages, and prepare reports for delivery.', action: 'Request a private demo', target: '/#contact' },
   'tax-flow': { name: 'Tax Flow', label: 'PROPERTY TAX RESEARCH', headline: 'From parcel to a clearer tax record.', description: 'Enter a parcel number, state, and county. Tax Flow retrieves available property-tax information from supported sources and brings it into a structured certificate for your team to review.', action: 'Explore the workflow', target: '#tax-flow' },
 }
 
@@ -139,7 +140,16 @@ export default function ProductsPage({ product }: { product?: ProductName }) {
           <div className="container">
             <SiteLink className="product-back" href="/products#product-system">← All products</SiteLink>
             <div className="product-detail-hero__grid">
-              <div><p className="eyebrow"><span /> {introduction.label}</p><div className="product-live"><i /> LIVE PRODUCT · {introduction.name}</div><h1>{introduction.headline}</h1><p className="product-detail-hero__description">{introduction.description}</p><SiteLink className="button" href={introduction.target}>{introduction.action}<ArrowRight size={18} /></SiteLink></div>
+              <div>
+                <p className="eyebrow"><span /> {introduction.label}</p>
+                <div className="product-live"><i /> LIVE PRODUCT · {introduction.name}</div>
+                <h1>{introduction.headline}</h1>
+                <p className="product-detail-hero__description">{introduction.description}</p>
+                <div className="product-detail-hero__actions">
+                  <SiteLink className="button" href={introduction.target}>{introduction.action}<ArrowRight size={18} aria-hidden="true" /></SiteLink>
+                  {product === 'titleflow-ai' && <SiteLink className="titleflow-secondary" href="#titleflow-workflow">See how it works <ArrowDown size={17} aria-hidden="true" /></SiteLink>}
+                </div>
+              </div>
               {product && <ProductHeroVisual product={product} />}
             </div>
           </div>
@@ -326,29 +336,13 @@ export default function ProductsPage({ product }: { product?: ProductName }) {
           </div>
         </section>}
 
-        {product === 'titleflow-ai' && <section className="section ai-lab-v2" id="ai-quality" aria-labelledby="ai-quality-heading">
-          <div className="container">
-            <div className="product-heading-v2 product-heading-v2--light">
-              <div>
-                <p className="eyebrow eyebrow--light"><span /> Product 02 · TitleFlow AI</p>
-                <h2 id="ai-quality-heading">From source records to a file ready for review.</h2>
-              </div>
-              <div>
-                <p>TitleFlow AI brings document extraction, structured typing, report preparation, and AI quality checks into one workspace. Searchers verify the source, correct the record, and retain control over the finished file.</p>
-              </div>
-            </div>
-
-            <ProductInsights kind="title" />
-          </div>
-        </section>}
-
-        {product === 'titleflow-ai' && <ProductInsights kind="title-workflow" />}
+        {product === 'titleflow-ai' && <ProductInsights kind="title" />}
         {product === 'tax-flow' && <TaxFlowExperience />}
         {product && <nav className="product-siblings container" aria-label="Explore other products"><span>Explore the product family</span>{(Object.keys(productIntroductions) as ProductName[]).map(key => <SiteLink key={key} href={`/products/${key}`} aria-current={product === key ? 'page' : undefined}>{productIntroductions[key].name}<ArrowUpRight size={16} /></SiteLink>)}</nav>}
-        <div className="products-contact-wave">
+        {product !== 'titleflow-ai' && <div className="products-contact-wave">
           <div className="products-contact-wave__surface" aria-hidden="true" />
           <Contact />
-        </div>
+        </div>}
       </main>
       <Footer />
     </>

@@ -15,7 +15,18 @@ export function structuredData(path: string, meta: PageMetadata) {
   const graph: object[] = [organization, { '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: `${SITE_URL}/`, name: SITE_NAME, alternateName: company.alternateNames, publisher: { '@id': organization['@id'] } }, page]
   if (segments.length) graph.push({ '@type': 'BreadcrumbList', itemListElement: crumbs })
   if (/^\/services\/[^/]+$/.test(path)) graph.push({ '@type': 'Service', name: page.headline, description: meta.description, url, provider: { '@id': organization['@id'] }, areaServed: { '@type': 'Country', name: 'United States' } })
-  if (/^\/products\/[^/]+$/.test(path)) graph.push({ '@type': 'SoftwareApplication', name: path.endsWith('traceq') ? 'TraceQ' : path.endsWith('titleflow-ai') ? 'TitleFlow AI' : 'TaxFlow', description: meta.description, url, applicationCategory: 'BusinessApplication', operatingSystem: 'Web browser', publisher: { '@id': organization['@id'] } })
+  if (/^\/products\/[^/]+$/.test(path)) {
+    const isTitleFlow = path.endsWith('titleflow-ai')
+    graph.push({
+      '@type': 'SoftwareApplication',
+      name: path.endsWith('traceq') ? 'TraceQ' : isTitleFlow ? 'TitleFlow AI' : 'TaxFlow',
+      description: meta.description,
+      url,
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: isTitleFlow ? 'Windows' : 'Web browser',
+      publisher: { '@id': organization['@id'] },
+    })
+  }
   return { '@context': 'https://schema.org', '@graph': graph }
 }
 

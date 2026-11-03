@@ -41,7 +41,6 @@ body .products-page .tax-certificate-hero::before { background: radial-gradient(
 body .products-page .tax-experience__rail button[aria-pressed='true'] { background: #2347ac; border-color: #7290db; }
 body .products-page .tax-cert-showcase { background: radial-gradient(ellipse at 90% 0, #294c9a, transparent 70%), #0d234d; }
 body .products-page .tax-cert-sample__summary { background: #eef3fc; }
-body .products-page .titleflow-workflow li { background: linear-gradient(145deg, #fff, #e7eeff); border-top-color: #315ec7; }
 body .products-page .titleflow-review-note > div:first-child, body .products-page .titleflow-review-band { background: linear-gradient(125deg, #fff, #e2eaff); }
 body .products-page .taxflow-transfer i, body .products-page .traceq-spine * { animation: none; }
 body .products-page .tax-cert-sample { border-top-color: var(--brand-action); }
