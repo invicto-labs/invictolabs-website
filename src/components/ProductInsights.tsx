@@ -138,7 +138,7 @@ export function ProductInsights({ kind }: { kind: 'title' | 'tax' }) {
       <div className="container">
         <div className="product-heading-v2">
           <div><p className="eyebrow"><span /> Product 03 · Tax Flow</p><h2 id="taxflow-heading">Three details.<br />A clearer tax picture.</h2></div>
-          <div><p>A property-tax retrieval application built for U.S. mortgage operations. Supply the parcel number, state, and county, and Tax Flow automates the lookup of available property-tax information from supported sources.</p><SiteLink href="#contact">Discuss your county coverage <ArrowRight size={17} aria-hidden="true" /></SiteLink></div>
+          <div><p>A property-tax retrieval application built for U.S. mortgage operations. Supply the parcel number, state, and county, and Tax Flow automates the lookup of available property-tax information from supported sources.</p><SiteLink href="/#contact">Discuss your county coverage <ArrowRight size={17} aria-hidden="true" /></SiteLink></div>
         </div>
         <div className="taxflow-workspace">
           <div className="taxflow-lookup" aria-label="Illustration of the Tax Flow lookup process">

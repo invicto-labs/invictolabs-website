@@ -13,6 +13,7 @@ export function Footer() {
         </div>
         <nav className="footer-nav footer-nav--explore" aria-label="Footer navigation">
           <p>Explore</p>
+          <p>Pages</p>
           {navigation.map((item) => <SiteLink href={item.href} key={item.href}>{item.label}</SiteLink>)}
         </nav>
         <nav className="footer-nav" aria-label="Footer products">

@@ -1665,7 +1665,7 @@ h3 {
 .primary-nav > a:not(.button)::after {
   position: absolute;
   right: 0;
-  bottom: -0.4rem;
+  bottom: 0;
   left: 0;
   height: 2px;
   background: var(--blue);
@@ -4320,6 +4320,7 @@ h3 {
   padding: 2.75rem 0 1.25rem;
   color: white;
   background: #040e30;
+  line-height: 1.45;
 }
 
 .footer-grid {
@@ -4345,15 +4346,15 @@ h3 {
   display: grid;
   align-content: start;
   justify-items: start;
-  gap: 0.65rem;
+  row-gap: 0.4rem;
 }
 
-.footer-nav--explore { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1rem; }
-.footer-nav--explore > p { grid-column: 1 / -1; }
+.footer-nav--explore { grid-template-columns: minmax(0, 1fr) minmax(max-content, 1fr); column-gap: 1rem; }
+.footer-nav--explore > a[href='/faq'] { grid-column: 2; }
 .footer-nav a { overflow-wrap: anywhere; }
 
 .footer-nav p {
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.3rem;
   color: #6f7da4;
   font-size: 0.71rem;
   font-weight: 600;
@@ -4961,6 +4962,10 @@ h3 {
 
   .footer-brand {
     grid-column: auto;
+  }
+
+  .footer-nav--explore {
+    grid-column: 1 / -1;
   }
 
   .footer-bottom {

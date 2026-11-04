@@ -13,7 +13,6 @@ import {
   UsersRound,
   Workflow,
 } from 'lucide-react'
-import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { GridBoxBackground } from './components/ui/GridBoxBackground'
@@ -339,10 +338,6 @@ export default function ProductsPage({ product }: { product?: ProductName }) {
         {product === 'titleflow-ai' && <ProductInsights kind="title" />}
         {product === 'tax-flow' && <TaxFlowExperience />}
         {product && <nav className="product-siblings container" aria-label="Explore other products"><span>Explore the product family</span>{(Object.keys(productIntroductions) as ProductName[]).map(key => <SiteLink key={key} href={`/products/${key}`} aria-current={product === key ? 'page' : undefined}>{productIntroductions[key].name}<ArrowUpRight size={16} /></SiteLink>)}</nav>}
-        {product !== 'titleflow-ai' && <div className="products-contact-wave">
-          <div className="products-contact-wave__surface" aria-hidden="true" />
-          <Contact />
-        </div>}
       </main>
       <Footer />
     </>

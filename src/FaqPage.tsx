@@ -1,7 +1,6 @@
 import { SiteLink } from './components/SiteLink'
 import { useState } from 'react'
 import { ArrowRight, ChevronDown, FileCheck2, Handshake, Layers3 } from 'lucide-react'
-import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { DeferredDottedSurface as DottedSurface } from './components/DeferredDottedSurface'
@@ -102,7 +101,6 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <Contact />
       </main>
       <Footer />
     </>

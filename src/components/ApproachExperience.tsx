@@ -39,7 +39,7 @@ export function ApproachExperience() {
             <p className="ap-eyebrow"><span /> THE INVICTO APPROACH</p>
             <h1 id="ap-heading">Your workflow.<br />Our expertise.<br /><em>One team.</em></h1>
             <p className="ap-lead">From the first conversation to the next delivery, we build around the way you work. Clear responsibilities. Connected people. Room to grow.</p>
-            <div className="ap-actions"><SiteLink className="ap-button" href="#contact">Build your delivery plan <ArrowUpRight size={18} /></SiteLink><SiteLink className="ap-text-link" href="#working-method">Explore the process <ArrowDown size={16} /></SiteLink></div>
+            <div className="ap-actions"><SiteLink className="ap-button" href="/#contact">Build your delivery plan <ArrowUpRight size={18} /></SiteLink><SiteLink className="ap-text-link" href="#working-method">Explore the process <ArrowDown size={16} /></SiteLink></div>
           </div>
           <div className="ap-map" aria-label="Six connected steps, from discovery to continuous improvement">
             <div className="ap-map-heading"><span className="ap-status-dot" /> A SHARED OPERATING RHYTHM <span>01—06</span></div>

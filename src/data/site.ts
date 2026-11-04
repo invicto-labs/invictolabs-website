@@ -10,11 +10,11 @@ export const company = {
 
 export const navigation = [
   { label: 'Home', href: '/' },
-  { label: 'Our Company', href: '/our-company' },
-  { label: 'Products', href: '/products' },
   { label: 'Services', href: '/services' },
   { label: 'Our Approach', href: '/our-approach' },
   { label: 'Locations', href: '/location' },
+  { label: 'Products', href: '/products' },
+  { label: 'Our Company', href: '/our-company' },
   { label: 'Blogs', href: '/blogs' },
   { label: 'Workflow Walkthroughs', href: '/case-studies' },
   { label: 'FAQ', href: '/faq' },
