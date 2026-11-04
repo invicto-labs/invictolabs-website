@@ -107,7 +107,7 @@
   position: relative;
   isolation: isolate;
   padding-block: clamp(3.25rem, 6vw, 5.5rem);
-  background: radial-gradient(ellipse at 50% 0%, #fff 10%, transparent 72%), #f3f7fd;
+  background: radial-gradient(ellipse at 50% 0%, #fff 10%, transparent 72%), #f9fbfe;
   border-block: 1px solid #e4ebf6;
 }
 #titleflow-workflow > .container { width: min(94%, 1360px); max-width: none; }
@@ -116,6 +116,7 @@
   z-index: -1;
   inset: 0;
   overflow: hidden;
+  opacity: 0.24;
   pointer-events: none;
 }
 .titleflow-workflow__wave-ribbons {
