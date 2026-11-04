@@ -1,11 +1,17 @@
-import { useRef, useState, type KeyboardEvent } from 'react'
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, CheckCircle2, Compass, Network, Rocket, SearchCheck, TrendingUp } from 'lucide-react'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Check, CheckCircle2, Compass, Network, Pause, Play, Rocket, SearchCheck, TrendingUp } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
 import { approach } from '../data/site'
 import { SiteLink } from './SiteLink'
 import './approach-experience.css'
 import '../insights.css'
 
 const linkedin = 'https://www.linkedin.com/company/invictolabs/posts/?feedView=all'
+const perspectiveSections = [
+  { id: 'approach-capacity', title: 'Capacity that follows demand' },
+  { id: 'approach-quality', title: 'Quality alongside turnaround' },
+  { id: 'approach-continuity', title: 'Continuity in your workflow' },
+]
 const phases = [
   { icon: SearchCheck, label: 'Understand the work.', detail: 'Start with the way your team operates today. Map the assignment, the information available, and the constraints that shape delivery.', items: ['Review tasks, inputs, and current handoffs', 'Identify scope, dependencies, and exceptions', 'Agree what the first assignment should cover'], output: 'An initial scope for your team to review', group: 'Build the foundation' },
   { icon: Compass, label: 'Define what good looks like.', detail: 'Turn expectations into a shared working brief, so your team and ours have the same reference point for every handoff.', items: ['Set the review checklist and delivery format', 'Clarify decision owners and responsibilities', 'Agree priorities and timing requirements'], output: 'A shared checklist and delivery brief', group: 'Build the foundation' },
@@ -16,8 +22,27 @@ const phases = [
 ]
 
 export function ApproachExperience() {
+  const { state } = useLocation()
   const [active, setActive] = useState(0)
+  const [mapPaused, setMapPaused] = useState(false)
+  const map = useRef<HTMLDivElement>(null)
   const tabs = useRef<(HTMLButtonElement | null)[]>([])
+
+  useEffect(() => {
+    const panel = map.current
+    if (!panel) return
+
+    const threshold = 0.35
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.intersectionRatio < threshold) return
+      panel.classList.add('ap-map--entered')
+      observer.disconnect()
+    }, { threshold })
+
+    observer.observe(panel)
+    return () => observer.disconnect()
+  }, [])
+
   const onTabKey = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (event.altKey || event.ctrlKey || event.metaKey) return
     let next = index
@@ -41,8 +66,13 @@ export function ApproachExperience() {
             <p className="ap-lead">From the first conversation to the next delivery, we build around the way you work. Clear responsibilities. Connected people. Room to grow.</p>
             <div className="ap-actions"><SiteLink className="ap-button" href="/#contact">Build your delivery plan <ArrowUpRight size={18} /></SiteLink><SiteLink className="ap-text-link" href="#working-method">Explore the process <ArrowDown size={16} /></SiteLink></div>
           </div>
-          <div className="ap-map" aria-label="Six connected steps, from discovery to continuous improvement">
-            <div className="ap-map-heading"><span className="ap-status-dot" /> A SHARED OPERATING RHYTHM <span>01—06</span></div>
+          <div ref={map} className="ap-map" data-paused={mapPaused} role="group" aria-label="Six connected steps, from discovery to continuous improvement">
+            <div className="ap-map-heading">
+              <span className="ap-status-dot" /> A SHARED OPERATING RHYTHM <span>01—06</span>
+              <button type="button" className="ap-map-motion" aria-label={mapPaused ? 'Resume workflow animation' : 'Pause workflow animation'} onClick={() => setMapPaused(paused => !paused)}>
+                {mapPaused ? <Play size={14} aria-hidden="true" /> : <Pause size={14} aria-hidden="true" />}
+              </button>
+            </div>
             <div className="ap-map-center"><span>YOUR TEAM + INVICTO</span><strong>Connected from<br />day one.</strong><p>One method. Six connected moves.</p></div>
             <ol className="ap-map-steps">{approach.map((step, index) => {
               const Icon = phases[index].icon
@@ -57,7 +87,15 @@ export function ApproachExperience() {
     <section className="ap-method" id="working-method" aria-labelledby="ap-method-heading">
       <div className="container">
         <div className="ap-section-heading"><div><p className="ap-eyebrow"><span /> HOW WE WORK TOGETHER</p><h2 id="ap-method-heading">A clear path.<br /><span>At every step.</span></h2></div><p>Know where we start, what happens next, and what your team receives. Explore each stage of the working relationship.</p></div>
-        <div className="ap-tabs" role="tablist" aria-label="Stages of our approach">{approach.map((step, index) => <button key={step.number} type="button" role="tab" id={`ap-tab-${index}`} aria-controls={`ap-panel-${index}`} aria-selected={active === index} tabIndex={active === index ? 0 : -1} ref={element => { tabs.current[index] = element }} onClick={() => setActive(index)} onKeyDown={event => onTabKey(event, index)}><span>{step.number}</span>{step.title}<ArrowRight size={16} aria-hidden="true" /></button>)}</div>
+        <div className="ap-tabs" role="tablist" aria-label="Stages of our approach">
+          {approach.map((step, index) => {
+            const Icon = phases[index].icon
+            return <button key={step.number} type="button" role="tab" id={`ap-tab-${index}`} aria-controls={`ap-panel-${index}`} aria-selected={active === index} tabIndex={active === index ? 0 : -1} ref={element => { tabs.current[index] = element }} onClick={() => setActive(index)} onKeyDown={event => onTabKey(event, index)}>
+              <span className="ap-tab-mark" aria-hidden="true"><Icon size={19} /><span>{step.number}</span></span>
+              <span>{step.title}</span>
+            </button>
+          })}
+        </div>
         {phases.map((phase, index) => {
           const Icon = phase.icon
           return <div className="ap-phase" key={phase.label} id={`ap-panel-${index}`} role="tabpanel" aria-labelledby={`ap-tab-${index}`} tabIndex={0} hidden={active !== index}>
@@ -74,13 +112,16 @@ export function ApproachExperience() {
         <div className="journal-meta"><span>Title operations</span><span>Perspectives from our LinkedIn</span></div>
         <h2 id="ap-perspective-heading">More capacity begins with<br />a connected way of working.</h2>
         <p>Production support works best when people understand the assignment, the review expectations, and the next handoff. Here’s how that thinking connects to the priorities Invicto shares with the title industry.</p>
-        <div className="journal-byline"><span className="journal-monogram" aria-hidden="true">i</span><div><strong>Invicto editorial</strong><span>Adapted from Invicto’s public LinkedIn updates</span></div></div>
+        <div className="journal-byline"><span className="journal-monogram" aria-hidden="true"><BookOpen size={21} /></span><div><strong>Invicto editorial</strong><span>Adapted from Invicto’s public LinkedIn updates</span></div></div>
       </div>
       <div className="container journal-reader">
         <aside className="journal-toc"><p>IN THIS PERSPECTIVE</p><nav aria-label="Title operations article contents">
-          <SiteLink href="#approach-capacity"><span>01</span>Capacity that follows demand</SiteLink>
-          <SiteLink href="#approach-quality"><span>02</span>Quality alongside turnaround</SiteLink>
-          <SiteLink href="#approach-continuity"><span>03</span>Continuity in your workflow</SiteLink>
+          {perspectiveSections.map(({ id, title }, index) => {
+            const href = `#${id}`
+            return <SiteLink key={id} href={href} aria-current={state?.scrollTarget === id ? 'location' : undefined}>
+              <span aria-hidden="true">0{index + 1}</span>{title}<ArrowRight size={16} aria-hidden="true" />
+            </SiteLink>
+          })}
         </nav><div className="journal-toc__related"><span>More from Invicto</span><SiteLink href="/blogs">Explore our blogs <ArrowUpRight size={15} aria-hidden="true" /></SiteLink></div></aside>
         <article className="journal-body" aria-labelledby="ap-perspective-heading">
           <section className="journal-reading-section" id="approach-capacity"><span className="journal-section-index">01</span><h3>Build capacity around the work.</h3>

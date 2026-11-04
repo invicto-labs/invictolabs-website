@@ -2608,6 +2608,15 @@ h3 {
   perspective: 1200px;
 }
 
+.service-card-slot {
+  display: grid;
+  min-width: 0;
+  transform:
+    translate3d(var(--deck-x, 0px), var(--deck-y, 0px), 0)
+    rotate(var(--deck-rotate, 0deg))
+    scale(var(--deck-scale, 1));
+}
+
 .service-card {
   --pointer-x: 50%;
   --pointer-y: 50%;
@@ -2624,11 +2633,6 @@ h3 {
   box-shadow: 0 18px 45px rgba(7, 22, 74, 0.07), inset 0 1px 0 white;
   flex-direction: column;
   isolation: isolate;
-  transform:
-    translate3d(var(--deck-x, 0px), var(--deck-y, 0px), 0)
-    rotate(var(--deck-rotate, 0deg))
-    scale(var(--deck-scale, 1));
-  transform-origin: center;
   transition:
     border-color 350ms ease,
     box-shadow 350ms ease;
@@ -2688,6 +2692,27 @@ h3 {
 
 .service-card:hover::after {
   opacity: 1;
+}
+
+.service-card-slot > .service-card::after {
+  opacity: 0;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .services--deck-open .service-card-slot > .service-card {
+    --pointer-x: inherit;
+    --pointer-y: inherit;
+    transition: border-color 350ms ease, box-shadow 350ms ease, transform 220ms ease-out;
+  }
+
+  .services--deck-open .service-card-slot[data-pointer-active] > .service-card {
+    transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+    transition-duration: 350ms, 350ms, 120ms;
+  }
+
+  .services--deck-open .service-card-slot[data-pointer-active] > .service-card::after {
+    opacity: 1;
+  }
 }
 
 .service-card__head {
@@ -2819,7 +2844,7 @@ h3 {
     align-items: center;
   }
 
-  .services--deck-ready .service-card {
+  .services--deck-ready .service-grid > * {
     will-change: transform;
   }
 
@@ -3076,14 +3101,21 @@ h3 {
   position: absolute;
   z-index: -1;
   inset: 0;
-  background: radial-gradient(220px circle at var(--pointer-x) var(--pointer-y), color-mix(in srgb, var(--phase-accent) 22%, transparent), transparent 68%);
+  background: radial-gradient(
+    240px circle at var(--pointer-x) var(--pointer-y),
+    color-mix(in srgb, var(--phase-accent) 36%, transparent),
+    color-mix(in srgb, var(--phase-accent) 12%, transparent) 38%,
+    transparent 75%
+  );
   content: '';
   opacity: 0;
   transition: opacity 220ms ease;
 }
 
-.approach-orbit-card:hover::before {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .approach--orbit-open .approach-orbit-card:hover::before {
+    opacity: 1;
+  }
 }
 
 .approach-orbit-card__head {

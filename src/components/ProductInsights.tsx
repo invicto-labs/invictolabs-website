@@ -1,10 +1,9 @@
 import { SiteLink } from './SiteLink'
-import { useEffect, useRef, type CSSProperties } from 'react'
-import { ArrowRight, ClipboardCheck, Download, FileInput, Files, Layers3, ReceiptText, SearchCheck, ShieldCheck, UsersRound } from 'lucide-react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { ArrowRight, ChevronRight, ClipboardCheck, Download, FileInput, Files, Layers3, Pause, Play, ReceiptText, SearchCheck, ShieldCheck, UsersRound } from 'lucide-react'
 import './product-insights.css'
 import { TitleFlowExample } from './TitleFlowConcept'
-import TiltedCard from './ui/TiltedCard'
-import { DeferredDottedSurface } from './DeferredDottedSurface'
+import Waves from './ui/Waves'
 
 const titleStages = [
   { icon: FileInput, title: 'Open an order', text: 'Capture the order number, property details, and key dates.', output: 'Order record' },
@@ -35,25 +34,48 @@ const titleDeliverables = [
 
 export function ProductInsights({ kind }: { kind: 'title' | 'tax' }) {
   const workflowRef = useRef<HTMLOListElement>(null)
+  const [workflowPaused, setWorkflowPaused] = useState(false)
 
   useEffect(() => {
     const workflow = workflowRef.current
     if (!workflow || !('IntersectionObserver' in window)) return
 
     const observer = new IntersectionObserver(entries => {
-      if (!entries.some(entry => entry.intersectionRatio >= 0.4)) return
-      workflow.classList.add('titleflow-workflow--in-view')
-      observer.disconnect()
-    }, { threshold: 0.4 })
+      for (const entry of entries) {
+        entry.target.classList.toggle('titleflow-workflow__step--offscreen', entry.intersectionRatio < 0.2)
+      }
+    }, { threshold: 0.2 })
     for (const stage of workflow.children) observer.observe(stage)
     return () => observer.disconnect()
   }, [kind])
 
   if (kind === 'title') return (
     <>
-      <section className="titleflow-editorial" id="titleflow-workflow" aria-labelledby="titleflow-workflow-heading">
-        <div className="titleflow-workflow__surface" aria-hidden="true">
-          <DeferredDottedSurface size={8} opacity={0.55} sizeAttenuation vertexColors />
+      <section className="titleflow-editorial" id="titleflow-workflow" aria-labelledby="titleflow-workflow-heading" data-workflow-motion={workflowPaused ? 'paused' : 'running'}>
+        <div className="titleflow-workflow__waves" aria-hidden="true">
+          <svg className="titleflow-workflow__wave-ribbons" viewBox="0 0 1440 640" preserveAspectRatio="none" focusable="false">
+            <g>
+              <path d="M-100 414 C168 310 326 548 564 491 S870 347 1091 445 S1346 539 1540 403 V670 H-100Z" fill="#d7e7ff" />
+              <path d="M-100 478 C177 373 323 584 574 520 S865 399 1094 489 S1369 575 1540 456 V670 H-100Z" fill="#c6dcfb" />
+              <path d="M-100 417 C168 313 326 551 564 494 S870 350 1091 448 S1346 542 1540 406 M-100 446 C170 344 324 551 569 500 S867 361 1093 461 S1354 548 1540 430 M-100 477 C177 372 323 583 574 519 S865 398 1094 488 S1369 574 1540 455 M-100 504 C182 400 325 609 578 542 S861 426 1099 510 S1376 594 1540 482" fill="none" stroke="#709bd8" strokeWidth="1.65" vectorEffect="non-scaling-stroke" />
+            </g>
+          </svg>
+          <Waves
+            lineColor="#628bd1"
+            accentColor="#7369c8"
+            rotation={76}
+            spacing={14}
+            lineWidth={1.35}
+            amplitude={44}
+            speed={0.6}
+            opacity={0.75}
+            fade={0.16}
+            dpr={1}
+            intro={false}
+            mouseStrength={0.45}
+            clickRipple={false}
+            paused={workflowPaused}
+          />
         </div>
         <div className="container">
           <header>
@@ -62,17 +84,26 @@ export function ProductInsights({ kind }: { kind: 'title' | 'tax' }) {
             <p>Follow five steps through evidence collection, examination, quality review, and export.</p>
           </header>
           <ol className="titleflow-workflow" role="list" ref={workflowRef}>
-            {titleStages.map(({ icon: Icon, title, text, output }, index) => <li key={title} style={{ '--titleflow-stage-index': index } as CSSProperties}>
-              <TiltedCard rotateAmplitude={4}>
+            {titleStages.map(({ icon: Icon, title, text, output }, index) => (
+              <li className="titleflow-workflow__step" key={title} style={{ '--titleflow-stage-index': index } as CSSProperties}>
                 <div className="titleflow-workflow__card">
-                  <div className="titleflow-workflow__marker"><Icon size={22} aria-hidden="true" /><span>0{index + 1}</span></div>
+                  <div className="titleflow-workflow__marker"><Icon size={20} aria-hidden="true" /><span aria-hidden="true">Step 0{index + 1}</span></div>
                   <div><h3>{title}</h3><p>{text}</p></div>
-                  <small>{output}</small>
+                  <div className="titleflow-workflow__output"><small>Output</small><strong>{output}</strong></div>
                 </div>
-              </TiltedCard>
-              {index < titleStages.length - 1 && <span className="titleflow-workflow__connector" aria-hidden="true"><ArrowRight size={16} /></span>}
-            </li>)}
+                {index < titleStages.length - 1 && (
+                  <span className="titleflow-workflow__connector" aria-hidden="true">
+                    <ChevronRight size={14} />
+                    <span className="titleflow-workflow__signal"><ArrowRight size={17} /></span>
+                  </span>
+                )}
+              </li>
+            ))}
           </ol>
+          <button className="titleflow-workflow__motion" type="button" onClick={() => setWorkflowPaused(paused => !paused)}>
+            {workflowPaused ? <Play size={13} aria-hidden="true" /> : <Pause size={13} aria-hidden="true" />}
+            {workflowPaused ? 'Play animation' : 'Pause animation'}
+          </button>
         </div>
       </section>
       <section className="titleflow-editorial titleflow-editorial--capabilities" aria-labelledby="titleflow-capabilities-heading">

@@ -41,9 +41,8 @@
 .home-page .service-card__status b { animation: none; background: #173dea; }
 .home-page .service-card .service-card__details { display: flex; align-items: center; justify-content: space-between; color: #173dea; margin-top: .8rem; font-size: .86rem; font-weight: 600; }
 .home-page .service-card__details > span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #f0f4fe; transition: transform .2s; font-size: 1.1rem; }
-.home-page .service-card__details:hover > span { transform: translate(2px, -2px); }
-.home-page .service-card__details:focus-visible { outline: 2px solid #173dea; outline-offset: 5px; border-radius: 3px; }
-.home-page .service-card::after { display: none; }
+.home-page .service-card:hover .service-card__details > span { transform: translate(2px, -2px); }
+.home-page .service-card:focus-visible { outline: 2px solid #173dea; outline-offset: 5px; }
 .home-page .service-card:hover { border-color: #a9bde8; box-shadow: 0 10px 24px #122c5410; }
 .home-page .services-deck-progress { color: #526786; }
 @media (min-width: 1100px) and (min-height: 720px) and (max-height: 850px) {

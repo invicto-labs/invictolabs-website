@@ -106,22 +106,32 @@
 #titleflow-workflow {
   position: relative;
   isolation: isolate;
-  padding-block: clamp(2.75rem, 5vw, 4.5rem);
+  padding-block: clamp(3.25rem, 6vw, 5.5rem);
+  background: radial-gradient(ellipse at 50% 0%, #fff 10%, transparent 72%), #f3f7fd;
+  border-block: 1px solid #e4ebf6;
 }
 #titleflow-workflow > .container { width: min(94%, 1360px); max-width: none; }
-.titleflow-workflow__surface {
+.titleflow-workflow__waves {
   position: absolute;
   z-index: -1;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  mask-image: linear-gradient(transparent 10%, #000 45%, #000 85%, transparent);
 }
+.titleflow-workflow__wave-ribbons {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.titleflow-workflow__waves .waves {
+  mask-image: linear-gradient(transparent, #0008 19%, #000 48%, #000 82%, transparent);
+}
+
 .titleflow-workflow {
-  --titleflow-cycle: 6.8s;
-  --titleflow-handoff-time: 1s;
-  --titleflow-card-tint: #112655;
-  --titleflow-gap: 2.25rem;
+  --titleflow-gap: clamp(1.875rem, 2.8vw, 2.625rem);
+  --titleflow-card-padding: clamp(.875rem, 1.4vw, 1.3rem);
+  --titleflow-icon-size: 2.5rem;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--titleflow-gap);
@@ -129,112 +139,233 @@
   margin: 0;
   padding: 0;
 }
-.titleflow-workflow li {
+.titleflow-workflow__step {
+  --step-ink: #244c9e;
+  --step-surface: #edf4ff;
+  --step-line: #dce7fb;
+  --step-delay: calc(var(--titleflow-stage-index) * 840ms);
   position: relative;
+  min-width: 0;
 }
-.titleflow-workflow .product-tilt-shell { height: 100%; }
+.titleflow-workflow__step:nth-child(3) {
+  --step-ink: #4944a0;
+  --step-surface: #f1efff;
+  --step-line: #e5e0f9;
+}
+.titleflow-workflow__step:nth-child(5) {
+  --step-ink: #176453;
+  --step-surface: #e9f7f2;
+  --step-line: #d5ece3;
+}
+
 .titleflow-workflow__card {
-  --titleflow-card-padding: 1.1rem;
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: .75rem;
+  gap: .9rem;
   padding: var(--titleflow-card-padding);
-  border: 1px solid var(--titleflow-card-tint);
-  border-radius: 12px;
+  border: 1px solid #d6e1f0;
+  border-radius: 16px;
   background: #fff;
-  color: var(--titleflow-card-tint);
+  box-shadow: 0 2px 4px #162d5a08, 0 10px 26px #162d5a0b;
 }
-.titleflow-workflow__marker { display: flex; align-items: center; justify-content: space-between; gap: .5rem; font-size: .75rem; font-weight: 700; }
-.titleflow-workflow__marker svg { box-sizing: content-box; width: 16px; height: 16px; padding: 7px; border: 1px solid color-mix(in srgb, var(--brand-action) 19%, white); border-radius: 8px; background: color-mix(in srgb, var(--brand-action) 7%, white); color: var(--brand-action); }
-.titleflow-workflow h3 { color: inherit; font-size: 1rem; line-height: 1.25; margin: 0 0 .35rem; }
-.titleflow-workflow p { margin: 0 0 .7rem; color: inherit; font-size: .83rem; line-height: 1.5; }
-.titleflow-workflow small {
-  margin: auto calc(-1 * var(--titleflow-card-padding)) calc(-1 * var(--titleflow-card-padding));
-  padding: .7rem var(--titleflow-card-padding);
-  border-radius: 0 0 11px 11px;
-  background: #091632;
-  color: #fff;
-  font-size: .8rem;
-  font-weight: 800;
-  text-align: center;
-}
-
-.titleflow-workflow__connector {
-  --titleflow-arrow-x: var(--titleflow-gap);
-  --titleflow-arrow-y: 0px;
-  --titleflow-arrow-angle: 0deg;
-  position: absolute;
-  top: 50%;
-  left: 100%;
+.titleflow-workflow__marker {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  color: var(--step-ink);
+}
+.titleflow-workflow__marker > svg {
+  box-sizing: border-box;
+  flex: none;
+  width: var(--titleflow-icon-size);
+  height: var(--titleflow-icon-size);
+  padding: .56rem;
+  border: 1px solid var(--step-line);
+  border-radius: 11px;
+  background: var(--step-surface);
+}
+.titleflow-workflow__marker > span {
+  font-size: .68rem;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.titleflow-workflow h3 {
+  margin: 0 0 .4rem;
+  color: #132a53;
+  font-size: 1.02rem;
+  line-height: 1.28;
+  text-wrap: pretty;
+}
+.titleflow-workflow p { margin: 0; color: #445672; font-size: .875rem; line-height: 1.55; }
+
+.titleflow-workflow__output {
+  display: grid;
+  gap: .15rem;
+  margin-top: auto;
+  padding: .55rem .7rem;
+  border: 1px solid var(--step-line);
+  border-radius: 9px;
+  background: var(--step-surface);
+  color: var(--step-ink);
+}
+.titleflow-workflow__output small { font-size: .62rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.titleflow-workflow__output strong { font-size: .78rem; font-weight: 750; line-height: 1.3; }
+
+.titleflow-workflow__connector {
+  --signal-x: calc(var(--titleflow-gap) / 2);
+  --signal-y: 0px;
+  --signal-angle: 0deg;
+  position: absolute;
+  z-index: 1;
+  top: calc(1px + var(--titleflow-card-padding) + var(--titleflow-icon-size) / 2);
+  left: 100%;
+  display: grid;
+  place-items: center;
   width: var(--titleflow-gap);
-  height: 16px;
+  height: 1rem;
   transform: translateY(-50%);
-  background: linear-gradient(#a6bce2, #a6bce2) center / 100% 2px no-repeat;
-  color: #244eaf;
+  background: linear-gradient(#b3c7e5, #b3c7e5) center / 100% 2px no-repeat;
+  color: #4a6ba7;
   pointer-events: none;
 }
-.titleflow-workflow__connector svg {
-  flex: none;
-  translate: -50% 0;
-  transform: translate(var(--titleflow-arrow-x), var(--titleflow-arrow-y)) rotate(var(--titleflow-arrow-angle));
+.titleflow-workflow__connector > svg { border-radius: 50%; background: #f7faff; }
+.titleflow-workflow__signal {
+  position: absolute;
+  display: none;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: #2255cf;
+  color: #fff;
+  box-shadow: 0 0 0 3px #dce8ff, 0 3px 10px #244c9e40;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .titleflow-workflow--in-view .titleflow-workflow__connector svg {
-    /* Four 1s handoffs, a .8s final fade, then a 2s pause. */
-    animation: titleflow-handoff var(--titleflow-cycle) linear calc(var(--titleflow-stage-index) * var(--titleflow-handoff-time)) infinite backwards;
-    opacity: 0;
-  }
-  .titleflow-workflow--in-view li + li { --titleflow-arrival-delay: calc(var(--titleflow-stage-index) * var(--titleflow-handoff-time) - .2s); }
-  .titleflow-workflow--in-view .titleflow-workflow__card {
-    animation: titleflow-receive var(--titleflow-cycle) ease-in-out var(--titleflow-arrival-delay, 0s) infinite;
-  }
-  .titleflow-workflow--in-view .titleflow-workflow__marker svg {
-    animation: titleflow-receive-icon var(--titleflow-cycle) ease-out var(--titleflow-arrival-delay, 0s) infinite;
-  }
-}
-@media (hover: hover) and (pointer: fine) {
-  .titleflow-workflow li:hover { z-index: 1; }
-}
-@keyframes titleflow-handoff {
-  0% { opacity: 0; transform: translate(0, 0) rotate(var(--titleflow-arrow-angle)); }
-  2.21%, 12.5% { opacity: 1; }
-  14.71%, 100% { opacity: 0; transform: translate(var(--titleflow-arrow-x), var(--titleflow-arrow-y)) rotate(var(--titleflow-arrow-angle)); }
-}
-@keyframes titleflow-receive {
-  2.94%, 7.35% {
-    background-color: var(--titleflow-card-tint);
-    color: #fff;
-    border-color: #315aa5;
-    box-shadow: 0 10px 26px color-mix(in srgb, var(--brand-action) 14%, transparent);
-  }
-  14.71%, 100% { background-color: #fff; color: var(--titleflow-card-tint); border-color: var(--titleflow-card-tint); box-shadow: none; }
-}
-@keyframes titleflow-receive-icon {
-  2.94%, 7.35% { background-color: color-mix(in srgb, var(--brand-action) 14%, white); }
-  14.71%, 100% { background-color: color-mix(in srgb, var(--brand-action) 7%, white); }
-}
+.titleflow-workflow__signal svg { transform: rotate(var(--signal-angle)); }
+.titleflow-workflow__motion { display: none; }
 
 @media (max-width: 1099px) {
-  .titleflow-workflow { grid-template-columns: minmax(0, 1fr); max-width: 38rem; margin-inline: auto; }
-  .titleflow-workflow__card { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 1rem; }
-  .titleflow-workflow small { grid-column: 1 / -1; }
-  .titleflow-workflow__marker { flex-direction: column; }
+  .titleflow-workflow {
+    --titleflow-gap: 1.75rem;
+    --titleflow-card-padding: clamp(1rem, 3vw, 1.35rem);
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 38rem;
+    margin-inline: auto;
+  }
+  .titleflow-workflow__step { --step-delay: calc(var(--titleflow-stage-index) * 150ms); }
   .titleflow-workflow__connector {
-    --titleflow-arrow-x: 0px;
-    --titleflow-arrow-y: var(--titleflow-gap);
-    --titleflow-arrow-angle: 90deg;
+    --signal-x: 0px;
+    --signal-y: calc(var(--titleflow-gap) / 2);
+    --signal-angle: 90deg;
     top: 100%;
-    left: 50%;
-    align-items: flex-start;
-    width: 16px;
+    left: calc(1px + var(--titleflow-card-padding) + var(--titleflow-icon-size) / 2);
+    width: 1rem;
     height: var(--titleflow-gap);
     transform: translateX(-50%);
     background-size: 2px 100%;
   }
-  .titleflow-workflow__connector svg { translate: 0 -50%; }
+  .titleflow-workflow__connector > svg { transform: rotate(90deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .titleflow-workflow { --workflow-cycle: 5.6s; }
+  .titleflow-workflow__wave-ribbons g { animation: titleflow-wave-drift 8s ease-in-out infinite alternate; }
+  [data-workflow-motion='paused'] .titleflow-workflow__wave-ribbons g { animation-play-state: paused; }
+  .titleflow-workflow__motion {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    margin: 1.4rem auto 0;
+    padding: .45rem .8rem;
+    border: 1px solid #d6e1f0;
+    border-radius: 999px;
+    background: #fff;
+    color: #315486;
+    font: inherit;
+    font-size: .75rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .titleflow-workflow__motion:hover { border-color: #8eacd8; }
+  .titleflow-workflow__motion:focus-visible { outline: 2px solid #2255cf; outline-offset: 3px; }
+  .titleflow-workflow__card::before {
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border: 2px solid color-mix(in srgb, var(--step-ink) 76%, white);
+    border-radius: inherit;
+    background: linear-gradient(155deg, color-mix(in srgb, var(--step-ink) 13%, white), #fff 82%);
+    box-shadow: 0 0 0 4px var(--step-line), 0 12px 26px color-mix(in srgb, var(--step-ink) 22%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    content: '';
+  }
+  .titleflow-workflow__signal {
+    display: grid;
+    opacity: 0;
+  }
+  /* An arrow lands 840ms into its step, when the following card starts its highlight. */
+  .titleflow-workflow__card,
+  .titleflow-workflow__card::before,
+  .titleflow-workflow__marker > svg,
+  .titleflow-workflow__signal {
+    animation-duration: var(--workflow-cycle);
+    animation-delay: var(--step-delay);
+    animation-iteration-count: infinite;
+  }
+  .titleflow-workflow__card { animation-name: titleflow-card-lift; }
+  .titleflow-workflow__card::before { animation-name: titleflow-card-highlight; }
+  .titleflow-workflow__marker > svg { animation-name: titleflow-icon-highlight; }
+  .titleflow-workflow__signal { animation-name: titleflow-arrow-travel; }
+  :is(.titleflow-workflow__step--offscreen, [data-workflow-motion='paused']) .titleflow-workflow__card::before,
+  :is(.titleflow-workflow__step--offscreen, [data-workflow-motion='paused']) :is(
+    .titleflow-workflow__card,
+    .titleflow-workflow__marker > svg,
+    .titleflow-workflow__signal
+  ) {
+    animation-play-state: paused;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .titleflow-workflow__card {
+      transition: translate 240ms ease-out, border-color 240ms ease-out, box-shadow 240ms ease-out;
+    }
+    .titleflow-workflow__card:hover {
+      translate: 0 -3px;
+      border-color: #b4c8e7;
+      box-shadow: 0 3px 7px #162d5a0a, 0 15px 32px #162d5a15;
+    }
+  }
+}
+
+@keyframes titleflow-wave-drift {
+  from { transform: translate(-1.5%, 0); }
+  to { transform: translate(1.5%, 2%); }
+}
+@keyframes titleflow-card-lift {
+  0%, 22%, 100% { transform: translateY(0); }
+  5%, 13% { transform: translateY(-5px); }
+}
+@keyframes titleflow-card-highlight {
+  0%, 22%, 100% { opacity: 0; }
+  5%, 13% { opacity: 1; }
+}
+@keyframes titleflow-icon-highlight {
+  0%, 22%, 100% { transform: scale(1); background-color: var(--step-surface); color: var(--step-ink); }
+  5%, 13% { transform: scale(1.08); background-color: var(--step-ink); color: #fff; }
+}
+@keyframes titleflow-arrow-travel {
+  0%, 4% {
+    opacity: 0;
+    translate: calc(-1 * var(--signal-x)) calc(-1 * var(--signal-y));
+    animation-timing-function: cubic-bezier(.4, 0, .6, 1);
+  }
+  7%, 13% { opacity: 1; }
+  15%, 100% { translate: var(--signal-x) var(--signal-y); }
+  17%, 100% { opacity: 0; }
 }
 
 .titleflow-editorial--capabilities {

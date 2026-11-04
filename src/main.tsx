@@ -65,9 +65,11 @@ export function SiteRoutes() {
     const metadata = routeMetadata[path] ?? { title: 'Page not found | Invicto', description: 'Explore Invicto services and products.' }
     syncMetadata(path, metadata, Boolean(routeMetadata[path]))
   }, [path])
-  if (path !== location.pathname || location.hash) return <Navigate replace to={path + location.search} state={{ ...location.state, scrollTarget: hash.slice(1) }} />
+  if (path !== normalized) return <Navigate replace to={path + location.search} state={{ ...location.state, scrollTarget: hash.slice(1) }} />
+  // Keep the same route mounted when opening an anchor on a prerendered page.
+  const scrollTarget = location.hash ? hash.slice(1) : location.state?.scrollTarget ?? ''
   return (
-    <Suspense fallback={<div className="route-loading" role="status">Loading Invicto…</div>}><RouteScrollManager behavior="auto" locationKey={location.key} target={location.state?.scrollTarget ?? ''}>
+    <Suspense fallback={<div className="route-loading" role="status">Loading Invicto…</div>}><RouteScrollManager behavior="auto" locationKey={location.key} target={scrollTarget}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/services" element={<OperationsPage key="services" kind="services" />} />

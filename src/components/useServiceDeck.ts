@@ -7,8 +7,26 @@ export function moveServiceSpotlight(event: PointerEvent<HTMLElement>) {
   event.currentTarget.style.setProperty('--pointer-y', `${event.clientY - bounds.top}px`)
 }
 
-// Shared by the overview and detail pages: the same stacked-to-open card motion.
-export function useServiceDeck(showcase = false) {
+export function moveServiceTilt(event: PointerEvent<HTMLDivElement>) {
+  const slot = event.currentTarget
+  if (event.pointerType !== 'mouse' || !slot.closest('.services--deck-open')) return
+
+  // Measure the slot so the card's rotation cannot shift the pointer coordinates.
+  const bounds = slot.getBoundingClientRect()
+  const x = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width))
+  const y = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height))
+  slot.style.setProperty('--pointer-x', `${x * 100}%`)
+  slot.style.setProperty('--pointer-y', `${y * 100}%`)
+  slot.style.setProperty('--tilt-x', `${(0.5 - y) * 10}deg`)
+  slot.style.setProperty('--tilt-y', `${(x - 0.5) * 10}deg`)
+  slot.dataset.pointerActive = ''
+}
+
+export function resetServiceTilt(event: PointerEvent<HTMLDivElement>) {
+  delete event.currentTarget.dataset.pointerActive
+}
+
+export function useServiceDeck() {
   const sectionRef = useRef<HTMLElement>(null)
   const deckRef = useRef<HTMLDivElement>(null)
   const progressRef = useRef<HTMLSpanElement>(null)
@@ -16,7 +34,7 @@ export function useServiceDeck(showcase = false) {
     const section = sectionRef.current
     const deck = deckRef.current
     if (!section || !deck) return
-    const cards = Array.from(deck.querySelectorAll<HTMLElement>('.service-card'))
+    const cards = Array.from(deck.querySelectorAll<HTMLElement>('.service-card-slot'))
     const media = window.matchMedia('(min-width: 1100px) and (min-height: 720px) and (prefers-reduced-motion: no-preference)')
     let frame = 0
     const update = () => {
@@ -28,7 +46,13 @@ export function useServiceDeck(showcase = false) {
       // Keyboard users must be able to reach a source link without a stacked
       // sibling card hiding the focused target.
       const keyboardFocus = deck.contains(document.activeElement) && document.activeElement?.matches(':focus-visible')
-      const progress = media.matches && !keyboardFocus ? Math.min(1, Math.max(0, (top - section.getBoundingClientRect().top) / travel / (showcase ? .75 : 1))) : 1
+      // Leave part of the pinned scroll range for interacting with the open cards.
+      const progress = media.matches && !keyboardFocus ? Math.min(1, Math.max(0, (top - section.getBoundingClientRect().top) / (travel * .75))) : 1
+      const open = progress === 1
+      if (section.classList.contains('services--deck-open') && !open) {
+        cards.forEach(card => { delete card.dataset.pointerActive })
+      }
+      section.classList.toggle('services--deck-open', open)
       const remaining = 1 - progress * progress * (3 - 2 * progress)
       cards.forEach((card, index) => {
         card.style.setProperty('--deck-x', `${(deck.clientWidth / 2 - card.offsetLeft - card.offsetWidth / 2) * remaining}px`)
@@ -58,6 +82,6 @@ export function useServiceDeck(showcase = false) {
       deck.removeEventListener('focusin', requestUpdate)
       deck.removeEventListener('focusout', requestUpdate)
     }
-  }, [showcase])
+  }, [])
   return { sectionRef, deckRef, progressRef }
 }

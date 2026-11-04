@@ -3,6 +3,7 @@ import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react'
 import { CheckCircle2, Compass, Network, Rocket, SearchCheck, TrendingUp } from 'lucide-react'
 import { approach } from '../data/site'
 import { SectionHeading } from './SectionHeading'
+import { SiteLink } from './SiteLink'
 
 const icons = {
   discover: SearchCheck,
@@ -34,6 +35,7 @@ export function Approach() {
 
     const showExpanded = () => {
       section.classList.remove('approach--orbit-ready')
+      section.classList.add('approach--orbit-open')
       section.style.setProperty('--approach-progress', '1')
       cards.forEach((card) => {
         card.style.removeProperty('--orbit-x')
@@ -60,6 +62,7 @@ export function Approach() {
       const rawProgress = (stickyTop - section.getBoundingClientRect().top) / travel
       const scrollProgress = Math.min(1, Math.max(0, rawProgress))
       const progress = Math.min(1, Math.max(0, (scrollProgress - 0.06) / 0.72))
+      section.classList.toggle('approach--orbit-open', progress === 1)
       const easedProgress = progress * progress * (3 - 2 * progress)
       const remaining = 1 - easedProgress
       const elapsed = Math.min(48, Math.max(0, time - lastTime))
@@ -134,6 +137,7 @@ export function Approach() {
   }, [])
 
   const moveSpotlight = (event: ReactPointerEvent<HTMLElement>) => {
+    if (event.pointerType !== 'mouse' || !sectionRef.current?.classList.contains('approach--orbit-open')) return
     const bounds = event.currentTarget.getBoundingClientRect()
     event.currentTarget.style.setProperty('--pointer-x', `${event.clientX - bounds.left}px`)
     event.currentTarget.style.setProperty('--pointer-y', `${event.clientY - bounds.top}px`)
@@ -161,8 +165,9 @@ export function Approach() {
               {approach.map((step, index) => {
                 const Icon = icons[step.icon as keyof typeof icons]
                 return (
-                  <article
+                  <SiteLink
                     className="approach-orbit-card"
+                    href="/our-approach"
                     key={step.number}
                     onPointerMove={moveSpotlight}
                     style={{
@@ -177,7 +182,7 @@ export function Approach() {
                     <h3>{step.title}</h3>
                     <p>{step.description}</p>
                     <div className="approach-orbit-card__line" aria-hidden="true"><i /></div>
-                  </article>
+                  </SiteLink>
                 )
               })}
             </div>

@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
 import type { CSSProperties } from 'react'
-import { useServiceDeck, moveServiceSpotlight } from './useServiceDeck'
+import { useServiceDeck, moveServiceTilt, resetServiceTilt } from './useServiceDeck'
 import { Blocks, Landmark, MapPinned, SearchCheck } from 'lucide-react'
 import { services } from '../data/site'
 import { SectionHeading } from './SectionHeading'
@@ -16,7 +16,7 @@ const icons = {
 }
 
 export function Services({ showcase = false }: { showcase?: boolean }) {
-  const { sectionRef, deckRef, progressRef } = useServiceDeck(showcase)
+  const { sectionRef, deckRef, progressRef } = useServiceDeck()
 
   return (
     <section ref={sectionRef} className="section services" id="services" aria-labelledby="services-heading">
@@ -52,28 +52,42 @@ export function Services({ showcase = false }: { showcase?: boolean }) {
           <div className="service-grid" ref={deckRef}>
             {services.map((service, index) => {
               const Icon = icons[service.icon as keyof typeof icons]
+              const { slug } = serviceDetails[index]
+              const href = showcase ? '/services' : `/services/${slug}`
+              const label = showcase ? `Explore services, including ${service.title}` : `Explore this service: ${service.title}`
               return (
-                <article
-                  className="service-card"
-                  key={service.title}
-                  onPointerMove={moveServiceSpotlight}
-                  style={{ '--card-delay': `${index * 90}ms` } as CSSProperties}
+                <div
+                  key={slug}
+                  className="service-card-slot"
+                  onPointerEnter={moveServiceTilt}
+                  onPointerMove={moveServiceTilt}
+                  onPointerLeave={resetServiceTilt}
+                  onPointerCancel={resetServiceTilt}
                 >
-                  <div className="service-card__head">
-                    <div className="icon-tile icon-tile--light"><Icon size={23} /></div>
-                    <span>{service.number}</span>
-                  </div>
-                  <h3>{service.title}</h3>
-                  <p>{service.description}</p>
-                  <ul>
-                    {service.items.map((item) => <li key={item}>{item}</li>)}
-                  </ul>
-                  <div className="service-card__status">
-                    <span>{['Research to review', 'Support across the file', 'Property-level context', 'Built around your process'][index]}</span>
-                    <i aria-hidden="true"><b /></i>
-                  </div>
-                  <SiteLink className="service-card__details" href={`/services/${serviceDetails[index].slug}`} aria-label={`Explore this service: ${service.title}`}>Explore this service <span aria-hidden="true">↗</span></SiteLink>
-                </article>
+                  <SiteLink
+                    className="service-card"
+                    href={href}
+                    aria-label={label}
+                    style={{ '--card-delay': `${index * 90}ms` } as CSSProperties}
+                  >
+                    <div className="service-card__head">
+                      <div className="icon-tile icon-tile--light"><Icon size={23} /></div>
+                      <span>{service.number}</span>
+                    </div>
+                    <h3>{service.title}</h3>
+                    <p>{service.description}</p>
+                    <ul>
+                      {service.items.map((item) => <li key={item}>{item}</li>)}
+                    </ul>
+                    <div className="service-card__status">
+                      <span>{['Research to review', 'Support across the file', 'Property-level context', 'Built around your process'][index]}</span>
+                      <i aria-hidden="true"><b /></i>
+                    </div>
+                    <span className="service-card__details" aria-hidden="true">
+                      {showcase ? <>Explore services <span>↗</span></> : 'Explore this service ↗'}
+                    </span>
+                  </SiteLink>
+                </div>
               )
             })}
           </div>
