@@ -20,7 +20,7 @@ export function Contact() {
     try { await navigator.clipboard.writeText(`To: ${company.email}\nSubject: ${draft.subject}\n\n${draft.body}`); setCopyStatus('Copied. Paste this into your email application and send it to our team.') }
     catch { setCopyStatus('Copy is unavailable in this browser. Select and copy the draft text below.') }
   }
-  return <section className="contact contact--inquiry" id="contact" aria-labelledby="contact-heading">
+  return <section className="contact contact--inquiry" id="contact" aria-labelledby="contact-heading" tabIndex={-1}>
     <div className="container contact-grid">
       <div className="contact-copy"><p className="eyebrow eyebrow--light"><span /> Start a conversation</p><h2 id="contact-heading">Tell us what your team needs.</h2><p>Share the service you need, the work involved, and any timing or volume requirements. We’ll use that context to discuss a suitable scope.</p><p className="inquiry-privacy">Please do not include borrower details, property documents, passwords, or other confidential information. This form prepares an email draft; it does not upload or send your information.</p></div>
       <div className="contact-action">

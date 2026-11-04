@@ -26,7 +26,7 @@ function scrollToRouteTarget(hash: string, behavior: ScrollBehavior) {
   if (id === 'main-content') {
     target.setAttribute('tabindex', '-1')
   }
-  if (id === 'main-content' || id === 'contact-email') {
+  if (id === 'main-content' || id === 'contact' || id === 'contact-email') {
     target.focus({ preventScroll: true })
   }
 

@@ -29,12 +29,14 @@ try {
   assert.equal(await page.$('.inquiry-form'), null, 'FAQ should not show the home inquiry form')
   await page.click('.header-actions .button')
   await page.waitForFunction(() => {
-    const email = document.querySelector('#contact-email')
-    if (!email || email !== document.activeElement || window.location.pathname !== '/') return false
-    const { top, bottom } = email.getBoundingClientRect()
-    return top >= document.querySelector('.site-header').getBoundingClientRect().bottom - 1 && bottom <= window.innerHeight
+    const contact = document.querySelector('#contact')
+    if (!contact || contact !== document.activeElement || window.location.pathname !== '/') return false
+    const headerBottom = document.querySelector('.site-header').getBoundingClientRect().bottom
+    const form = contact.querySelector('.inquiry-form').getBoundingClientRect()
+    return Math.abs(contact.getBoundingClientRect().top - headerBottom) <= 1 &&
+      form.top >= headerBottom && form.bottom <= window.innerHeight
   })
-  console.log('PASS Talk to our team reveals the homepage email')
+  console.log('PASS Talk to our team aligns the homepage inquiry form below the header')
   await page.type('input[name=name]', 'Website QA')
   await page.type('input[name=email]', 'qa@example.com')
   await page.type('input[name=organization]', 'Example testing company')
