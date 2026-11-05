@@ -17,7 +17,7 @@ const sections = [
   ] },
   { id: 'technical', title: 'Website delivery, cookies & analytics', paragraphs: [
     'Loading a website sends technical information, such as your IP address, requested URL, browser information, and request time, to the services delivering it. Hosting providers may process request and security logs to deliver and protect the website.',
-    'The current website application does not include advertising pixels or Google Analytics, and does not use cookies or browser storage to save your enquiry draft. Hosting-level monitoring and any future analytics configuration must also be considered; this is not a statement that no technical information is processed.',
+    'We use Vercel Web Analytics to understand website traffic, including page views, referral sources, and general device and location information. Vercel Web Analytics does not use cookies. The website does not include advertising pixels or Google Analytics, and does not use cookies or browser storage to save your enquiry draft.',
     'You can manage cookies and other site permissions in your browser. External websites have their own settings and practices. If tracking tools are introduced, this notice and any required consent controls will need to reflect them.',
   ] },
   { id: 'use', title: 'Enquiries & service providers', paragraphs: [

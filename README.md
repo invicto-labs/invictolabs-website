@@ -82,6 +82,14 @@ npx vercel --prod
 
 After deployment, verify `/`, `/our-company`, `/products`, `/faq`, and the legacy redirects listed below.
 
+### Web Analytics
+
+Vercel Web Analytics is mounted once in `src/main.tsx` using `@vercel/analytics/react`.
+It records page views on initial visits and client-side navigation. Enable Web Analytics
+for the linked Vercel project, deploy, and visit the production site to start collecting
+data. View traffic in the project's Analytics dashboard. Local development uses the
+package's debug mode and does not send production analytics events.
+
 ## Project structure
 
 ```text

@@ -1,5 +1,6 @@
 import { StrictMode, Suspense, lazy, useEffect } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
+import { Analytics } from '@vercel/analytics/react'
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 const HomePage = lazy(() => import('./App'))
 const OperationsPage = lazy(() => import('./OperationsPage'))
@@ -95,7 +96,7 @@ export function SiteRoutes() {
 
 if (typeof document !== 'undefined') {
   const root = document.getElementById('root')!
-  const app = <StrictMode><BrowserRouter><SiteRoutes /></BrowserRouter></StrictMode>
+  const app = <StrictMode><BrowserRouter><SiteRoutes /><Analytics /></BrowserRouter></StrictMode>
   if (root.hasChildNodes()) hydrateRoot(root, app)
   else createRoot(root).render(app)
 }
